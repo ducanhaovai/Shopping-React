@@ -16,8 +16,6 @@ export const LoginSignup = () => {
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate("/");
 
   const [action, setAction] = useState("Sign up");
