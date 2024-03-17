@@ -3,7 +3,7 @@ import React from "react";
 import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
 import Aside from "../../components/Aside";
-import Tophome from "../../features/TopHome";
+import Tophome from "../../components/TopHome";
 
 interface Props {
   children?: React.ReactNode;
