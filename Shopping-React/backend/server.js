@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -96,7 +96,9 @@ app.get("/home", verifyUser, (req, res) => {
 
 app.get("/products", async (req, res) => {
   try {
-    const response = await axios.get("https://fakestoreapi.com/products");
+    const response = await axios.get(
+      "https://api.escuelajs.co/api/v1/products"
+    );
     res.json(response.data);
   } catch (error) {
     console.error("Error fetching products:", error);
