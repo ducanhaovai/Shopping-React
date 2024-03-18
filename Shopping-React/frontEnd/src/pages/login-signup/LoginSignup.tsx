@@ -2,26 +2,23 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./LoginSignup.css";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form"; // Import useForm
 import LoginGoogle from "../../features/loginGoogle";
 import Input from "../../components/Input/Input";
 
-axios.defaults.withCredentials = true;
+const LoginSignup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm(); // Khởi tạo form
 
-export const LoginSignup = () => {
   const [message, setMessage] = useState("");
-
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
-  const navigate = useNavigate("/");
-
   const [action, setAction] = useState("Sign up");
   const [haveAccountText, setHaveAccountText] = useState(
     "Don’t have an account?"
   );
+  const navigate = useNavigate();
 
   const toggleAction = () => {
     if (action === "Sign up") {
@@ -33,21 +30,9 @@ export const LoginSignup = () => {
     }
   };
 
-  const handleInputChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
-
-  const handleSignUp = (e) => {
-    e.preventDefault();
-
-    // Kiểm tra xem người dùng đã nhập đủ thông tin hay không
-    if (!values.name || !values.email || !values.password) {
-      setMessage("Please enter all required information");
-      return; // Không thực hiện chuyển hướng nếu thiếu thông tin
-    }
-
+  const handleSignUp = (data) => {
     axios
-      .post("http://localhost:8088/signup", values)
+      .post("http://localhost:8088/signup", data)
       .then((res) => {
         console.log("Sign up successful:", res.data);
         setMessage("Registration successful");
@@ -59,20 +44,13 @@ export const LoginSignup = () => {
       });
   };
 
-  const handleSignIn = () => {
-    // Kiểm tra xem người dùng đã nhập đủ thông tin hay không
-    if (!values.email || !values.password) {
-      setMessage("Please enter email and password");
-      return; // Không thực hiện chuyển hướng nếu thiếu thông tin
-    }
-
-    axios.defaults.withCredentials = true;
+  const handleSignIn = (data) => {
     axios
-      .post("http://localhost:8088/login", values)
+      .post("http://localhost:8088/login", data)
       .then((res) => {
         console.log("Sign in successful:", res.data);
         setMessage("Login successful");
-        navigate("/home");
+        navigate("/");
       })
       .catch((err) => {
         console.error("Sign in failed:", err);
@@ -81,25 +59,23 @@ export const LoginSignup = () => {
   };
 
   return (
-    <div className="bg-orange ">
+    <div className="bg-orange">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-5 py-12 lg:py-32 lg:pr-10 ">
           <div className="lg:col-span-2 lg:col-start-4 ">
-            <form className="p-10 rounded bg-white shadow-sm ">
-              <div className="flex flex-col items-center flex-wrap">
-                <div className="text-2xl font-semibold">Get’s started.</div>
-
-                <span>or login with email</span>
-                <div className="rectangle"></div>
-              </div>
-
+            <form
+              className="p-10 rounded bg-white shadow-sm "
+              onSubmit={handleSubmit(
+                action === "Sign up" ? handleSignUp : handleSignIn
+              )}
+            >
+              {/* Đăng ký các trường input với form */}
               {action === "Sign in" && (
                 <Input
                   className="mt-8"
                   type="text"
-                  name="name"
                   placeholder="Name"
-                  onChange={handleInputChange}
+                  {...register("name")} // Đăng ký trường input
                   autoFocus
                   required
                 />
@@ -107,38 +83,25 @@ export const LoginSignup = () => {
               <Input
                 className="mt-2"
                 type="email"
-                name="email"
                 placeholder="Email"
-                onChange={handleInputChange}
+                {...register("email")} // Đăng ký trường input
                 autoFocus
                 required
               />
               <Input
                 className="mt-2"
                 type="password"
-                name="password"
                 placeholder="Password"
-                onChange={handleInputChange}
+                {...register("password")} // Đăng ký trường input
                 required
               />
               <div className="mt-2">
-                {action === "Sign in" ? (
-                  <button
-                    type="button"
-                    className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white  text-sm hover:bg-red-600"
-                    onClick={handleSignUp}
-                  >
-                    Sign up
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white  text-sm hover:bg-red-600"
-                    onClick={handleSignIn}
-                  >
-                    Sign in
-                  </button>
-                )}
+                <button
+                  type="submit" // Sử dụng type submit để gửi form
+                  className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white  text-sm hover:bg-red-600"
+                >
+                  {action === "Sign in" ? "Sign up" : "Sign in"}
+                </button>
               </div>
 
               <div className="mt-8 text-center">
@@ -159,3 +122,5 @@ export const LoginSignup = () => {
     </div>
   );
 };
+
+export default LoginSignup;

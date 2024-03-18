@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-neutral-100 py-5">
+    <div className="bg-neutral-100 py-5">
       <div className="mx-auto max-w-7xl space-y-10 px-4">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <div className="lg:col-span-1">
@@ -26,6 +26,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </div>
   );
 }

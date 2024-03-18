@@ -19,23 +19,11 @@ const getOauthGoogleUrl = () => {
 };
 
 function Home() {
-  const isAuthenticated = Boolean(localStorage.getItem("access_token"));
   const oauthURL = getOauthGoogleUrl();
-  const logout = () => {
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
-    window.location.reload();
-  };
+
   return (
     <div>
-      {isAuthenticated ? (
-        <div>
-          <p>Xin chào, bạn đã login thành công</p>
-          <button onClick={logout}>Click để logout</button>
-        </div>
-      ) : (
-        <Link to={oauthURL}>Login with Google</Link>
-      )}
+      <Link to={oauthURL}>Login with Google</Link>
     </div>
   );
 }
