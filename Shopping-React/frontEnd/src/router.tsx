@@ -7,6 +7,8 @@ import RegisterLayout from "./layouts/RegisterLayout/RegisterLayout";
 import LoginSignup from "./pages/login-signup";
 import HomeLayout from "./layouts/HomeLayout";
 import Home from "./pages/Home/index";
+import UserDetail from "./pages/UserDetail";
+import UserDetailLayout from "./layouts/UserDetailLayout";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginGoogle />,
+  },
+  {
+    path: "/userdetail",
+    element: (
+      <UserDetailLayout>
+        <UserDetail />
+      </UserDetailLayout>
+    ),
   },
   {
     path: "/login/oauth",
