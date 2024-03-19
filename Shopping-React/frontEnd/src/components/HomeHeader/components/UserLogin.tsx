@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import Button from "@mui/material/Button";
+
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
 import Paper from "@mui/material/Paper";
@@ -14,6 +14,10 @@ import Stack from "@mui/material/Stack";
 export default function UserLogin() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const [auth, setAuth] = useState(false);
+  const [email, setEmail] = useState(""); // Thêm state để lưu trữ tên người dùng
+
+  const navigate = useNavigate();
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -45,9 +49,6 @@ export default function UserLogin() {
 
     prevOpen.current = open;
   }, [open]);
-  const [auth, setAuth] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     // Kiểm tra xác thực mỗi khi component được render
@@ -60,12 +61,15 @@ export default function UserLogin() {
       .then((res) => {
         if (res.data.Status === "Success") {
           setAuth(true);
+          setEmail(res.data.email);
+          console.log(email);
         } else {
           setAuth(false);
         }
       })
       .catch((err) => console.log(err));
   }, []);
+
   const handleLogout = () => {
     axios
       .get("http://localhost:8088/logout")
@@ -81,26 +85,40 @@ export default function UserLogin() {
       .catch((err) => console.log(err));
   };
 
+  const handleProfileClick = () => {
+    navigate("/profile");
+  };
+
   const handleLogin = () => {
     navigate("/login", { replace: true });
   };
+
   return (
-    <div className="flex items-center justify-end space-x-4 py-2">
-      <div className="flex items-center">
+    <div className="flex items-center justify-end space-x-4 py-2 z-2">
+      <div>
         {auth ? (
           <Stack direction="row" spacing={2}>
             <div>
-              <AccountCircleIcon
-                fontSize="large"
-                ref={anchorRef}
-                id="composition-button"
-                aria-controls={open ? "composition-menu" : undefined}
-                aria-expanded={open ? "true" : undefined}
-                aria-haspopup="true"
+              <button
                 onClick={handleToggle}
+                className="flex items-center outline-none transition duration-300 flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 bg-transparent hover:bg-white/20"
               >
-                Dashboard
-              </AccountCircleIcon>
+                <div className="flex-center cursor-pointer">
+                  <div className="mr-2 h-6 w-6 flex-shrink-0">
+                    <AccountCircleIcon
+                      fontSize="medium"
+                      ref={anchorRef}
+                      id="composition-button"
+                      aria-controls={open ? "composition-menu" : undefined}
+                      aria-expanded={open ? "true" : undefined}
+                      aria-haspopup="true"
+                      className="h-full w-full rounded-full object-cover"
+                    ></AccountCircleIcon>
+                  </div>
+                  <p className="text-white/80">{email}</p>
+                </div>
+              </button>
+
               <Popper
                 open={open}
                 anchorEl={anchorRef.current}
@@ -127,9 +145,25 @@ export default function UserLogin() {
                           aria-labelledby="composition-button"
                           onKeyDown={handleListKeyDown}
                         >
-                          <MenuItem onClick={handleClose}>Profile</MenuItem>
-                          <MenuItem onClick={handleClose}>My account</MenuItem>
-                          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                          <MenuItem
+                            className="block w-full bg-white py-3 px-4 text-left hover:bg-slate-100 hover:text-cyan-500"
+                            onClick={handleProfileClick}
+                          >
+                            Profile
+                          </MenuItem>
+                          <MenuItem
+                            className="block w-full bg-white py-3 px-4 text-left hover:bg-slate-100 hover:text-cyan-500 "
+                            onClick={handleClose}
+                          >
+                            My account
+                          </MenuItem>
+
+                          <MenuItem
+                            className="block w-full bg-white py-3 px-4 text-left hover:bg-slate-100 hover:text-cyan-500"
+                            onClick={handleLogout}
+                          >
+                            Logout
+                          </MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>

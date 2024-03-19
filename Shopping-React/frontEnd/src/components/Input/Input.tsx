@@ -10,29 +10,45 @@ interface Props {
   autoFocus?: boolean;
   required?: boolean;
   autoComplete?: string;
+  phone?: string;
+  address?: string;
+  value?: string;
 }
-const Input = ({
-  name,
-  type,
-  placeholder,
-  className,
-  onChange,
-  autoFocus,
-  required,
-}: Props) => {
-  return (
-    <div className={className}>
-      <input
-        className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        onChange={onChange}
-        required={required}
-        autoFocus={autoFocus}
-      />
-    </div>
-  );
-};
+
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  (
+    {
+      name,
+      type,
+      placeholder,
+      className,
+      onChange,
+      autoFocus,
+      required,
+      phone,
+      address,
+      value,
+    }: Props,
+    ref
+  ) => {
+    return (
+      <div className={className}>
+        <input
+          className="p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus:shadow-sm"
+          ref={ref}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          onChange={onChange}
+          required={required}
+          autoFocus={autoFocus}
+          phone={phone}
+          address={address}
+          value={value}
+        />
+      </div>
+    );
+  }
+);
 
 export default Input;
