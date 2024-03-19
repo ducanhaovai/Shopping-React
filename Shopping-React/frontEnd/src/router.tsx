@@ -32,14 +32,13 @@ const router = createBrowserRouter([
     element: <LoginGoogle />,
   },
   {
-    path: "/profile",
+    path: "/userdetail",
     element: (
       <UserDetailLayout>
         <UserDetail />
       </UserDetailLayout>
     ),
   },
-
   {
     path: "/login/oauth",
     element: <Login />,
