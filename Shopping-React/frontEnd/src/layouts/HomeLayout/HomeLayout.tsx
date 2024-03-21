@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
 import Aside from "../../components/Aside";
@@ -10,9 +9,14 @@ interface Props {
 }
 
 export default function HomeLayout({ children }: Props) {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+  };
   return (
     <div className="flex h-screen flex-col justify-between">
-      <HomeHeader />
+      <HomeHeader handleSearch={handleSearch} />
       <div className="flex-grow">
         <div className="container pb-4">
           <div className="grid grid-cols-12 gap-6">

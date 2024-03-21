@@ -14,7 +14,7 @@ export const LoginSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // Initialize React Hook Form
+  } = useForm(); 
 
   const navigate = useNavigate("/");
 
@@ -78,7 +78,7 @@ export const LoginSignup = () => {
             >
               <div className="flex flex-col items-center flex-wrap">
                 <div className="text-2xl font-semibold">
-                  Get’s started. Render Count: {renderCount}
+                  Get’s started.
                 </div>
 
                 <span>or login with email</span>

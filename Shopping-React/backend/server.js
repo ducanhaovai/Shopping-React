@@ -313,6 +313,46 @@ app.post("/profile", verifyUser, (req, res) => {
     }
   );
 });
+app.get("/api/products/:productId", async (req, res) => {
+  try {
+    // Lấy productId từ params
+    const productId = req.params.productId;
+
+    // Kiểm tra và chuyển đổi productId thành số nguyên
+    const parsedProductId = parseInt(productId);
+    if (isNaN(parsedProductId)) {
+      throw new Error("Invalid productId");
+    }
+
+    // Tiếp tục gửi yêu cầu API với parsedProductId
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
+    );
+    const productData = response.data;
+    res.json(productData);
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching the product." });
+  }
+});
+
+app.get("/search-products", async (req, res) => {
+  try {
+    const title = req.query.title;
+    console.log("Search query:", title);
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/?title=${title}`
+    );
+
+    console.log("Response data:", response.data);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error searching products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 const port = 8088;
 app.listen(port, () => {
