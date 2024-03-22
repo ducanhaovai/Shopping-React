@@ -17,7 +17,10 @@ export default function Search({ handleSearch }) {
       const response = await axios.get(
         `http://localhost:8088/search-products?title=${searchTerm}`
       );
-      setSearchResults(response.data);
+      if (handleSearch) {
+        handleSearch(response.data);
+        console.log(handleSearch(response.data));
+      }
       setError(null);
     } catch (error) {
       console.error("Error searching products:", error);
@@ -52,7 +55,7 @@ export default function Search({ handleSearch }) {
           required
         />
         <button
-          type="submit"
+          type="button"
           onClick={search}
           className="flex items-center outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 absolute right-2.5 bottom-2.5  bg-red-600"
         >

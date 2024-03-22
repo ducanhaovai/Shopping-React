@@ -9,12 +9,15 @@ const Home = ({ product }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [searchResults, setSearchResults] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Thêm state để lưu từ khóa tìm kiếm
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searching, setSearching] = useState(false); // Thêm state để theo dõi trạng thái tìm kiếm
+  const [initialLoad, setInitialLoad] = useState(true); // Thêm biến trạng thái cho lần load ban đầu
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get("http://localhost:8088/products");
+
         console.log("Data from backend:", response.data);
         setProducts(response.data);
       } catch (error) {
@@ -28,6 +31,10 @@ const Home = ({ product }) => {
   useEffect(() => {
     if (searchTerm !== "") {
       searchProducts();
+      setSearching(true); // Đặt trạng thái tìm kiếm thành true khi bắt đầu tìm kiếm
+      setInitialLoad(false); // Đặt trạng thái ban đầu thành false khi bắt đầu tìm kiếm
+    } else {
+      setSearching(false); // Đặt trạng thái tìm kiếm thành false khi không có từ khóa tìm kiếm
     }
   }, [searchTerm]);
 
@@ -38,31 +45,31 @@ const Home = ({ product }) => {
       );
       console.log("Search results from backend:", response.data);
       setSearchResults(response.data);
+
+      setSearching(true);
     } catch (error) {
       console.error("Error searching products:", error);
       setSearchResults([]);
+      setSearching(false);
     }
   };
 
-  const totalPages = Math.ceil(
-    searchResults.length > 0
-      ? searchResults.length
-      : products.length / itemsPerPage
-  );
+  const handleSearch = (searchTerm) => {
+    console.log("Search term sent to parent component:", searchTerm);
+    // Thực hiện xử lý dữ liệu tìm kiếm ở đây
+  };
+
+  // Lọc danh sách sản phẩm để hiển thị
+  const displayItems = searching ? searchResults : products;
+
+  const totalPages = Math.ceil(displayItems.length / itemsPerPage);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems =
-    searchResults.length > 0
-      ? searchResults.slice(indexOfFirstItem, indexOfLastItem)
-      : products.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = displayItems.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePagination = (pageNumber) => {
     setCurrentPage(pageNumber);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
   };
 
   return (
@@ -79,12 +86,10 @@ const Home = ({ product }) => {
                       className="absolute top-0 left-0 h-full w-full bg-white object-cover"
                     />
                   </div>
-
                   <div className="overflow-hidden p-2">
                     <h2 className="min-h-[2rem] text-xs line-clamp-2">
                       {product.title}
                     </h2>
-
                     <div className="mt-3 flex items-center">
                       <div className="max-w-[50%] truncate text-gray-500 line-through">
                         <span className="text-xs">$</span>
@@ -107,6 +112,8 @@ const Home = ({ product }) => {
               </Link>
             </div>
           ))
+        ) : initialLoad ? (
+          <p>Loading...</p>
         ) : (
           <p>No products found.</p>
         )}
