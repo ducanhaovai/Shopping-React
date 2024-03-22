@@ -14,6 +14,7 @@ import ProductDetail from "./components/ProductDetail";
 import ProductDetailLayout from "./layouts/ProductDetailLayout/ProductDetailLayout";
 import Product from "./components/ProductDetail";
 
+
 const AppRouter = () => {
   return (
     <Routes>
@@ -62,5 +63,6 @@ const AppRouter = () => {
     </Routes>
   );
 };
+
 
 export default AppRouter;

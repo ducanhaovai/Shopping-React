@@ -28,7 +28,7 @@ export default function HomeHeader() {
     <header className="bg-[linear-gradient(-180deg,#f53d2d,#f63)]">
       <div className="container">
         <UserLogin />
-        <div className="grid w-full grid-cols-10 space-x-4 py-4">
+        <nav className="grid w-full grid-cols-10 space-x-4 py-4">
           <Logo />
           <form className="col-span-7" onSubmit={handleSubmit}>
             <label className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -37,7 +37,7 @@ export default function HomeHeader() {
             <Search handleSearch={handleSearch} />
           </form>
           <Cart />
-        </div>
+        </nav>
       </div>
     </header>
   );

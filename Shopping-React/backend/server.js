@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "PUT", "POST", "DELETE"],
+    methods: ["GET", "POST"],
     credentials: true,
   })
 );
@@ -46,18 +46,10 @@ const verifyUser = (req, res, next) => {
   } else {
     jwt.verify(token, "our-jsonwebtoken-key", (err, decoded) => {
       if (err) {
-        return res.json({ Message: "Xac nhan that bai", error: err.message });
+        return res.json({ Message: "Xac nhan that bai" });
       } else {
-        if (decoded.name && decoded.email) {
-          req.id = decoded.id;
-          req.name = decoded.name;
-          req.email = decoded.email;
-          next();
-        } else {
-          return res.json({
-            Message: "Không đủ thông tin người dùng trong JWT!",
-          });
-        }
+        req.name = decoded.name;
+        next();
       }
     });
   }
@@ -99,9 +91,7 @@ const getGoogleUser = async ({ id_token, access_token }) => {
 };
 
 app.get("/home", verifyUser, (req, res) => {
-  const { name, email } = req;
-  console.log(email); // Di chuyển lên đây
-  return res.json({ Status: "Success", name, email });
+  return res.json({ Status: "Success", name: req.name });
 });
 
 app.get("/products", async (req, res) => {
@@ -190,14 +180,9 @@ app.post("/login", (req, res) => {
 
       // Đăng nhập thành công: tạo token và gửi về cho người dùng
       console.log("User logged in successfully");
-      // tạo ra jwt
-      const token = jwt.sign(
-        { id: user.id, name: user.name, email: user.email },
-        "our-jsonwebtoken-key",
-        {
-          expiresIn: "1d",
-        }
-      );
+      const token = jwt.sign({ user }, "our-jsonwebtoken-key", {
+        expiresIn: "1d",
+      });
       res.cookie("token", token);
       return res.json({ Status: "Success" });
     });
@@ -246,6 +231,7 @@ app.get("/api/oauth/google", async (req, res, next) => {
       });
     }
 
+    // Nếu người dùng đã tồn tại, tạo token và redirect
     const token = jwt.sign({ user: googleUser }, "our-jsonwebtoken-key", {
       expiresIn: "1d",
     });
@@ -276,6 +262,7 @@ function generateRandomPassword() {
   const randomPassword = Math.random().toString(36).slice(-8);
   return randomPassword;
 }
+
 app.get("/profile", verifyUser, (req, res) => {
   const userId = req.id;
 
