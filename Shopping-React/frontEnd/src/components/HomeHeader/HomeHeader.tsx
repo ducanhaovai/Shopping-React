@@ -34,7 +34,6 @@ export default function HomeHeader() {
             <label className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Search
             </label>
-            <Search handleSearch={handleSearch} />
           </form>
           <Cart />
         </nav>

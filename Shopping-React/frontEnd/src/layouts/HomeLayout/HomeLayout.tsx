@@ -3,17 +3,29 @@ import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
 import Aside from "../../components/Aside";
 import Tophome from "../../components/TopHome";
+import axios from "axios";
+import Home from "../../pages/Home";
 
 interface Props {
   children?: React.ReactNode;
 }
 
 export default function HomeLayout({ children }: Props) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = (value) => {
-    setSearchTerm(value);
+  const handleSearch = async (value) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8088/search-products?title=${value}`
+      );
+      console.log("value", value);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error("Error searching products:", error);
+      setSearchResults([]);
+    }
   };
+
   return (
     <div className="flex h-screen flex-col justify-between">
       <HomeHeader handleSearch={handleSearch} />
@@ -24,8 +36,8 @@ export default function HomeLayout({ children }: Props) {
               <Aside />
             </div>
             <div className="col-span-9">
-              <Tophome />
-              {children}
+              <Tophome searchResults={searchResults} />
+              <Home handleSearch={handleSearch} />
             </div>
           </div>
         </div>
