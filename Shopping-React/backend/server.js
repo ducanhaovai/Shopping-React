@@ -341,6 +341,22 @@ app.get("/search-products", async (req, res) => {
   }
 });
 
+app.get("/category-products", async (req, res) => {
+  try {
+    const title = req.query.title;
+    console.log("Search query:", title);
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/categories/?title=${title}`
+    );
+
+    console.log("Response data:", response.data);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error searching products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const port = 8088;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

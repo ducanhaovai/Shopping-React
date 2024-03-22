@@ -2,29 +2,24 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Search({ handleSearch }) {
+  console.log("handleSearch in Search:", handleSearch);
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState(null);
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
     console.log("Search term:", event.target.value);
   };
-
   const search = async () => {
     try {
       console.log("Search term sent to backend:", searchTerm);
       const response = await axios.get(
         `http://localhost:8088/search-products?title=${searchTerm}`
       );
-      if (handleSearch) {
-        handleSearch(response.data);
-        console.log(handleSearch(response.data));
-      }
+      handleSearch(response.data);
       setError(null);
     } catch (error) {
       console.error("Error searching products:", error);
-      setSearchResults([]);
       setError("Error searching products. Please try again later.");
     }
   };

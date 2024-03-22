@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./LoginSignup.css";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form"; // Import useForm
+import { useForm } from "react-hook-form";
 import LoginGoogle from "../../features/loginGoogle";
 import Input from "../../components/Input/Input";
 
@@ -11,19 +11,15 @@ const LoginSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-
-  } = useForm(); 
+  } = useForm();
 
   const navigate = useNavigate("/");
-
-
 
   const [message, setMessage] = useState("");
   const [action, setAction] = useState("Sign up");
   const [haveAccountText, setHaveAccountText] = useState(
     "Don’t have an account?"
   );
-  const navigate = useNavigate();
 
   const toggleAction = () => {
     if (action === "Sign up") {
@@ -74,23 +70,19 @@ const LoginSignup = () => {
                 action === "Sign up" ? handleSignUp : handleSignIn
               )}
             >
-
               <div className="flex flex-col items-center flex-wrap">
-                <div className="text-2xl font-semibold">
-                  Get’s started.
-                </div>
+                <div className="text-2xl font-semibold">Get’s started.</div>
 
                 <span>or login with email</span>
                 <div className="rectangle"></div>
               </div>
-
 
               {action === "Sign in" && (
                 <Input
                   className="mt-8"
                   type="text"
                   placeholder="Name"
-                  {...register("name")} // Đăng ký trường input
+                  {...register("name")}
                   autoFocus
                   required
                 />
@@ -99,7 +91,7 @@ const LoginSignup = () => {
                 className="mt-2"
                 type="email"
                 placeholder="Email"
-                {...register("email")} // Đăng ký trường input
+                {...register("email")}
                 autoFocus
                 required
               />
@@ -107,12 +99,12 @@ const LoginSignup = () => {
                 className="mt-2"
                 type="password"
                 placeholder="Password"
-                {...register("password")} // Đăng ký trường input
+                {...register("password")}
                 required
               />
               <div className="mt-2">
                 <button
-                  type="submit" // Sử dụng type submit để gửi form
+                  type="submit"
                   className="w-full text-center py-4 px-2 uppercase bg-red-500 text-white  text-sm hover:bg-red-600"
                 >
                   {action === "Sign in" ? "Sign up" : "Sign in"}

@@ -6,26 +6,18 @@ import Login from "./features/loginGoogle/index";
 import RegisterLayout from "./layouts/RegisterLayout/RegisterLayout";
 import LoginSignup from "./pages/login-signup";
 import HomeLayout from "./layouts/HomeLayout";
-import Home from "./pages/Home/index";
+
 import UserDetail from "./pages/UserDetail";
 import UserDetailLayout from "./layouts/UserDetailLayout";
 import Cart from "./pages/Cart";
-import ProductDetail from "./components/ProductDetail";
+
 import ProductDetailLayout from "./layouts/ProductDetailLayout/ProductDetailLayout";
 import Product from "./components/ProductDetail";
-
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route
-        path="/"
-        element={
-          <HomeLayout>
-            <Home />
-          </HomeLayout>
-        }
-      />
+      <Route path="/" element={<HomeLayout />} />
       <Route
         path="/login"
         element={
@@ -63,6 +55,5 @@ const AppRouter = () => {
     </Routes>
   );
 };
-
 
 export default AppRouter;
