@@ -5,7 +5,7 @@ import LoginGoogle from "./features/loginGoogle/index";
 import Login from "./features/loginGoogle/index";
 import RegisterLayout from "./layouts/RegisterLayout/RegisterLayout";
 import LoginSignup from "./pages/login-signup";
-import HomeLayout from "./layouts/HomeLayout";
+import HomeLayout from "./layouts/HomeLayout/index";
 
 import UserDetail from "./pages/UserDetail";
 import UserDetailLayout from "./layouts/UserDetailLayout";

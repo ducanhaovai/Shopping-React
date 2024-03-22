@@ -4,13 +4,8 @@ import Search from "./components/Search";
 import UserLogin from "./components/UserLogin";
 import Cart from "./components/Cart";
 
-export default function HomeHeader() {
+export default function HomeHeader({ handleSearch }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const handleSearch = (searchTerm) => {
-    // Đây là nơi để xử lý dữ liệu khi nhận được từ component Search
-    console.log("Search term sent to parent component:", searchTerm);
-    // Thực hiện các xử lý khác ở đây (nếu cần)
-  };
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -34,6 +29,7 @@ export default function HomeHeader() {
             <label className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Search
             </label>
+            <Search handleSearch={handleSearch} />
           </form>
           <Cart />
         </nav>
