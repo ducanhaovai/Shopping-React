@@ -263,6 +263,84 @@ function generateRandomPassword() {
   return randomPassword;
 }
 
+app.get("/profile", verifyUser, (req, res) => {
+  const userId = req.id;
+
+  db.query("SELECT * FROM users WHERE id = ?", [userId], (err, results) => {
+    if (err) {
+      console.error("Error fetching user profile:", err);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    const user = results[0];
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.json(user);
+  });
+});
+
+app.post("/profile", verifyUser, (req, res) => {
+  const userId = req.id;
+  const { name, email, phone, address } = req.body;
+
+  db.query(
+    "UPDATE users SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?",
+    [name, email, phone, address, userId],
+    (err, results) => {
+      if (err) {
+        console.error("Error updating user profile:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      console.log("User profile updated successfully");
+      return res
+        .status(200)
+        .json({ message: "User profile updated successfully" });
+    }
+  );
+});
+app.get("/api/products/:productId", async (req, res) => {
+  try {
+    // Lấy productId từ params
+    const productId = req.params.productId;
+
+    // Kiểm tra và chuyển đổi productId thành số nguyên
+    const parsedProductId = parseInt(productId);
+    if (isNaN(parsedProductId)) {
+      throw new Error("Invalid productId");
+    }
+
+    // Tiếp tục gửi yêu cầu API với parsedProductId
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
+    );
+    const productData = response.data;
+    res.json(productData);
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching the product." });
+  }
+});
+
+app.get("/search-products", async (req, res) => {
+  try {
+    const title = req.query.title;
+    console.log("Search query:", title);
+    const response = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/?title=${title}`
+    );
+
+    console.log("Response data:", response.data);
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error searching products:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const port = 8088;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

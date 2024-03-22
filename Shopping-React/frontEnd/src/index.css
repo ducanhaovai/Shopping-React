@@ -12,11 +12,9 @@ body {
   font-weight: 400;
 }
 
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* Đảm bảo kích thước tính toán của phần tử bao gồm cả padding và border */
+
 }

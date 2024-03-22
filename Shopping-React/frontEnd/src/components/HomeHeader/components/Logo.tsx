@@ -3,7 +3,7 @@ import React from "react";
 export default function Logo() {
   return (
     <div className="col-span-2">
-      <a>
+      <a href="/">
         <svg
           viewBox="0 0 192 65"
           width="100%"

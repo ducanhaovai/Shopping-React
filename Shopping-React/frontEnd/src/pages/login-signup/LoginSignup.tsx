@@ -11,7 +11,12 @@ const LoginSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // Khởi tạo form
+
+  } = useForm(); 
+
+  const navigate = useNavigate("/");
+
+
 
   const [message, setMessage] = useState("");
   const [action, setAction] = useState("Sign up");
@@ -69,7 +74,17 @@ const LoginSignup = () => {
                 action === "Sign up" ? handleSignUp : handleSignIn
               )}
             >
-              {/* Đăng ký các trường input với form */}
+
+              <div className="flex flex-col items-center flex-wrap">
+                <div className="text-2xl font-semibold">
+                  Get’s started.
+                </div>
+
+                <span>or login with email</span>
+                <div className="rectangle"></div>
+              </div>
+
+
               {action === "Sign in" && (
                 <Input
                   className="mt-8"
