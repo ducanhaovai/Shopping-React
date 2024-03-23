@@ -161,7 +161,6 @@ app.post("/login", (req, res) => {
     }
 
     if (results.length === 0) {
-     
       return res.status(401).json({ error: "User not found" });
     }
 
