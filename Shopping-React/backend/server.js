@@ -129,7 +129,6 @@ app.post("/signup", (req, res) => {
       return res.status(500).json({ error: "Error hashing password" });
     }
 
-    // Thực hiện thêm người dùng vào cơ sở dữ liệu với mật khẩu đã mã hóa
     const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
     const values = [name, email, hashedPassword];
 
@@ -162,7 +161,7 @@ app.post("/login", (req, res) => {
     }
 
     if (results.length === 0) {
-      // Không tìm thấy người dùng với email được cung cấp
+     
       return res.status(401).json({ error: "User not found" });
     }
 
