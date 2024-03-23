@@ -2,10 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CarContext";
 import LoginGoogle from "./features/loginGoogle/index";
 
-import Login from "./features/loginGoogle/index";
+import Login from "./features/loginGoogle/login";
 import RegisterLayout from "./layouts/RegisterLayout/RegisterLayout";
 import LoginSignup from "./pages/login-signup";
-import HomeLayout from "./layouts/HomeLayout";
+import HomeLayout from "./layouts/HomeLayout/index";
 
 import UserDetail from "./pages/UserDetail";
 import UserDetailLayout from "./layouts/UserDetailLayout";
@@ -26,7 +26,7 @@ const AppRouter = () => {
           </RegisterLayout>
         }
       />
-      <Route path="/login/google" element={<LoginGoogle />} />
+      <Route path="/login" element={<LoginGoogle />} />
       <Route
         path="/profile"
         element={

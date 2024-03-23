@@ -10,7 +10,7 @@ export default function Login() {
     const refresh_token = searchParams.get('refresh_token')
     localStorage.setItem('access_token', access_token)
     localStorage.setItem('refresh_token', refresh_token)
-    navigate('/home')
+    navigate('/')
   }, [searchParams, navigate])
 
   return <div>Login</div>

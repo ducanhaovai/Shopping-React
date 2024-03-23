@@ -1,15 +1,24 @@
 import axios from "axios";
 
-const productApi = async (productId) => {
+export const fetchProducts = async () => {
   try {
-    const response = await axios.get(
-      `http://localhost:8088/api/products/:productId`
-    );
+    const response = await axios.get("http://localhost:8088/products");
     return response.data;
   } catch (error) {
-    console.error("Error fetching product:", error);
-    return null;
+    console.error("Error fetching products:", error);
+    return [];
   }
 };
 
-export default productApi;
+// Hàm searchProducts để tìm kiếm sản phẩm dựa trên từ khóa
+export const searchProducts = async (searchTerm) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8088/search-products?title=${searchTerm}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error searching products:", error);
+    return [];
+  }
+};

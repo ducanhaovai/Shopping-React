@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { searchProducts } from "../../../api/productApi";
 
 export default function Search({ handleSearch }) {
   console.log("handleSearch in Search:", handleSearch);
@@ -10,13 +10,12 @@ export default function Search({ handleSearch }) {
     setSearchTerm(event.target.value);
     console.log("Search term:", event.target.value);
   };
+
   const search = async () => {
     try {
       console.log("Search term sent to backend:", searchTerm);
-      const response = await axios.get(
-        `http://localhost:8088/search-products?title=${searchTerm}`
-      );
-      handleSearch(response.data);
+      const products = await searchProducts(searchTerm);
+      handleSearch(products);
       setError(null);
     } catch (error) {
       console.error("Error searching products:", error);

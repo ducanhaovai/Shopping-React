@@ -6,12 +6,9 @@ import Tophome from "../../components/TopHome";
 import axios from "axios";
 import Home from "../../pages/Home";
 
-interface Props {
-  children?: React.ReactNode;
-}
-
 export default function HomeLayout({ children }: Props) {
   const [searchResults, setSearchResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = async (value) => {
     try {
@@ -28,7 +25,7 @@ export default function HomeLayout({ children }: Props) {
 
   return (
     <div className="flex h-screen flex-col justify-between">
-      <HomeHeader handleSearch={handleSearch} />
+      <HomeHeader handleSearch={(value) => setSearchTerm(value)} />{" "}
       <div className="flex-grow">
         <div className="container pb-4">
           <div className="grid grid-cols-12 gap-6">
@@ -37,12 +34,11 @@ export default function HomeLayout({ children }: Props) {
             </div>
             <div className="col-span-9">
               <Tophome searchResults={searchResults} />
-              <Home handleSearch={handleSearch} />
+              <Home searchTerm={searchTerm} />{" "}
             </div>
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );
