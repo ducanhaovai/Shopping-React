@@ -19,7 +19,7 @@ export default function Price() {
       </div>
       <button
         type="submit"
-        className="flex items-center outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80"
+        className="outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80"
       >
         Áp dụng
       </button>

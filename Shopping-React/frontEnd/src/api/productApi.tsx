@@ -3,7 +3,7 @@ import axios from "axios";
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(
-      "https://shopping-react-sjvr-9nylavw5n-ducanhaovais-projects.vercel.app/products"
+      "https://shopping-react-sjvr.vercel.app/products"
     );
     return response.data;
   } catch (error) {
@@ -16,7 +16,7 @@ export const fetchProducts = async () => {
 export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
-      `https://shopping-react-sjvr-9nylavw5n-ducanhaovais-projects.vercel.app/search-products?title=${searchTerm}`
+      `https://shopping-react-sjvr.vercel.app/search-products?title=${searchTerm}`
     );
     return response.data;
   } catch (error) {

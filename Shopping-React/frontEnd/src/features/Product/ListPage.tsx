@@ -16,7 +16,7 @@ export default function ListPage({
               onClick={() => handlePagination(page)}
               className={`px-3 py-1 rounded-full ${
                 currentPage === page
-                  ? "bg-primary text-white"
+                  ? "bg-orange text-white"
                   : "bg-gray-200 text-gray-700"
               }`}
             >

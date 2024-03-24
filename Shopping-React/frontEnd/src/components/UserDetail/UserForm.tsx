@@ -17,7 +17,7 @@ export default function UserForm() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8088/profile", {
+      .get("https://shopping-react-sjvr.vercel.app/profile", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -37,7 +37,7 @@ export default function UserForm() {
 
   const onSubmit = (data: any) => {
     axios
-      .post("http://localhost:8088/profile", data, {
+      .post("https://shopping-react-sjvr.vercel.app/profile", data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },

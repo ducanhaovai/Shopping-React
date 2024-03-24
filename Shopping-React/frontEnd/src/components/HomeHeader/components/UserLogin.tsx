@@ -44,7 +44,7 @@ export default function UserLogin() {
   useEffect(() => {
     // Kiểm tra xác thực mỗi khi component được render
     axios
-      .get("http://localhost:8088/home", {
+      .get("https://shopping-react-sjvr.vercel.app/home", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -63,7 +63,7 @@ export default function UserLogin() {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:8088/logout")
+      .get("https://shopping-react-sjvr.vercel.app/logout")
       .then((res) => {
         if (res.data.Status === "Success") {
           localStorage.removeItem("access_token");

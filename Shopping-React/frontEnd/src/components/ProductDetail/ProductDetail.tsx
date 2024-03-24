@@ -25,7 +25,7 @@ const Product = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8088/api/products/${productIdInt}` // Sử dụng productIdInt
+          `https://shopping-react-sjvr.vercel.app/api/products/${productIdInt}` // Sử dụng productIdInt
         );
         setProduct(response.data);
         setLoading(false);
