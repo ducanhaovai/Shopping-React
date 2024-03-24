@@ -16,7 +16,7 @@ export const LoginSignup = () => {
     formState: { errors },
   } = useForm(); // Initialize React Hook Form
 
-  const navigate = useNavigate("/");
+  const navigate = useNavigate();
 
   const [action, setAction] = useState("Sign up");
   const [haveAccountText, setHaveAccountText] = useState(
@@ -33,7 +33,7 @@ export const LoginSignup = () => {
     }
   };
 
-  const handleSignUp = (data) => {
+  const handleSignUp = (data: any) => {
     axios
       .post("http://localhost:8088/signup", data)
       .then((res) => {
@@ -47,7 +47,7 @@ export const LoginSignup = () => {
       });
   };
 
-  const handleSignIn = (data) => {
+  const handleSignIn = (data: any) => {
     // Pass data from React Hook Form
     axios.defaults.withCredentials = true;
     axios

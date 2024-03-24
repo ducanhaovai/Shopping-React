@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-
 import AsideUser from "../../components/Aside/AsideUser";
 import UserForm from "../../components/UserDetail";
 
