@@ -4,6 +4,10 @@ export default function ListPage({
   totalPages,
   currentPage,
   handlePagination,
+}: {
+  totalPages: number;
+  currentPage: number;
+  handlePagination: (page: number) => void;
 }) {
   return (
     <div className="mt-4">

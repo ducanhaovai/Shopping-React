@@ -35,14 +35,7 @@ const AppRouter = () => {
           </UserDetailLayout>
         }
       />
-      <Route
-        path="/cart"
-        element={
-          <CartProvider>
-            <Cart />
-          </CartProvider>
-        }
-      />
+      <Route path="/cart" element={<Cart />} />
       <Route
         path="/products/:productId"
         element={

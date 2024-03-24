@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
   })
 );
@@ -46,10 +46,18 @@ const verifyUser = (req, res, next) => {
   } else {
     jwt.verify(token, "our-jsonwebtoken-key", (err, decoded) => {
       if (err) {
-        return res.json({ Message: "Xac nhan that bai" });
+        return res.json({ Message: "Xac nhan that bai", error: err.message });
       } else {
-        req.name = decoded.name;
-        next();
+        if (decoded.name && decoded.email) {
+          req.id = decoded.id;
+          req.name = decoded.name;
+          req.email = decoded.email;
+          next();
+        } else {
+          return res.json({
+            Message: "Không đủ thông tin người dùng trong JWT!",
+          });
+        }
       }
     });
   }
@@ -91,7 +99,9 @@ const getGoogleUser = async ({ id_token, access_token }) => {
 };
 
 app.get("/home", verifyUser, (req, res) => {
-  return res.json({ Status: "Success", name: req.name });
+  const { name, email } = req;
+  console.log(email);
+  return res.json({ Status: "Success", name, email });
 });
 
 app.get("/products", async (req, res) => {
@@ -178,9 +188,13 @@ app.post("/login", (req, res) => {
 
       // Đăng nhập thành công: tạo token và gửi về cho người dùng
       console.log("User logged in successfully");
-      const token = jwt.sign({ user }, "our-jsonwebtoken-key", {
-        expiresIn: "1d",
-      });
+      const token = jwt.sign(
+        { id: user.id, name: user.name, email: user.email },
+        "our-jsonwebtoken-key",
+        {
+          expiresIn: "1d",
+        }
+      );
       res.cookie("token", token);
       return res.json({ Status: "Success" });
     });

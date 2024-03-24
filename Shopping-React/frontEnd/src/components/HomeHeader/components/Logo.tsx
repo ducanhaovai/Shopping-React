@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Logo() {
   return (
     <div className="col-span-2">

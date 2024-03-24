@@ -10,8 +10,6 @@ interface Props {
   autoFocus?: boolean;
   required?: boolean;
   autoComplete?: string;
-  phone?: string;
-  address?: string;
   value?: string;
 }
 
@@ -25,9 +23,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       onChange,
       autoFocus,
       required,
-      phone,
-      address,
       value,
+      ...rest
     }: Props,
     ref
   ) => {
@@ -42,9 +39,8 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           onChange={onChange}
           required={required}
           autoFocus={autoFocus}
-          phone={phone}
-          address={address}
           value={value}
+          {...rest}
         />
       </div>
     );

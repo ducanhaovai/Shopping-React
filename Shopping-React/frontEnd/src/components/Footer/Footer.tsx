@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Footer() {
   return (
     <div className="bg-neutral-100 py-5">

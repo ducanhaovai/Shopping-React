@@ -11,7 +11,7 @@ export const fetchProducts = async () => {
 };
 
 // Hàm searchProducts để tìm kiếm sản phẩm dựa trên từ khóa
-export const searchProducts = async (searchTerm) => {
+export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
       `http://localhost:8088/search-products?title=${searchTerm}`

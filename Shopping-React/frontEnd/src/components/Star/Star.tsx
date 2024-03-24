@@ -4,7 +4,7 @@ interface SvgIconProps {
   className?: string;
 }
 
-const Star5: React.FC<SvgIconProps> = ({ className }) => {
+const Star5: React.FC<SvgIconProps> = () => {
   return (
     <div className="my-3">
       <div
@@ -71,7 +71,7 @@ const Star5: React.FC<SvgIconProps> = ({ className }) => {
     </div>
   );
 };
-const Star4: React.FC<SvgIconProps> = ({ className }) => {
+const Star4: React.FC<SvgIconProps> = () => {
   return (
     <div className="my-3">
       <div
@@ -127,7 +127,7 @@ const Star4: React.FC<SvgIconProps> = ({ className }) => {
     </div>
   );
 };
-const Star3: React.FC<SvgIconProps> = ({ className }) => {
+const Star3: React.FC<SvgIconProps> = () => {
   return (
     <div className="my-3">
       <div
@@ -172,7 +172,7 @@ const Star3: React.FC<SvgIconProps> = ({ className }) => {
     </div>
   );
 };
-const Star2: React.FC<SvgIconProps> = ({ className }) => {
+const Star2: React.FC<SvgIconProps> = () => {
   return (
     <div className="my-3">
       <div
@@ -206,7 +206,7 @@ const Star2: React.FC<SvgIconProps> = ({ className }) => {
     </div>
   );
 };
-const Star1: React.FC<SvgIconProps> = ({ className }) => {
+const Star1: React.FC<SvgIconProps> = () => {
   return (
     <div className="my-3">
       <div

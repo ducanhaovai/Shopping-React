@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "./components/Button";
 
 export default function Tophome() {
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  const handleButtonClick = (buttonLabel) => {
+  const handleButtonClick = (buttonLabel: string) => {
     setActiveButton(buttonLabel);
   };
   return (
@@ -28,7 +28,7 @@ export default function Tophome() {
               isActive={activeButton === "Bán chạy"}
               onClick={() => handleButtonClick("Bán chạy")}
             />
-            <select className="h-8 px-4 text-left text-sm capitalize text-black outline-none  bg-white text-black hover:bg-slate-100">
+            <select className="h-8 px-4 text-left text-sm capitalize outline-none  bg-white text-black hover:bg-slate-100">
               <option value="" className="bg-white text-black">
                 Giá
               </option>

@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../ImageSlider/index";
-
+interface Product {
+  images: string;
+  title: string;
+  description: string;
+  price: number;
+}
 const Product = () => {
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const { productId } = useParams();
 
   useEffect(() => {
     const fetchProduct = async () => {
       console.log("productId:", productId);
       try {
-        const productIdInt = parseInt(productId, 10);
+        const productIdInt = parseInt(productId!, 10);
         if (isNaN(productIdInt)) {
-          setError({ message: "Invalid productId" });
           setLoading(false);
           return;
         }
@@ -27,7 +31,7 @@ const Product = () => {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
-        setError(error);
+
         setLoading(false);
       }
     };
@@ -36,7 +40,7 @@ const Product = () => {
   }, [productId]);
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (error) return <p>Error: {(error as any).message}</p>;
   if (!product) return <p>Product not found</p>;
 
   return (
@@ -82,7 +86,7 @@ const Product = () => {
                   <div>
                     <div className="undefined py-1">
                       <input
-                        className="w-full appearance-none bg-transparent leading-tight focus:outline-none flex-center h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-center text-gray-600"
+                        className="w-full appearance-none bg-transparent leading-tight focus:outline-none flex-center h-8  items-center justify-center rounded-l-sm border border-gray-300 text-center text-gray-600"
                         spellCheck="false"
                         type="text"
                       />
@@ -113,7 +117,7 @@ const Product = () => {
               <div className="mt-8 flex items-center space-x-4">
                 <button
                   type="button"
-                  className="flex items-center outline-none transition duration-300 text-primary border-[1px] border-primary flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 gap-x-2"
+                  className=" outline-none transition duration-300 text-primary border-[1px] border-primary flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 gap-x-2"
                 >
                   <svg
                     stroke="currentColor"
@@ -131,7 +135,7 @@ const Product = () => {
                 </button>
                 <button
                   type="button"
-                  className="flex items-center outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80"
+                  className=" outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80"
                 >
                   Mua ngay
                 </button>

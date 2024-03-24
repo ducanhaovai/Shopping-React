@@ -15,7 +15,9 @@ export default function UserLogin() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [auth, setAuth] = useState(false);
-  const [email, setEmail] = useState(""); // Thêm state để lưu trữ tên người dùng
+  const [email, setEmail] = useState("");
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
 
@@ -23,15 +25,14 @@ export default function UserLogin() {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      return;
-    }
-
-    setOpen(false);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
-  function handleListKeyDown(event) {
+  function handleListKeyDown(event: {
+    key: string;
+    preventDefault: () => void;
+  }) {
     if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
@@ -39,16 +40,6 @@ export default function UserLogin() {
       setOpen(false);
     }
   }
-
-  // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-
-    prevOpen.current = open;
-  }, [open]);
 
   useEffect(() => {
     // Kiểm tra xác thực mỗi khi component được render

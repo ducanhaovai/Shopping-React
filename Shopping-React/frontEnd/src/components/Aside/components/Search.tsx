@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Search() {
   return (
     <a className="mt-4 flex items-center font-bold uppercase">

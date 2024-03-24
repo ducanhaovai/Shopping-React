@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const ImageSlider = ({ imageUrls }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+const ImageSlider = ({ imageUrls }: { imageUrls: string[] }) => {
+  const [, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
@@ -15,7 +15,6 @@ const ImageSlider = ({ imageUrls }) => {
           className={`relative w-full pt-[100%]`}
           aria-hidden="true"
           role="button"
-          tabIndex="0"
         >
           <img
             src={imageUrl}

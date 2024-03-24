@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { searchProducts } from "../../../api/productApi";
-
-export default function Search({ handleSearch }) {
+interface SearchProps {
+  handleSearch: (query: string) => void;
+}
+export default function Search({ handleSearch }: SearchProps) {
   console.log("handleSearch in Search:", handleSearch);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
 
-  const handleChange = (event) => {
+  const handleChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setSearchTerm(event.target.value);
     console.log("Search term:", event.target.value);
   };
@@ -19,7 +23,6 @@ export default function Search({ handleSearch }) {
       setError(null);
     } catch (error) {
       console.error("Error searching products:", error);
-      setError("Error searching products. Please try again later.");
     }
   };
 
@@ -51,7 +54,7 @@ export default function Search({ handleSearch }) {
         <button
           type="button"
           onClick={search}
-          className="flex items-center outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 absolute right-2.5 bottom-2.5  bg-red-600"
+          className="flex items-center outline-none transition duration-300 bg-primary text-white space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 absolute right-2.5 bottom-2.5  bg-red-600"
         >
           <svg
             stroke="currentColor"

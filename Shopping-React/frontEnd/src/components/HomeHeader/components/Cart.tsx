@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Cart() {
   return (
     <div className="flex-center col-span-1 justify-self-end">

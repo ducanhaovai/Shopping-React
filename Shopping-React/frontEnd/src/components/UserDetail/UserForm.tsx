@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import Input from "../Input";
 import { useForm } from "react-hook-form";
 
 export default function UserForm() {
-  const [user, setUser] = useState(null);
-  const { userId } = useParams();
+  const [user, setUser] = useState<{
+    name?: string;
+    email?: string;
+    phone?: string;
+    address?: string;
+  } | null>(null);
+
   const { register, handleSubmit, setValue } = useForm();
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -18,25 +23,26 @@ export default function UserForm() {
         },
       })
       .then((response) => {
-        setUser(response.data);
-        setValue("name", response.data.name);
-        setValue("email", response.data.email);
-        setValue("phone_number", response.data.phone_number);
-        setValue("address", response.data.address);
+        const userData = response.data;
+        setUser(userData);
+        setValue("name", userData.name);
+        setValue("email", userData.email);
+        setValue("phone_number", userData.phone_number);
+        setValue("address", userData.address);
       })
       .catch((error) => {
         console.error("Error fetching user detail:", error);
       });
   }, []);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: any) => {
     axios
       .post("http://localhost:8088/profile", data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
       })
-      .then((response) => {
+      .then((_response) => {
         console.log("User data updated successfully");
       })
       .catch((error) => {
@@ -77,7 +83,7 @@ export default function UserForm() {
                 <div className="false py-1 default-input">
                   <Input
                     type="text"
-                    placeholder={user && user.name}
+                    placeholder={user?.name || ""}
                     {...register("name", { required: true })}
                   />
                 </div>
@@ -93,7 +99,7 @@ export default function UserForm() {
                 <div className="false py-1 default-input">
                   <Input
                     type="text"
-                    placeholder={user && user.phone}
+                    placeholder={user?.phone || ""}
                     {...register("phone", { required: true })}
                   />
                 </div>
@@ -109,7 +115,7 @@ export default function UserForm() {
                 <div className="false py-1 default-input">
                   <Input
                     type="text"
-                    placeholder={user && user.address}
+                    placeholder={user?.address || ""}
                     {...register("address", { required: true })}
                   />
                 </div>
@@ -120,7 +126,7 @@ export default function UserForm() {
             <div className="flex justify-end truncate pt-3 capitalize sm:w-[33%] sm:text-right">
               <button
                 type="submit"
-                className="flex items-center outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 px-5 bg-orange"
+                className=" outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 px-5 bg-orange"
               >
                 Lưu
               </button>

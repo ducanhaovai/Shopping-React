@@ -1,18 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Logo from "./components/Logo";
 import Search from "./components/Search";
 import UserLogin from "./components/UserLogin";
 import Cart from "./components/Cart";
 
 export default function HomeHeader({ handleSearch }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm] = useState("");
 
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-    console.log("Search term:", event.target.value);
-  };
-
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     handleSearch(searchTerm);
