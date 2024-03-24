@@ -35,7 +35,7 @@ export const LoginSignup = () => {
 
   const handleSignUp = (data: any) => {
     axios
-      .post("https://shopping-react-sjvr.vercel.app/signup", data)
+      .post("http://localhost:8088/signup", data)
       .then((res) => {
         console.log("Sign up successful:", res.data);
         setMessage("Registration successful");
@@ -51,7 +51,7 @@ export const LoginSignup = () => {
     // Pass data from React Hook Form
     axios.defaults.withCredentials = true;
     axios
-      .post("https://shopping-react-sjvr.vercel.app/login", data)
+      .post("http://localhost:8088/login", data)
       .then((res) => {
         console.log("Sign in successful:", res.data);
         setMessage("Login successful");

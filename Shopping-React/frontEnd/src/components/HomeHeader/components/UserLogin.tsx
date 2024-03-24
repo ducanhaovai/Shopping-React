@@ -44,7 +44,7 @@ export default function UserLogin() {
   useEffect(() => {
     // Kiểm tra xác thực mỗi khi component được render
     axios
-      .get("https://shopping-react-sjvr.vercel.app/home", {
+      .get("http://localhost:8088/home", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -63,7 +63,7 @@ export default function UserLogin() {
 
   const handleLogout = () => {
     axios
-      .get("https://shopping-react-sjvr.vercel.app/logout")
+      .get("http://localhost:8088/logout")
       .then((res) => {
         if (res.data.Status === "Success") {
           localStorage.removeItem("access_token");
@@ -92,7 +92,7 @@ export default function UserLogin() {
             <div>
               <button
                 onClick={handleToggle}
-                className="flex items-center outline-none transition duration-300 flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 bg-transparent hover:bg-white/20"
+                className="flex items-center outline-none transition duration-300  space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 bg-transparent hover:bg-white/20"
               >
                 <div className="flex-center cursor-pointer">
                   <div className="mr-2 h-6 w-6 flex-shrink-0">
