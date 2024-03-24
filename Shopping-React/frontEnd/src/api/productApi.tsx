@@ -2,9 +2,7 @@ import axios from "axios";
 
 export const fetchProducts = async () => {
   try {
-    const response = await axios.get(
-      "https://shopping-react-sjvr.vercel.app/products"
-    );
+    const response = await axios.get("http://localhost:8088/products");
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -16,7 +14,7 @@ export const fetchProducts = async () => {
 export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
-      `https://shopping-react-sjvr.vercel.app/search-products?title=${searchTerm}`
+      `http://localhost:8088/search-products?title=${searchTerm}`
     );
     return response.data;
   } catch (error) {
