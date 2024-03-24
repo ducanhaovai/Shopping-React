@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["*"],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
   })
@@ -33,11 +33,11 @@ app.use(
 );
 
 const db = mysql.createConnection({
-  host: "192.168.1.7",
+  host: "localhost",
   user: "root",
   password: "123456",
   database: "singup",
-  port: 65385,
+  port: 3306,
 });
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
