@@ -7,7 +7,6 @@ import RegisterLayout from "./layouts/RegisterLayout/RegisterLayout";
 import LoginSignup from "./pages/login-signup";
 import HomeLayout from "./layouts/HomeLayout/index";
 
-import UserDetail from "./pages/UserDetail";
 import UserDetailLayout from "./layouts/UserDetailLayout";
 import Cart from "./pages/Cart";
 
@@ -27,14 +26,7 @@ const AppRouter = () => {
         }
       />
       <Route path="/login" element={<LoginGoogle />} />
-      <Route
-        path="/profile"
-        element={
-          <UserDetailLayout>
-            
-          </UserDetailLayout>
-        }
-      />
+      <Route path="/profile" element={<UserDetailLayout></UserDetailLayout>} />
       <Route path="/cart" element={<Cart />} />
       <Route
         path="/products/:productId"
