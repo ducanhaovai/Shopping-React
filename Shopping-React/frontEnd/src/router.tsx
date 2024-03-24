@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { CartProvider } from "./context/CarContext";
+
 import LoginGoogle from "./features/loginGoogle/index";
 
 import Login from "./features/loginGoogle/login";

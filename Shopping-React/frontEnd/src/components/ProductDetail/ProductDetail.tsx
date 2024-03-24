@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../ImageSlider/index";
 interface Product {
-  images: string;
+  images: string[];
   title: string;
   description: string;
   price: number;
@@ -51,7 +51,7 @@ const Product = () => {
             <div className="col-span-5">
               <div className="relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow">
                 <img
-                  src={product.images}
+                  src={product.images[0]}
                   alt={product.title}
                   className="pointer-events-none absolute top-0 left-0 h-full w-full bg-white object-cover"
                 />

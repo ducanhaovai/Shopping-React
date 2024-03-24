@@ -6,9 +6,15 @@ import { fetchProducts } from "../../api/productApi"; // Import hàm fetchProduc
 interface HomeProps {
   searchTerm: string;
 }
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  images: any;
+}
 const Home: React.FC<HomeProps> = ({ searchTerm }) => {
   console.log("home", searchTerm);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
 
@@ -16,8 +22,8 @@ const Home: React.FC<HomeProps> = ({ searchTerm }) => {
     const fetchInitialProducts = async () => {
       try {
         if (!searchTerm) {
-          const products = await fetchProducts();
-          setProducts(products);
+          const fetchedProducts = await fetchProducts(); // Assuming fetchProducts returns an array of products
+          setProducts(fetchedProducts);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -39,7 +45,6 @@ const Home: React.FC<HomeProps> = ({ searchTerm }) => {
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
 
-  // Lọc danh sách sản phẩm theo trang hiện tại
   const currentProducts = searchTerm
     ? searchTerm.slice(indexOfFirstProduct, indexOfLastProduct)
     : products.slice(indexOfFirstProduct, indexOfLastProduct);

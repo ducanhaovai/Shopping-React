@@ -3,8 +3,12 @@ import Logo from "./components/Logo";
 import Search from "./components/Search";
 import UserLogin from "./components/UserLogin";
 import Cart from "./components/Cart";
-
-export default function HomeHeader({ handleSearch }) {
+type HandleSearchFunction = (searchTerm: string) => void;
+export default function HomeHeader({
+  handleSearch,
+}: {
+  handleSearch: HandleSearchFunction;
+}) {
   const [searchTerm] = useState("");
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
