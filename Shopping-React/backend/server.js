@@ -33,11 +33,11 @@ app.use(
 );
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "192.168.1.7",
   user: "root",
   password: "123456",
   database: "singup",
-  port: 3306,
+  port: 65385,
 });
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
