@@ -31,7 +31,7 @@ const AppRouter = () => {
         path="/profile"
         element={
           <UserDetailLayout>
-            <UserDetail />
+            
           </UserDetailLayout>
         }
       />

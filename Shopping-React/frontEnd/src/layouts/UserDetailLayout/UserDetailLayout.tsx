@@ -2,18 +2,17 @@ import React from "react";
 
 import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
+import UserDetail from "../../pages/UserDetail";
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-export default function UserDetailLayout({ children }: Props) {
+export default function UserDetailLayout() {
+  const handleSearch = (value: string) => {
+    console.log("Thanh cong");
+  };
   return (
     <div className="flex h-screen flex-col justify-between">
-      <HomeHeader />
+      <HomeHeader handleSearch={handleSearch} />
 
-      {children}
-
+      <UserDetail />
       <Footer />
     </div>
   );
