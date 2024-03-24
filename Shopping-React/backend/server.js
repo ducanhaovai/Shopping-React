@@ -13,7 +13,8 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["*"],
+    origin:
+      "https://shopping-react-sjvr-9nylavw5n-ducanhaovais-projects.vercel.app",
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
   })
