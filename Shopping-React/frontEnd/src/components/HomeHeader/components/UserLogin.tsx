@@ -43,7 +43,7 @@ export default function UserLogin() {
 
   useEffect(() => {
     axios
-      .get("https://server-shopping-tau.vercel.app/home", {
+      .get("https://shopping-react-sjvr.vercel.app/home", {
         withCredentials: true,
       })
       .then((res) => {
