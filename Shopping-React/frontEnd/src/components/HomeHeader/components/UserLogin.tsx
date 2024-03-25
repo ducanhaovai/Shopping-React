@@ -52,12 +52,15 @@ export default function UserLogin() {
         if (res.data.Status === "Success") {
           setAuth(true);
           setEmail(res.data.email);
+          // Lưu thông tin người dùng vào localStorage
+          localStorage.setItem("user_email", res.data.email);
+          localStorage.setItem("user_name", res.data.name);
         } else {
           setAuth(false);
         }
       })
       .catch((err) => console.log(err));
-  }, [email]);
+  }, []);
 
   const handleLogout = () => {
     axios
@@ -82,6 +85,9 @@ export default function UserLogin() {
     navigate("/login", { replace: true });
   };
 
+  const userEmail = localStorage.getItem("user_email");
+  const userName = localStorage.getItem("user_name");
+
   return (
     <div className="flex items-center justify-end space-x-4 py-2 z-2">
       <div>
@@ -104,7 +110,7 @@ export default function UserLogin() {
                       className="h-full w-full rounded-full object-cover"
                     ></AccountCircleIcon>
                   </div>
-                  <p className="text-white/80">{email}</p>
+                  <p className="text-white/80">{userName}</p>
                 </div>
               </button>
 
