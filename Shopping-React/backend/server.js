@@ -13,7 +13,12 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://shopping-react-sjvr.vercel.app", "http://localhost:3000"],
+    origin: [
+      "https://shopping-react-sjvr.vercel.app",
+      "http://localhost:3000",
+      "https://server-shopping-du4g2veh8-ducanhaovais-projects.vercel.app",
+      "https://server-shopping-tau.vercel.app",
+    ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
   })
