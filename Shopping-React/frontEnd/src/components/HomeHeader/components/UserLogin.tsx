@@ -52,13 +52,12 @@ export default function UserLogin() {
         if (res.data.Status === "Success") {
           setAuth(true);
           setEmail(res.data.email);
-          console.log(email);
         } else {
           setAuth(false);
         }
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [email]);
 
   const handleLogout = () => {
     axios
