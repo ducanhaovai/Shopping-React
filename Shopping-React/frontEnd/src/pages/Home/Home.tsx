@@ -22,7 +22,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm }) => {
     const fetchInitialProducts = async () => {
       try {
         if (!searchTerm) {
-          const fetchedProducts = await fetchProducts(); // Assuming fetchProducts returns an array of products
+          const fetchedProducts = await fetchProducts(); 
           setProducts(fetchedProducts);
         }
       } catch (error) {

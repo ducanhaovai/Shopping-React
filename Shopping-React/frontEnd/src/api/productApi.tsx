@@ -2,9 +2,7 @@ import axios from "axios";
 
 export const fetchProducts = async () => {
   try {
-    const response = await axios.get(
-      "https://server-shopping-tau.vercel.app/products"
-    );
+    const response = await axios.get("http://localhost:8088/products");
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
