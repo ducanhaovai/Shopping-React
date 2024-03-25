@@ -106,6 +106,7 @@ const getGoogleUser = async ({ id_token, access_token }) => {
 app.get("/home", verifyUser, (req, res) => {
   const { name, email } = req;
   console.log(email);
+  console.log("Success");
   return res.json({ Status: "Success", name, email });
 });
 
