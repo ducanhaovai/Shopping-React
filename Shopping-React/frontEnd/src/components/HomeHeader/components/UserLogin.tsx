@@ -43,8 +43,10 @@ export default function UserLogin() {
 
   useEffect(() => {
     axios
-      .get("https://shopping-react-sjvr.vercel.app/home", {
-        withCredentials: true,
+      .get("http://localhost:8088/home", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
       })
       .then((res) => {
         if (res.data.Status === "Success") {
