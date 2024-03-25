@@ -13,7 +13,12 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://shopping-react-sjvr.vercel.app", "http://localhost:3000"],
+    origin: [
+      "https://shopping-react-sjvr.vercel.app",
+      "http://localhost:3000",
+      "https://shopping-react-sjvr-git-main-ducanhaovais-projects.vercel.app",
+      "https://shopping-react-sjvr-lqdrwqxdx-ducanhaovais-projects.vercel.app",
+    ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
   })
@@ -27,7 +32,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      express: 60 * 60 * 24,
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 1000,
     },
   })
 );
@@ -196,7 +204,7 @@ app.post("/login", (req, res) => {
           expiresIn: "1d",
         }
       );
-      res.cookie("token", token);
+      res.cookie("token", token, { httpOnly: true });
       return res.json({ Status: "Success" });
     });
   });
