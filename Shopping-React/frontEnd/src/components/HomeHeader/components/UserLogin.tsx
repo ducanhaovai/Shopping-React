@@ -42,7 +42,6 @@ export default function UserLogin() {
   }
 
   useEffect(() => {
-    // Kiểm tra xác thực mỗi khi component được render
     axios
       .get("http://localhost:8088/home", {
         headers: {
