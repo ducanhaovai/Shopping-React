@@ -55,7 +55,7 @@ export const LoginSignup = () => {
       .then((res) => {
         console.log("Sign in successful:", res.data);
         setMessage("Login successful");
-        navigate("https://shopping-react-sjvr.vercel.app");
+        navigate("/");
       })
       .catch((err) => {
         console.error("Sign in failed:", err);
