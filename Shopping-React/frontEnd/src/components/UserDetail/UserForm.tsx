@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-
-import axios from "axios";
 import Input from "../Input";
 import { useForm } from "react-hook-form";
 import { fetchUserProfile, updateUserProfile } from "../../api/profileApi";
