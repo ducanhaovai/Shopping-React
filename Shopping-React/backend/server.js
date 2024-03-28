@@ -18,6 +18,7 @@ app.use(
       "http://localhost:3000",
       "https://shopping-react-sjvr-git-main-ducanhaovais-projects.vercel.app",
       "https://shopping-react-sjvr-lqdrwqxdx-ducanhaovais-projects.vercel.app",
+      "https://backend-3udxnrtb8-ducanhaovais-projects.vercel.app",
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
