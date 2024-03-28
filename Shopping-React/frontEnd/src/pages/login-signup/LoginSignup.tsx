@@ -36,6 +36,7 @@ export const LoginSignup = () => {
 
   const handleSignUp = async (data: any) => {
     try {
+      
       const response = await signup(data);
       if (response.message === "User registered successfully") {
         setMessage("Registration successful");

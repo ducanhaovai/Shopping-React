@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const signup = async (data: any) => {
   try {
+    console.log("Data received for signup:", data);
     const response = await axios.post(
       "https://backend-alpha-three-12.vercel.app/signup",
       data
@@ -15,6 +16,7 @@ export const signup = async (data: any) => {
 
 export const login = async (data: any) => {
   try {
+    console.log("Data received for login:", data);
     const response = await axios.post(
       "https://backend-alpha-three-12.vercel.app/login",
       data
