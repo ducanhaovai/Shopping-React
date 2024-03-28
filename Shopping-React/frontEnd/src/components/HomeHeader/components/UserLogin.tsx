@@ -17,7 +17,7 @@ export default function UserLogin() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [auth, setAuth] = useState(false);
-  const [email, setEmail] = useState("");
+  const [, setEmail] = useState("");
 
   const [, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { t } = useTranslation();
@@ -86,7 +86,6 @@ export default function UserLogin() {
     navigate("/login", { replace: true });
   };
 
-  const userEmail = localStorage.getItem("user_email");
   const userName = localStorage.getItem("user_name");
 
   return (
