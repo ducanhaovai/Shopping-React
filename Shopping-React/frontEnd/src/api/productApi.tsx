@@ -3,7 +3,7 @@ import axios from "axios";
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(
-      "https://backend-3udxnrtb8-ducanhaovais-projects.vercel.app/products"
+      "https://backend-alpha-three-12.vercel.app/products"
     );
     return response.data;
   } catch (error) {
