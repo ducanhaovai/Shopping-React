@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Input from "../Input";
 import { useForm } from "react-hook-form";
+import { fetchUserProfile, updateUserProfile } from "../../api/profileApi";
 
 export default function UserForm() {
   const [user, setUser] = useState<{
@@ -16,39 +17,36 @@ export default function UserForm() {
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8088/profile", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      })
-      .then((response) => {
-        const userData = response.data;
-        setUser(userData);
-        setValue("name", userData.name);
-        setValue("email", userData.email);
-        setValue("phone_number", userData.phone_number);
-        setValue("address", userData.address);
-      })
-      .catch((error) => {
-        console.error("Error fetching user detail:", error);
-      });
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      fetchUserProfile(accessToken)
+        .then((userData) => {
+          setUser(userData);
+
+          setValue("name", userData.name);
+          setValue("email", userData.email);
+          setValue("phone", userData.phone);
+          setValue("address", userData.address);
+        })
+        .catch((error) => {
+          console.error("Error fetching user detail:", error);
+        });
+    }
   }, []);
 
   const onSubmit = (data: any) => {
-    axios
-      .post("http://localhost:8088/profile", data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      })
-      .then((_response) => {
-        console.log("User data updated successfully");
-      })
-      .catch((error) => {
-        console.error("Error updating user data:", error);
-      });
-    setSuccessMessage("Thông tin của bạn đã được cập nhật thành công!");
+    const accessToken = localStorage.getItem("access_token");
+    if (accessToken) {
+      updateUserProfile(accessToken, data)
+        .then(() => {
+          console.log("User data updated successfully");
+          setSuccessMessage("Thông tin của bạn đã được cập nhật thành công!");
+        })
+        .catch((error) => {
+          console.error("Error updating user data:", error);
+          setSuccessMessage("An error occurred during profile update");
+        });
+    }
   };
   return (
     <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">

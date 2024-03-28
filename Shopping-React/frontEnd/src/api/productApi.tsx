@@ -16,7 +16,7 @@ export const fetchProducts = async () => {
 export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
-      `http://localhost:8088/search-products?title=${searchTerm}`
+      `https://backend-alpha-three-12.vercel.app/search-products?title=${searchTerm}`
     );
     return response.data;
   } catch (error) {
