@@ -1,4 +1,9 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
+
 export default function AsideUser() {
+  const { t } = useTranslation();
+
   return (
     <div className="mt-7">
       <a className="text-orange flex items-center capitalize transition-colors">
@@ -9,7 +14,7 @@ export default function AsideUser() {
             className="h-full w-full"
           />
         </div>
-        Tài khoản của tôi
+        {t("profile.My Account")}
       </a>
       <a className="mt-4 flex items-center capitalize text-gray-600 transition-colors">
         <div className="mr-3 h-[22px] w-[22px]">
@@ -19,7 +24,7 @@ export default function AsideUser() {
             className="h-full w-full"
           />
         </div>
-        Đổi mật khẩu
+        {t("profile.Change Password")}
       </a>
       <a className="mt-4 flex items-center capitalize text-gray-600 transition-colors">
         <div className="mr-3 h-[22px] w-[22px]">
@@ -29,7 +34,7 @@ export default function AsideUser() {
             className="h-full w-full"
           />
         </div>
-        Đơn mua
+        {t("profile.Purchase Orders")}
       </a>
     </div>
   );

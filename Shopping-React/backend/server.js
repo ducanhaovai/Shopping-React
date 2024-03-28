@@ -1,14 +1,13 @@
 const express = require("express");
-const mysql = require("mysql2");
 const cors = require("cors");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
-require("dotenv").config();
-
+const { MongoClient } = require("mongodb");
 const cookie = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
 
+require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(
@@ -39,14 +38,21 @@ app.use(
     },
   })
 );
+const uri = process.env.MONGODB_URI;
 
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "123456",
-  database: "singup",
-  port: 3306,
-});
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    console.log("Connected successfully to MongoDB");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
+}
+
+run().catch(console.dir);
+
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
@@ -125,89 +131,67 @@ app.get("/products", async (req, res) => {
   }
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error("Error connecting to database:", err);
-    return;
-  }
-  console.log("Connected to MySQL database");
-});
-
-app.post("/signup", (req, res) => {
+app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
-  // Kiểm tra xem có dữ liệu được gửi lên không
-  if (!name || !email || !password) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  // Sử dụng bcrypt để mã hóa mật khẩu
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
-    if (err) {
-      console.error("Error hashing password:", err);
-      return res.status(500).json({ error: "Error hashing password" });
+  try {
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const sql = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-    const values = [name, email, hashedPassword];
+    // Mã hóa mật khẩu
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    db.query(sql, values, (err, results) => {
-      if (err) {
-        console.error("Error inserting user into database:", err);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
+    const usersCollection = client.db().collection("users");
+    const newUser = {
+      name,
+      email,
+      password: hashedPassword,
+      address: "",
+      phone: "",
+    };
 
-      console.log("User registered successfully");
-      return res.status(200).json({ message: "User registered successfully" });
-    });
-  });
+    const result = await usersCollection.insertOne(newUser);
+
+    console.log("User registered successfully");
+    return res.status(200).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error("Error registering user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   console.log(email);
   if (!email || !password) {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
-  const sql = "SELECT * FROM users WHERE email = ?";
-  db.query(sql, [email], (err, results) => {
-    if (err) {
-      console.error("Error selecting user from database:", err);
-      return res
-        .status(500)
-        .json({ error: "Error selecting user from database" });
-    }
-
-    if (results.length === 0) {
+  try {
+    const usersCollection = client.db().collection("users");
+    const user = await usersCollection.findOne({ email });
+    if (!user) {
       return res.status(401).json({ error: "User not found" });
     }
-
-    const user = results[0];
-    bcrypt.compare(password, user.password, (err, result) => {
-      if (err) {
-        console.error("Error comparing passwords:", err);
-        return res.status(500).json({ error: "Error comparing passwords" });
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+    console.log("User logged in successfully");
+    const token = jwt.sign(
+      { id: user.id, name: user.name, email: user.email },
+      "our-jsonwebtoken-key",
+      {
+        expiresIn: "1d",
       }
-
-      if (!result) {
-        // Mật khẩu không chính xác
-        return res.status(401).json({ error: "Invalid password" });
-      }
-
-      // Đăng nhập thành công: tạo token và gửi về cho người dùng
-      console.log("User logged in successfully");
-      const token = jwt.sign(
-        { id: user.id, name: user.name, email: user.email },
-        "our-jsonwebtoken-key",
-        {
-          expiresIn: "1d",
-        }
-      );
-      res.cookie("token", token, { httpOnly: true });
-      return res.json({ Status: "Success" });
-    });
-  });
+    );
+    res.cookie("token", token, { httpOnly: true });
+    return res.json({ Status: "Success" });
+  } catch (error) {
+    console.error("Error logging in:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 app.get("/logout", (req, res) => {
   res.clearCookie("token");
@@ -229,30 +213,21 @@ app.get("/api/oauth/google", async (req, res, next) => {
 
     const { email, name, picture } = googleUser;
 
-    // Kiểm tra xem người dùng đã tồn tại trong cơ sở dữ liệu hay chưa
     const [existingUser] = await db
       .promise()
       .query("SELECT * FROM users WHERE email = ?", [email]);
-
     if (existingUser.length === 0) {
-      // Nếu người dùng chưa tồn tại, tạo một mật khẩu ngẫu nhiên
-      const randomPassword = generateRandomPassword(); // Hàm tạo mật khẩu ngẫu nhiên
+      const randomPassword = generateRandomPassword();
       const hashedPassword = await bcrypt.hash(randomPassword, 10);
-
-      // Thêm người dùng mới vào cơ sở dữ liệu với mật khẩu ngẫu nhiên
       const sql = "INSERT INTO users (email, name, password) VALUES (?, ?, ?)";
       await db.promise().query(sql, [email, name, hashedPassword]);
 
       console.log("User added to the database successfully");
-
-      // Trả về mật khẩu ngẫu nhiên cho người dùng
       return res.status(200).json({
         message: "User added successfully",
         newPassword: randomPassword,
       });
     }
-
-    // Nếu người dùng đã tồn tại, tạo token và redirect
     const token = jwt.sign({ user: googleUser }, "our-jsonwebtoken-key", {
       expiresIn: "1d",
     });
@@ -284,43 +259,45 @@ function generateRandomPassword() {
   return randomPassword;
 }
 
-app.get("/profile", verifyUser, (req, res) => {
+app.get("/profile", verifyUser, async (req, res) => {
   const userId = req.id;
 
-  db.query("SELECT * FROM users WHERE id = ?", [userId], (err, results) => {
-    if (err) {
-      console.error("Error fetching user profile:", err);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-    const user = results[0];
+  try {
+    const usersCollection = client.db().collection("users");
+    const user = await usersCollection.findOne({ id: userId });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     return res.json(user);
-  });
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
-app.post("/profile", verifyUser, (req, res) => {
+app.post("/profile", verifyUser, async (req, res) => {
   const userId = req.id;
-  const { name, email, phone, address } = req.body;
+  const { address, phone } = req.body;
 
-  db.query(
-    "UPDATE users SET name = ?, email = ?, phone = ?, address = ? WHERE id = ?",
-    [name, email, phone, address, userId],
-    (err, results) => {
-      if (err) {
-        console.error("Error updating user profile:", err);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
-      console.log("User profile updated successfully");
-      return res
-        .status(200)
-        .json({ message: "User profile updated successfully" });
-    }
-  );
+  try {
+    const usersCollection = client.db().collection("users");
+    const result = await usersCollection.updateOne(
+      { id: userId },
+      { $set: { address, phone } }
+    );
+
+    console.log("User profile updated successfully");
+    return res
+      .status(200)
+      .json({ message: "User profile updated successfully" });
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
+
 app.get("/api/products/:productId", async (req, res) => {
   try {
     // Lấy productId từ params
@@ -378,7 +355,7 @@ app.get("/category-products", async (req, res) => {
   }
 });
 
-const port = 8088;
+const port = process.env.PORT || 8088;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

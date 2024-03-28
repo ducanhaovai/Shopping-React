@@ -1,0 +1,38 @@
+{
+    "Profile": "Hồ sơ",
+    "Logout": "Đăng xuất",
+    "Login": "Đăng nhập",
+    "List": "Tất cả danh mục",
+    "footer": {
+        "copyright": "© 2024 Shopee. Tất cả các quyền được bảo lưu.",
+        "countryRegion": "Quốc gia & Khu vực: Singapore Indonesia Thái Lan Malaysia Việt Nam Philippines Brazil México Colombia Chile Đài Loan",
+        "companyName": "Công ty TNHH Shopee",
+        "address": "Địa chỉ: Viet Name",
+        "contentManager": "Chịu Trách Nhiệm Quản Lý Nội Dung: Duc Anh Mai",
+        "rightsReserved": "© 2015 - Bản quyền thuộc về Công ty TNHH Shop"
+    },
+    "profile": {
+        "My Account": "Tài khoản của tôi",
+        "Change Password": "Đổi mật khẩu",
+        "Purchase Orders": "Đơn mua",
+        "My profile": "Hồ Sơ Của Tôi.",
+        "Detail": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "Name": "Tên",
+        "PhoneNumber": "Số điện thoại",
+        "Address": "Địa chỉ",
+        "Save": "Lưu"
+    },
+    "tophead": {
+        "sort_by": "Sắp xếp theo",
+        "popular": "Phổ biến",
+        "newest": "Mới nhất",
+        "best_selling": "Bán chạy nhất",
+        "price": "Giá",
+        "price_low_to_high": "Giá: Thấp đến cao",
+        "price_high_to_low": "Giá: Cao đến thấp"
+    },
+    "aside": {
+        "price": "Giá",
+        "apply": "Áp dụng"
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "Profile": "Profile",
+    "Logout": "Logout",
+    "Login": "Login",
+    "List": "List",
+    "footer": {
+        "copyright": "© 2024 Shopee. All rights reserved.",
+        "countryRegion": "Country & Region: Singapore Indonesia Thailand Malaysia Vietnam Philippines Brazil Mexico Colombia Chile Taiwan",
+        "companyName": "Shopee Co., Ltd.",
+        "address": "Address: Viet Name",
+        "contentManager": "Content Management Responsibility: Duc Anh Mai",
+        "rightsReserved": "© 2015 - All rights reserved by Shopee Co., Ltd."
+    },
+    "profile": {
+        "My Account": "My account",
+        "Change Password": "Change Password",
+        "Purchase Orders": "Purchase Orders",
+        "My profile": "My profile",
+        "Detail": "Manage profile information for account security",
+        "Name": "Name",
+        "PhoneNumber": "Phone number",
+        "Address": "Address",
+        "Save": "Save,"
+    },
+    "tophead": {
+        "sort_by": "Sort by",
+        "popular": "Popular",
+        "newest": "Newest",
+        "best_selling": "Best Selling",
+        "price": "Price",
+        "price_low_to_high": "Price: Low to High",
+        "price_high_to_low": "Price: High to Low"
+    },
+    "aside": {
+        "price": "Price",
+        "apply": "Apply"
+    }
+}
