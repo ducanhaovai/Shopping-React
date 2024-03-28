@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js ",
-    "build": "npm start"
+    "vercel-build": "npm run build",
+    "start": "nodemon server.js",
+    "build": "npm run start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "14.x"
+  },
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
     "axios": "^1.6.7",
