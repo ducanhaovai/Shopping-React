@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const baseURL = "https://backend-alpha-three-12.vercel.app/";
+const baseURL2= "https://backend-alpha-three-12.vercel.app/";
 
 export const fetchUserProfile = async (accessToken: string) => {
   try {
@@ -27,3 +28,5 @@ export const updateUserProfile = async (accessToken: string, userData: any) => {
     throw new Error("Error updating user profile");
   }
 };
+
+console.log('const Closed = ${DoorState.Open}')

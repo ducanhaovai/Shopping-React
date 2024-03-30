@@ -35,7 +35,6 @@ app.use(
       secure: true,
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 1000,
-      domain: "https://shopping-react-sjvr.vercel.app",
     },
   })
 );
@@ -51,6 +50,7 @@ async function run() {
     console.error("Error connecting to MongoDB:", error);
   }
 }
+
 
 run().catch(console.dir);
 

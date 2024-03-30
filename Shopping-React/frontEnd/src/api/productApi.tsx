@@ -1,10 +1,8 @@
 import axios from "axios";
-
+const baseURL = "https://backend-alpha-three-12.vercel.app/";
 export const fetchProducts = async () => {
   try {
-    const response = await axios.get(
-      "https://backend-alpha-three-12.vercel.app/products"
-    );
+    const response = await axios.get(`${baseURL}/products`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -12,11 +10,10 @@ export const fetchProducts = async () => {
   }
 };
 
-// Hàm searchProducts để tìm kiếm sản phẩm dựa trên từ khóa
 export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
-      `https://backend-alpha-three-12.vercel.app/search-products?title=${searchTerm}`
+      `${baseURL}/search-products?title=${searchTerm}`
     );
     return response.data;
   } catch (error) {
