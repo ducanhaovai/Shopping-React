@@ -14,7 +14,7 @@ export const LoginSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm(); // Initialize React Hook Form
+  } = useForm();
 
   const navigate = useNavigate();
 
