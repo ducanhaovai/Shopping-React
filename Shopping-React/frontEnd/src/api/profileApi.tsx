@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://backend-alpha-three-12.vercel.app/";
+const baseURL = "https://backend-alpha-three-12.vercel.app";
 const baseURL2 = "http://localhost:8088";
 
 export const fetchUserProfile = async (accessToken: string) => {

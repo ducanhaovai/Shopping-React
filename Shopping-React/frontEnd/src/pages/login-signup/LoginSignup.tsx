@@ -43,7 +43,7 @@ export const LoginSignup = () => {
       })
       .catch((err) => {
         console.error("Sign up failed:", err);
-        setMessage("An error occurred");
+        setMessage("Email already exists");
       });
   };
 
