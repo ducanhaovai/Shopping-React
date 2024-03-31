@@ -1,10 +1,10 @@
 import axios from "axios";
+const baseURL = "https://backend-alpha-three-12.vercel.app/";
+const baseURL2 = "http://localhost:8088";
 
 export const fetchProducts = async () => {
   try {
-    const response = await axios.get(
-      "https://shopping-react-2bwz2hsny-ducanhaovais-projects.vercel.app/products"
-    );
+    const response = await axios.get(`${baseURL}/products`);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -16,7 +16,7 @@ export const fetchProducts = async () => {
 export const searchProducts = async (searchTerm: string) => {
   try {
     const response = await axios.get(
-      `http://localhost:8088/search-products?title=${searchTerm}`
+      `${baseURL}/search-products?title=${searchTerm}`
     );
     return response.data;
   } catch (error) {
