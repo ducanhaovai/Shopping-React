@@ -45,7 +45,7 @@ export default function UserLogin() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8088/home", {
+      .get("https://backend-alpha-three-12.vercel.app/home", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -65,7 +65,7 @@ export default function UserLogin() {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:8088/logout")
+      .get("https://backend-alpha-three-12.vercel.app/logout")
       .then((res) => {
         if (res.data.Status === "Success") {
           localStorage.removeItem("access_token");
