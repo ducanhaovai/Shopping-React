@@ -1,4 +1,6 @@
+import { useTranslation } from "react-i18next";
 export default function Allfile() {
+  const { t } = useTranslation();
   return (
     <a className="flex items-center font-bold">
       <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current">
@@ -14,7 +16,7 @@ export default function Allfile() {
           </g>
         </g>
       </svg>
-      "Tất cả danh mục"
+      {t("List")}
     </a>
   );
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import Input from "../Input";
 import { useForm } from "react-hook-form";
-import { fetchUserProfile, updateUserProfile } from "../../api/profileApi";
+
+import { useTranslation } from "react-i18next";
+
 
 export default function UserForm() {
   const [user, setUser] = useState<{
@@ -10,6 +12,7 @@ export default function UserForm() {
     phone?: string;
     address?: string;
   } | null>(null);
+  const { t } = useTranslation();
 
   const { register, handleSubmit, setValue } = useForm();
   const [successMessage, setSuccessMessage] = useState("");
@@ -50,11 +53,9 @@ export default function UserForm() {
     <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">
       <div className="border-b border-b-gray-200 py-6">
         <h1 className="text-lg font-medium capitalize text-gray-900">
-          Hồ Sơ Của Tôi.
+          {t("profile.My profile")}
         </h1>
-        <div className="mt-1 text-sm text-gray-700">
-          Quản lý thông tin hồ sơ để bảo mật tài khoản
-        </div>
+        <div className="mt-1 text-sm text-gray-700">{t("profile.Detail")}</div>
       </div>
       <form
         className="mt-8 flex flex-col-reverse md:flex-row md:items-start"
@@ -71,7 +72,7 @@ export default function UserForm() {
           </div>
           <div className="mt-6 flex flex-col flex-wrap sm:flex-row">
             <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
-              Tên
+              {t("profile.Name")}
             </div>
 
             <div className="sm:w-[80%] sm:pl-5">
@@ -88,7 +89,7 @@ export default function UserForm() {
           </div>
           <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
             <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
-              Số điện thoại
+              {t("profile.PhoneNumber")}
             </div>
             <div className="sm:w-[80%] sm:pl-5">
               <div>
@@ -104,7 +105,7 @@ export default function UserForm() {
           </div>
           <div className="mt-2 flex flex-col flex-wrap sm:flex-row">
             <div className="truncate pt-3 capitalize sm:w-[20%] sm:text-right">
-              Địa chỉ
+              {t("profile.Address")}
             </div>
             <div className="sm:w-[80%] sm:pl-5">
               <div>
@@ -124,7 +125,7 @@ export default function UserForm() {
                 type="submit"
                 className=" outline-none transition duration-300 bg-primary text-white flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 px-5 bg-orange"
               >
-                Lưu
+                {t("profile.Save")}
               </button>
             </div>
           </div>
