@@ -137,6 +137,7 @@ app.post("/signup", async (req, res) => {
   try {
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Missing required fields" });
+
     }
 
     // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu hay chưa
@@ -144,10 +145,14 @@ app.post("/signup", async (req, res) => {
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
+
     }
 
     // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
+
+
+    const usersCollection = client.db().collection("users");
 
     const newUser = {
       name,
