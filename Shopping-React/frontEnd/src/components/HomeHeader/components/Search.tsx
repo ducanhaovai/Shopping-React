@@ -4,7 +4,6 @@ interface SearchProps {
   handleSearch: (query: string) => void;
 }
 export default function Search({ handleSearch }: SearchProps) {
-  console.log("handleSearch in Search:", handleSearch);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
 
@@ -12,12 +11,10 @@ export default function Search({ handleSearch }: SearchProps) {
     target: { value: SetStateAction<string> };
   }) => {
     setSearchTerm(event.target.value);
-    console.log("Search term:", event.target.value);
   };
 
   const search = async () => {
     try {
-      console.log("Search term sent to backend:", searchTerm);
       const products = await searchProducts(searchTerm);
       handleSearch(products);
       setError(null);

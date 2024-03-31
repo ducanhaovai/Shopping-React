@@ -15,7 +15,6 @@ export default function HomeHeader({
     event.preventDefault();
 
     handleSearch(searchTerm);
-    console.log("handleSubmit", handleSubmit);
   };
 
   return (

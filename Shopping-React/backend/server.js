@@ -6,6 +6,7 @@ const { MongoClient } = require("mongodb");
 const cookie = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken");
+const { ObjectId } = require("mongodb");
 
 require("dotenv").config();
 const app = express();
@@ -56,22 +57,19 @@ run().catch(console.dir);
 const verifyUser = (req, res, next) => {
   const token = req.cookies.token;
   if (!token) {
-    return res.json({ Message: "need token!" });
+    return res.status(401).json({ message: "Unauthorized: Missing token" });
   } else {
     jwt.verify(token, "our-jsonwebtoken-key", (err, decoded) => {
       if (err) {
-        return res.json({ Message: "Xac nhan that bai", error: err.message });
+        return res
+          .status(401)
+          .json({ message: "Unauthorized: Invalid token", error: err.message });
       } else {
-        if (decoded.name && decoded.email) {
-          req.id = decoded.id;
-          req.name = decoded.name;
-          req.email = decoded.email;
-          next();
-        } else {
-          return res.json({
-            Message: "Không đủ thông tin người dùng trong JWT!",
-          });
-        }
+        req.id = decoded.id;
+        req.name = decoded.name;
+        req.email = decoded.email;
+        console.log("Extracted user ID:", decoded.id);
+        next();
       }
     });
   }
@@ -137,22 +135,19 @@ app.post("/signup", async (req, res) => {
   try {
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Missing required fields" });
-
     }
 
-    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu hay chưa
+    // Khởi tạo usersCollection trước khi sử dụng
     const usersCollection = client.db().collection("users");
+
+    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu hay chưa
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
-
     }
 
     // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
-
-
-    const usersCollection = client.db().collection("users");
 
     const newUser = {
       name,
@@ -191,7 +186,7 @@ app.post("/login", async (req, res) => {
     }
     console.log("User logged in successfully");
     const token = jwt.sign(
-      { id: user.id, name: user.name, email: user.email },
+      { id: user._id, name: user.name, email: user.email },
       "our-jsonwebtoken-key",
       {
         expiresIn: "1d",
@@ -271,23 +266,26 @@ function generateRandomPassword() {
 }
 
 app.get("/profile", verifyUser, async (req, res) => {
-  const userId = req.id;
-
   try {
+    // Lấy ID của người dùng từ thông tin đã được giải mã từ token
+    const userId = req.id;
+
+    const objectId = new ObjectId(userId);
+
     const usersCollection = client.db().collection("users");
-    const user = await usersCollection.findOne({ id: userId });
+    const user = await usersCollection.findOne({ _id: objectId });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    console.log("User data:", user);
 
     return res.json(user);
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.error("Error fetching user data:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 app.post("/profile", verifyUser, async (req, res) => {
   const userId = req.id;
   const { address, phone } = req.body;

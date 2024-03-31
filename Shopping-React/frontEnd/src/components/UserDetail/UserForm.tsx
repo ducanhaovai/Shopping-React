@@ -3,7 +3,7 @@ import Input from "../Input";
 import { useForm } from "react-hook-form";
 
 import { useTranslation } from "react-i18next";
-
+import { fetchUserProfile, updateUserProfile } from "../../api/profileApi";
 
 export default function UserForm() {
   const [user, setUser] = useState<{
@@ -16,28 +16,30 @@ export default function UserForm() {
 
   const { register, handleSubmit, setValue } = useForm();
   const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      fetchUserProfile(accessToken)
-        .then((userData) => {
-          setUser(userData);
-
-          setValue("name", userData.name);
-          setValue("email", userData.email);
-          setValue("phone", userData.phone);
-          setValue("address", userData.address);
-        })
-        .catch((error) => {
-          console.error("Error fetching user detail:", error);
-        });
-    }
+    fetchUserProfile()
+      .then((userData) => {
+        setUser(userData);
+        setValue("name", userData.name || "");
+        setValue("email", userData.email || "");
+        setValue("phone", userData.phone || "");
+        setValue("address", userData.address || "");
+        setLoading(false); // Kết thúc quá trình tải dữ liệu
+      })
+      .catch((error) => {
+        console.error("Error fetching user detail:", error);
+        setErrorMessage("Failed to fetch user data");
+        setLoading(false); // Kết thúc quá trình tải dữ liệu
+      });
   }, []);
 
   const onSubmit = (data: any) => {
     const accessToken = localStorage.getItem("access_token");
     if (accessToken) {
+      // Gửi yêu cầu cập nhật thông tin người dùng
       updateUserProfile(accessToken, data)
         .then(() => {
           console.log("User data updated successfully");
@@ -45,10 +47,10 @@ export default function UserForm() {
         })
         .catch((error) => {
           console.error("Error updating user data:", error);
-          setSuccessMessage("An error occurred during profile update");
         });
     }
   };
+
   return (
     <div className="rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20">
       <div className="border-b border-b-gray-200 py-6">
@@ -131,7 +133,8 @@ export default function UserForm() {
           </div>
         </div>
       </form>
-      <div>{successMessage}</div>
+      {successMessage && <div className="text-green-600">{successMessage}</div>}
+      {errorMessage && <div className="text-red-600">{errorMessage}</div>}
     </div>
   );
 }

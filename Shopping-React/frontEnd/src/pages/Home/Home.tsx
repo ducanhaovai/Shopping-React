@@ -13,7 +13,6 @@ interface Product {
   images: any;
 }
 const Home: React.FC<HomeProps> = ({ searchTerm }) => {
-  console.log("home", searchTerm);
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
