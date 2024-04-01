@@ -7,6 +7,7 @@ import { fetchUserProfile, updateUserProfile } from "../../api/profileApi";
 
 export default function UserForm() {
   const [user, setUser] = useState<{
+    _id?: any;
     name?: string;
     email?: string;
     phone?: string;
@@ -17,7 +18,7 @@ export default function UserForm() {
   const { register, handleSubmit, setValue } = useForm();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     fetchUserProfile()
@@ -27,28 +28,25 @@ export default function UserForm() {
         setValue("email", userData.email || "");
         setValue("phone", userData.phone || "");
         setValue("address", userData.address || "");
-        setLoading(false); // Kết thúc quá trình tải dữ liệu
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching user detail:", error);
         setErrorMessage("Failed to fetch user data");
-        setLoading(false); // Kết thúc quá trình tải dữ liệu
+        setLoading(false);
       });
   }, []);
 
   const onSubmit = (data: any) => {
-    const accessToken = localStorage.getItem("access_token");
-    if (accessToken) {
-      // Gửi yêu cầu cập nhật thông tin người dùng
-      updateUserProfile(accessToken, data)
-        .then(() => {
-          console.log("User data updated successfully");
-          setSuccessMessage("Thông tin của bạn đã được cập nhật thành công!");
-        })
-        .catch((error) => {
-          console.error("Error updating user data:", error);
-        });
-    }
+    data._id = user?._id;
+    updateUserProfile(data)
+      .then(() => {
+        console.log("User data updated successfully");
+        setSuccessMessage("Thông tin của bạn đã được cập nhật thành công!");
+      })
+      .catch((error) => {
+        console.error("Error updating user data:", error);
+      });
   };
 
   return (
@@ -80,6 +78,8 @@ export default function UserForm() {
             <div className="sm:w-[80%] sm:pl-5">
               <div>
                 <div className="false py-1 default-input">
+                  <input type="hidden" name="_id" value={user?._id || ""} />
+
                   <Input
                     type="text"
                     placeholder={user?.name || ""}

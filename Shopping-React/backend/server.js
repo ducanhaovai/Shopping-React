@@ -137,16 +137,12 @@ app.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
-    // Khởi tạo usersCollection trước khi sử dụng
     const usersCollection = client.db().collection("users");
 
-    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu hay chưa
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: "Email already exists" });
     }
-
-    // Mã hóa mật khẩu
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = {
@@ -159,7 +155,6 @@ app.post("/signup", async (req, res) => {
 
     const result = await usersCollection.insertOne(newUser);
 
-    console.log("User registered successfully");
     return res.status(200).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -260,14 +255,12 @@ app.get("/api/oauth/google", async (req, res, next) => {
 });
 
 function generateRandomPassword() {
-  // Logic để tạo mật khẩu ngẫu nhiên, ví dụ:
   const randomPassword = Math.random().toString(36).slice(-8);
   return randomPassword;
 }
 
 app.get("/profile", verifyUser, async (req, res) => {
   try {
-    // Lấy ID của người dùng từ thông tin đã được giải mã từ token
     const userId = req.id;
 
     const objectId = new ObjectId(userId);
@@ -278,7 +271,6 @@ app.get("/profile", verifyUser, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("User data:", user);
 
     return res.json(user);
   } catch (error) {
@@ -286,15 +278,19 @@ app.get("/profile", verifyUser, async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-app.post("/profile", verifyUser, async (req, res) => {
-  const userId = req.id;
-  const { address, phone } = req.body;
+app.post("/profile-update", async (req, res) => {
+  console.log("Request received to update profile:", req.body);
+
+  const _id = new ObjectId(req.body._id);
+
+  const { name, email, address, phone } = req.body;
 
   try {
+    console.log("da vao");
     const usersCollection = client.db().collection("users");
     const result = await usersCollection.updateOne(
-      { id: userId },
-      { $set: { address, phone } }
+      { _id: _id },
+      { $set: { name, phone, address, email } }
     );
 
     console.log("User profile updated successfully");
