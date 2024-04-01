@@ -331,12 +331,9 @@ app.get("/api/products/:productId", async (req, res) => {
 app.get("/search-products", async (req, res) => {
   try {
     const title = req.query.title;
-    console.log("Search query:", title);
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/products/?title=${title}`
     );
-
-    console.log("Response data:", response.data);
     res.json(response.data);
   } catch (error) {
     console.error("Error searching products:", error);
@@ -351,7 +348,6 @@ app.get("/category-products", async (req, res) => {
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/categories/?title=${title}`
     );
-
     console.log("Response data:", response.data);
     res.json(response.data);
   } catch (error) {
