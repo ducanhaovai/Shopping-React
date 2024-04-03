@@ -34,5 +34,32 @@
     "aside": {
         "price": "Giá",
         "apply": "Áp dụng"
+    },
+    "password": {
+        "oldpassword": ""
+    },
+    "changePass": {
+        "changePassword": "Đổi mật khẩu",
+        "manageProfile": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+        "oldPassword": "Mật khẩu cũ",
+        "oldPasswordRequired": "Mật khẩu cũ là bắt buộc",
+        "newPassword": "Mật khẩu mới",
+        "newPasswordRequired": "Mật khẩu mới là bắt buộc",
+        "newPasswordMinLength": "Mật khẩu mới phải có ít nhất 8 ký tự",
+        "confirmPassword": "Nhập lại mật khẩu",
+        "confirmPasswordRequired": "Xác nhận mật khẩu là bắt buộc",
+        "passwordsDoNotMatch": "Mật khẩu xác nhận không khớp",
+        "save": "Lưu",
+        "passwordUpdatedSuccessfully": "Cập nhật mật khẩu thành công",
+        "incorrectOldPassword": "Mật khẩu cũ bạn nhập không chính xác.",
+        "errorChangingPassword": "Lỗi khi thay đổi mật khẩu: "
+    },
+    "category": {
+        "clothes": "Quần áo",
+        "electronics": "Điện tử",
+        "furniture": "Đồ nội thất",
+        "shoes": "Giày dép",
+        "miscellaneous": "Linh tinh",
+        "foods": "Thực phẩm"
     }
 }

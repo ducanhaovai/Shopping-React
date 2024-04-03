@@ -12,6 +12,7 @@ import Cart from "./pages/Cart";
 
 import ProductDetailLayout from "./layouts/ProductDetailLayout/ProductDetailLayout";
 import Product from "./components/ProductDetail";
+import ChangePass from "./components/ChangePassword";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,7 @@ const AppRouter = () => {
       <Route path="/login" element={<LoginGoogle />} />
       <Route path="/profile" element={<UserDetailLayout></UserDetailLayout>} />
       <Route path="/cart" element={<Cart />} />
+      <Route path="/pass" element={<ChangePass />} />
       <Route
         path="/products/:productId"
         element={

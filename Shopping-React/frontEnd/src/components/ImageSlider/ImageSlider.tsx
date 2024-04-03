@@ -1,12 +1,10 @@
-import { useState } from "react";
-
-const ImageSlider = ({ imageUrls }: { imageUrls: string[] }) => {
-  const [, setCurrentImageIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imageUrls.length);
-  };
-
+const ImageSlider = ({
+  imageUrls,
+  onImageClick,
+}: {
+  imageUrls: string[];
+  onImageClick: (imageUrl: string) => void;
+}) => {
   return (
     <>
       {imageUrls.map((imageUrl, index) => (
@@ -19,7 +17,7 @@ const ImageSlider = ({ imageUrls }: { imageUrls: string[] }) => {
           <img
             src={imageUrl}
             className="absolute top-0 left-0 h-full w-full cursor-pointer bg-white object-cover"
-            onClick={nextImage}
+            onClick={() => onImageClick(imageUrl)}
           />
         </div>
       ))}

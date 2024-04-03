@@ -16,6 +16,7 @@ export default function Search({ handleSearch }: SearchProps) {
   const search = async () => {
     try {
       const products = await searchProducts(searchTerm);
+      console.log("search", searchTerm);
       handleSearch(products);
       setError(null);
     } catch (error) {

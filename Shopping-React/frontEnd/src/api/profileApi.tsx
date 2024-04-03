@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AxiosError } from "axios";
 
 const baseURL = "https://backend-alpha-three-12.vercel.app";
 const baseURL2 = "http://localhost:8088";
@@ -34,5 +35,35 @@ export const updateUserProfile = async (data: any) => {
     return response.data;
   } catch (error) {
     throw new Error("Error updating user profile");
+  }
+};
+
+export const changeUserPassword = async (
+  oldPassword: any,
+  newPassword: any
+) => {
+  try {
+    const token = getTokenFromCookie();
+    const response = await axios.post(
+      `${baseURL2}/change-password`,
+      {
+        oldPassword,
+        newPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("Change user password response:", response);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response && error.response.data) {
+      throw new Error(error.response.data.message);
+    } else {
+      throw new Error("Error changing password");
+    }
   }
 };

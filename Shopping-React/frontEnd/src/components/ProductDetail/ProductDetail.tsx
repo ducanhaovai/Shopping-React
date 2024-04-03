@@ -13,6 +13,7 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error] = useState(null);
   const { productId } = useParams();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -23,21 +24,27 @@ const Product = () => {
           setLoading(false);
           return;
         }
-
         const response = await axios.get(
-          `http://localhost:8088/api/products/${productIdInt}` // Sử dụng productIdInt
+          `http://localhost:8088/api/products/${productIdInt}`
         );
         setProduct(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching product:", error);
-
         setLoading(false);
       }
     };
-
     fetchProduct();
   }, [productId]);
+  useEffect(() => {
+    if (product && product.images.length > 0) {
+      setSelectedImage(product.images[0]);
+    }
+  }, [product]);
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {(error as any).message}</p>;
@@ -51,13 +58,16 @@ const Product = () => {
             <div className="col-span-5">
               <div className="relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow">
                 <img
-                  src={product.images[0]}
+                  src={selectedImage}
                   alt={product.title}
                   className="pointer-events-none absolute top-0 left-0 h-full w-full bg-white object-cover"
                 />
               </div>
               <div className="relative mt-4 grid grid-cols-5 gap-1">
-                <ImageSlider imageUrls={product.images} />
+                <ImageSlider
+                  imageUrls={product.images}
+                  onImageClick={handleImageClick}
+                />
               </div>
             </div>
             <div className="col-span-7">

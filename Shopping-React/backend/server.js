@@ -305,16 +305,13 @@ app.post("/profile-update", async (req, res) => {
 
 app.get("/api/products/:productId", async (req, res) => {
   try {
-    // Lấy productId từ params
     const productId = req.params.productId;
 
-    // Kiểm tra và chuyển đổi productId thành số nguyên
     const parsedProductId = parseInt(productId);
     if (isNaN(parsedProductId)) {
       throw new Error("Invalid productId");
     }
 
-    // Tiếp tục gửi yêu cầu API với parsedProductId
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
     );
@@ -327,16 +324,21 @@ app.get("/api/products/:productId", async (req, res) => {
       .json({ error: "An error occurred while fetching the product." });
   }
 });
+app.get("/api/categories/:id/products", async (req, res) => {
+  const categoryId = req.params.id;
+  const response = await fetch(
+    `https://api.escuelajs.co/api/v1/categories/${categoryId}/products`
+  );
+  const data = await response.json();
+  res.json(data);
+});
 
 app.get("/search-products", async (req, res) => {
   try {
     const title = req.query.title;
-    console.log("Search query:", title);
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/products/?title=${title}`
     );
-
-    console.log("Response data:", response.data);
     res.json(response.data);
   } catch (error) {
     console.error("Error searching products:", error);
@@ -352,11 +354,54 @@ app.get("/category-products", async (req, res) => {
       `https://api.escuelajs.co/api/v1/categories/?title=${title}`
     );
 
-    console.log("Response data:", response.data);
     res.json(response.data);
   } catch (error) {
     console.error("Error searching products:", error);
     res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.post("/change-password", verifyUser, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.id;
+    const usersCollection = client.db().collection("users");
+
+    const objectId = new ObjectId(userId);
+    const user = await usersCollection.findOne({ _id: objectId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Incorrect old password" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await usersCollection.updateOne(
+      { _id: objectId },
+      { $set: { password: hashedPassword } }
+    );
+
+    console.log("User password updated successfully");
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/api/categories", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://api.escuelajs.co/api/v1/categories/"
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).send("Error fetching categories");
   }
 });
 
