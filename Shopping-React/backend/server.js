@@ -356,6 +356,38 @@ app.get("/category-products", async (req, res) => {
   }
 });
 
+app.post("/change-password", verifyUser, async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.id;
+    const usersCollection = client.db().collection("users");
+
+    const objectId = new ObjectId(userId);
+    const user = await usersCollection.findOne({ _id: objectId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Incorrect old password" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await usersCollection.updateOne(
+      { _id: objectId },
+      { $set: { password: hashedPassword } }
+    );
+
+    console.log("User password updated successfully");
+    return res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error changing password:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const port = process.env.PORT || 8088;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

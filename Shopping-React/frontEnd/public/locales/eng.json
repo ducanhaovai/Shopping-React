@@ -34,5 +34,21 @@
     "aside": {
         "price": "Price",
         "apply": "Apply"
+    },
+    "changePass": {
+        "changePassword": "Change Password",
+        "manageProfile": "Manage profile information to secure your account",
+        "oldPassword": "Old Password",
+        "oldPasswordRequired": "Old password is required",
+        "newPassword": "New Password",
+        "newPasswordRequired": "New password is required",
+        "newPasswordMinLength": "New password must be at least 8 characters",
+        "confirmPassword": "Confirm Password",
+        "confirmPasswordRequired": "Confirm password is required",
+        "passwordsDoNotMatch": "Confirm password does not match",
+        "save": "Save",
+        "passwordUpdatedSuccessfully": "Password updated successfully",
+        "incorrectOldPassword": "The old password you entered is incorrect.",
+        "errorChangingPassword": "Error changing password: "
     }
 }
