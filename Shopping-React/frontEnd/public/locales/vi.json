@@ -53,5 +53,13 @@
         "passwordUpdatedSuccessfully": "Cập nhật mật khẩu thành công",
         "incorrectOldPassword": "Mật khẩu cũ bạn nhập không chính xác.",
         "errorChangingPassword": "Lỗi khi thay đổi mật khẩu: "
+    },
+    "category": {
+        "clothes": "Quần áo",
+        "electronics": "Điện tử",
+        "furniture": "Đồ nội thất",
+        "shoes": "Giày dép",
+        "miscellaneous": "Linh tinh",
+        "foods": "Thực phẩm"
     }
 }

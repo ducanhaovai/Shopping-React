@@ -305,16 +305,13 @@ app.post("/profile-update", async (req, res) => {
 
 app.get("/api/products/:productId", async (req, res) => {
   try {
-    // Lấy productId từ params
     const productId = req.params.productId;
 
-    // Kiểm tra và chuyển đổi productId thành số nguyên
     const parsedProductId = parseInt(productId);
     if (isNaN(parsedProductId)) {
       throw new Error("Invalid productId");
     }
 
-    // Tiếp tục gửi yêu cầu API với parsedProductId
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
     );
@@ -326,6 +323,14 @@ app.get("/api/products/:productId", async (req, res) => {
       .status(500)
       .json({ error: "An error occurred while fetching the product." });
   }
+});
+app.get("/api/categories/:id/products", async (req, res) => {
+  const categoryId = req.params.id;
+  const response = await fetch(
+    `https://api.escuelajs.co/api/v1/categories/${categoryId}/products`
+  );
+  const data = await response.json();
+  res.json(data);
 });
 
 app.get("/search-products", async (req, res) => {
@@ -348,7 +353,7 @@ app.get("/category-products", async (req, res) => {
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/categories/?title=${title}`
     );
-    console.log("Response data:", response.data);
+
     res.json(response.data);
   } catch (error) {
     console.error("Error searching products:", error);
@@ -385,6 +390,18 @@ app.post("/change-password", verifyUser, async (req, res) => {
   } catch (error) {
     console.error("Error changing password:", error);
     return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/api/categories", async (req, res) => {
+  try {
+    const response = await axios.get(
+      "https://api.escuelajs.co/api/v1/categories/"
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).send("Error fetching categories");
   }
 });
 

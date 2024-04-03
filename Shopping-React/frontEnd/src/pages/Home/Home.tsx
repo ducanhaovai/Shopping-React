@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Star5 } from "../../components/Star";
 import ListPage from "../../features/Product";
-import { fetchProducts } from "../../api/productApi";
+import { fetchProducts, searchProducts } from "../../api/productApi";
 import Loading from "../../components/Loading";
 
 interface HomeProps {
   searchTerm: string;
+  products: Product[];
+  category: Product[];
 }
 
 interface Product {
@@ -16,42 +18,53 @@ interface Product {
   images: any;
 }
 
-const Home: React.FC<HomeProps> = ({ searchTerm }) => {
-  const [products, setProducts] = useState<Product[]>([]);
+const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
+  const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchInitialProducts = async () => {
+      setLoading(true);
       try {
-        if (!searchTerm) {
-          const fetchedProducts = await fetchProducts();
-          setProducts(fetchedProducts);
-          setLoading(false);
-        }
+        const fetchedProducts = await fetchProducts();
+        setCurrentProducts(fetchedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setLoading(false);
       }
+      setLoading(false);
     };
 
-    fetchInitialProducts();
+    if (!searchTerm) {
+      fetchInitialProducts();
+    }
   }, [searchTerm]);
+
+  useEffect(() => {
+    if (searchTerm && Array.isArray(searchTerm) && searchTerm.length > 0) {
+      setCurrentProducts(searchTerm);
+
+    } else if (category && Array.isArray(category) && category.length > 0) {
+      setCurrentProducts(category);
+
+    }
+  }, [searchTerm, category]);
 
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  const totalItems = searchTerm ? searchTerm.length : products.length;
+  const totalItems = searchTerm ? searchTerm.length : currentProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const indexOfLastProduct = currentPage * itemsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
 
-  const currentProducts = searchTerm
-    ? searchTerm.slice(indexOfFirstProduct, indexOfLastProduct)
-    : products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const displayedProducts = currentProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   return (
     <div>
@@ -60,8 +73,8 @@ const Home: React.FC<HomeProps> = ({ searchTerm }) => {
       ) : (
         <>
           <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {Array.isArray(currentProducts) &&
-              currentProducts.map((product, index) => (
+            {Array.isArray(displayedProducts) &&
+              displayedProducts.map((product, index) => (
                 <div className="col-span-1" key={product.id || index}>
                   <Link to={`/products/${product.id}`}>
                     <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">

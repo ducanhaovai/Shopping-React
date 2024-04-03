@@ -50,5 +50,13 @@
         "passwordUpdatedSuccessfully": "Password updated successfully",
         "incorrectOldPassword": "The old password you entered is incorrect.",
         "errorChangingPassword": "Error changing password: "
-    }
+    },
+    "category": {
+        "clothes": "Clothes",
+        "electronics": "Electronics",
+        "furniture": "Furniture",
+        "shoes": "Shoes",
+        "miscellaneous": "Miscellaneous",
+        "foods": "Foods"
+      }
 }
