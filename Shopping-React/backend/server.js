@@ -405,6 +405,84 @@ app.get("/api/categories", async (req, res) => {
   }
 });
 
+app.post("/cart/add", verifyUser, async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+    const userId = req.id;
+
+    const productResponse = await axios.get(
+      `https://api.escuelajs.co/api/v1/products/${productId}`
+    );
+    const { title, price, images } = productResponse.data;
+
+    const cartsCollection = client.db().collection("carts");
+    let cart = await cartsCollection.findOne({ userId });
+
+    if (!cart) {
+      cart = {
+        userId: userId,
+        products: [],
+      };
+      await cartsCollection.insertOne(cart);
+    }
+
+    const productIndex = cart.products.findIndex(
+      (product) => product.productId === productId
+    );
+
+    if (productIndex !== -1) {
+      cart.products[productIndex].quantity += quantity;
+    } else {
+      cart.products.push({
+        productId,
+        title,
+        price,
+        images,
+        quantity,
+      });
+    }
+    await cartsCollection.updateOne({ userId }, { $set: cart });
+
+    res.json({ message: "Product added to cart successfully" });
+  } catch (error) {
+    console.error("Error adding product to cart:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+app.get("/cart", verifyUser, async (req, res) => {
+  const userId = req.id;
+
+  const cartsCollection = client.db().collection("carts");
+  const cart = await cartsCollection.findOne({ userId });
+
+  if (!cart) {
+    return res.json([]);
+  }
+
+  return res.json(cart.products);
+});
+app.post("/cart/delete", verifyUser, async (req, res) => {
+  try {
+    const { id } = req.body;
+    const userId = req.id;
+
+    const cartsCollection = client.db().collection("carts");
+    let cart = await cartsCollection.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
+
+    cart.products = cart.products.filter((product) => product.id !== id);
+    await cartsCollection.updateOne({ userId }, { $set: cart });
+
+    res.json({ message: "Product removed from cart successfully" });
+  } catch (error) {
+    console.error("Error removing product from cart:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 const port = process.env.PORT || 8088;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

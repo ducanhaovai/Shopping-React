@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../ImageSlider/index";
+import { addToCart } from "../../api/cartApi";
+import { useTranslation } from "react-i18next";
 interface Product {
   images: string[];
   title: string;
@@ -14,7 +16,9 @@ const Product = () => {
   const [error] = useState(null);
   const { productId } = useParams();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchProduct = async () => {
       console.log("productId:", productId);
@@ -46,6 +50,27 @@ const Product = () => {
     setSelectedImage(imageUrl);
   };
 
+  const handleAddToCart = () => {
+    if (quantity > 138) {
+      alert("Không thể thêm quá 138 sản phẩm vào giỏ hàng.");
+      return;
+    }
+
+    console.log(`productId: ${productId}, quantity: ${quantity}`);
+
+    addToCart(productId, quantity)
+      .then((response) => {
+        console.log("Response from addToCart:", response);
+      })
+      .catch((error) => {
+        console.error("Error adding product to cart:", error);
+      });
+  };
+
+  const handleQuantityChange = (event: { target: { value: string } }) => {
+    setQuantity(parseInt(event.target.value, 10));
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {(error as any).message}</p>;
   if (!product) return <p>Product not found</p>;
@@ -58,7 +83,7 @@ const Product = () => {
             <div className="col-span-5">
               <div className="relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow">
                 <img
-                  src={selectedImage}
+                  src={selectedImage || ""}
                   alt={product.title}
                   className="pointer-events-none absolute top-0 left-0 h-full w-full bg-white object-cover"
                 />
@@ -98,7 +123,11 @@ const Product = () => {
                       <input
                         className="w-full appearance-none bg-transparent leading-tight focus:outline-none flex-center h-8  items-center justify-center rounded-l-sm border border-gray-300 text-center text-gray-600"
                         spellCheck="false"
-                        type="text"
+                        type="number"
+                        min="1"
+                        max="138"
+                        value={quantity}
+                        onChange={handleQuantityChange}
                       />
                     </div>
                   </div>
@@ -128,6 +157,7 @@ const Product = () => {
                 <button
                   type="button"
                   className=" outline-none transition duration-300 text-primary border-[1px] border-primary flex items-center space-x-2 rounded-md px-4 py-2 hover:bg-opacity-80 gap-x-2"
+                  onClick={handleAddToCart}
                 >
                   <svg
                     stroke="currentColor"
