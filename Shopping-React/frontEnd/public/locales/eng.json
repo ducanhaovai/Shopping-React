@@ -59,5 +59,13 @@
         "miscellaneous": "Miscellaneous",
         "foods": "Foods"
     },
-    ""
+    "detailP": {
+        "description": "Product Description",
+        "addToCart": "Add to cart",
+        "buyNow": "Buy now",
+        "amount": "138 products available",
+        "Amount": "Amount",
+        "login": "Please log in to add products to cart!",
+        "setAmount": "Cannot add more than 138 products to the cart."
+    }
 }

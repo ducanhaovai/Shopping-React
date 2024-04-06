@@ -40,14 +40,18 @@ export const getCart = async () => {
     throw error;
   }
 };
-export const removeFromCart = async (productId: string) => {
+export const removeFromCart = async (productId: number) => {
   try {
-    const response = await axios.post(`${baseURL2}/cart/delete`, {
-      data: { productId },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
+    const response = await axios.post(
+      `${baseURL2}/cart/delete`,
+      { id: productId },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      }
+    );
+
     console.log("Response data from removeFromCart:", response.data);
     return response.data;
   } catch (error) {

@@ -10,6 +10,7 @@ type Item = {
   quantity: number;
   price: number;
   images: string;
+  productId: number;
 };
 
 function CartPage() {
@@ -54,14 +55,19 @@ function CartPage() {
     return total;
   };
 
-  const handleDelete = async (index: number) => {
+  const handleDelete = async (productId: number) => {
     try {
-      const productId = cartItems[index].id;
-      await removeFromCart(productId);
-
-      const updatedCartItems = await getCart();
+      const index = cartItems.findIndex((item) => item.productId === productId);
+      if (index === -1) {
+        console.error("Error: Product not found in cart");
+        return;
+      }
+      const updatedCartItems = [...cartItems];
+      updatedCartItems.splice(index, 1);
+      console.log("Updated cart items:", updatedCartItems);
       setCartItems(updatedCartItems);
       setSelectedItems(new Array(updatedCartItems.length).fill(false));
+      await removeFromCart(productId);
     } catch (error) {
       console.error("Error deleting cart item:", error);
     }

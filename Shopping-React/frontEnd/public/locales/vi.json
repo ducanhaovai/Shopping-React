@@ -61,5 +61,14 @@
         "shoes": "Giày dép",
         "miscellaneous": "Linh tinh",
         "foods": "Thực phẩm"
+    },
+    "detailP": {
+        "description": "Mô tả sản phẩm",
+        "addToCart": "Thêm vào giỏ hàng",
+        "buyNow": "Mua ngay",
+        "amount": "138 sản phẩm có sẵn",
+        "Amount": "Số lượng",
+        "login": "Hãy đâng nhập để thêm sản phẩm vào giỏ hàng!",
+        "setAmount":"Không thể thêm quá 138 sản phẩm vào giỏ hàng."
     }
 }

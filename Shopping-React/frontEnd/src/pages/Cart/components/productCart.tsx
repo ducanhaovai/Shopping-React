@@ -1,7 +1,7 @@
 import React from "react";
 
 type CartItem = {
-  id: string;
+  productId: number;
   title: string;
   description: string;
   quantity: number;
@@ -13,7 +13,7 @@ type ProductCartProps = {
   cartItems: CartItem[];
   selectedItems: boolean[];
   onSelectItem: (index: number) => void;
-  onDeleteItem: (index: number) => void;
+  onDeleteItem: (productId: number) => void;
 };
 
 export default function ProductCart({
@@ -25,7 +25,7 @@ export default function ProductCart({
   return (
     <div className="my-3 rounded-sm bg-white p-5 shadow">
       {cartItems.map((item, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={item.productId}>
           <div className="mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0">
             <div className="col-span-6">
               <div className="flex">
@@ -72,7 +72,7 @@ export default function ProductCart({
                 <div className="col-span-1">
                   <button
                     className="bg-none text-black transition-colors hover:text-orange"
-                    onClick={() => onDeleteItem(index)}
+                    onClick={() => onDeleteItem(item.productId)}
                   >
                     Xóa
                   </button>
