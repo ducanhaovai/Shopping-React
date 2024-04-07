@@ -1,13 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createContext, useState } from "react";
 
-import userReducer from "../features/Auth/index";
+export const CartContext = createContext();
 
-const rootReducer = {
-  user: userReducer,
+export const CartProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  return (
+    <CartContext.Provider value={{ cart, addToCart }}>
+      {children}
+    </CartContext.Provider>
+  );
 };
-
-const store = configureStore({
-  reducer: rootReducer,
-});
-
-export default store;

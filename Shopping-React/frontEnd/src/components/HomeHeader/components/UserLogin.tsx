@@ -51,6 +51,7 @@ export default function UserLogin() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         if (res.data.Status === "Success") {
           setAuth(true);
           setEmail(res.data.email);
@@ -70,6 +71,7 @@ export default function UserLogin() {
         if (res.data.Status === "Success") {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user_email");
           navigate("/login", { replace: true });
         } else {
           alert("error");
