@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
 import ChangPassPage from "../../pages/ChangPass/ChangPassPage";
@@ -6,9 +6,9 @@ import UserDetail from "../../pages/UserDetail";
 import AsideUser from "../../components/Aside/AsideUser";
 
 export default function UserDetailLayout() {
-  const [selectedSection, setSelectedSection] = useState("profile"); // State để lưu trạng thái phần được chọn
+  const [selectedSection, setSelectedSection] = useState("profile");
 
-  const handleSelectSection = (section) => {
+  const handleSelectSection = (section: SetStateAction<string>) => {
     setSelectedSection(section);
   };
 

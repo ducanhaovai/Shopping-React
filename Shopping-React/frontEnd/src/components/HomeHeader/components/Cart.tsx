@@ -1,6 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 export default function Cart() {
+  const navigate = useNavigate();
+  const handleCartClick = () => {
+    navigate("/cart");
+  };
   return (
-    <div className="flex-center col-span-1 justify-self-end">
+    <div
+      className="flex-center col-span-1 justify-self-end"
+      onClick={handleCartClick}
+    >
       <div>
         <a>
           <svg
