@@ -1,10 +1,9 @@
-import { useState, useEffect, SetStateAction } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ImageSlider from "../ImageSlider/index";
 import { addToCart } from "../../api/cartApi";
 import { useTranslation } from "react-i18next";
-import Popup from "reactjs-popup";
 
 interface Product {
   images: string[];
