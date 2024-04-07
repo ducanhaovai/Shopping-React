@@ -1,10 +1,9 @@
-// LangSwitch.js
-import React, { useState } from "react";
+import { useState } from "react";
 import i18n from "../../i18n/i18n";
 
 const LangSwitch = () => {
   const [showOptions, setShowOptions] = useState(false);
-  const [language, setLanguage] = useState("English"); // Ngôn ngữ mặc định
+  const [language, setLanguage] = useState("English");
 
   const handleToggleOptions = () => {
     setShowOptions(!showOptions);

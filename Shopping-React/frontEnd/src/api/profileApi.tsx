@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AxiosError } from "axios";
 
-const baseURL = "https://backend-alpha-three-12.vercel.app";
 const baseURL2 = "http://localhost:8088";
 
 const getTokenFromCookie = () => {

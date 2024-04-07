@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 export default function ChangePass() {
   const { t } = useTranslation();
-  const [message, setMessage] = useState<string | null>(null);
+  const [message] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -17,7 +17,7 @@ export default function ChangePass() {
   const onSubmit = async (data: any) => {
     try {
       const { oldPassword, newPassword } = data;
-      const response = await changeUserPassword(oldPassword, newPassword);
+      await changeUserPassword(oldPassword, newPassword);
       alert(t("passwordUpdatedSuccessfully"));
     } catch (error) {
       if (error instanceof Error) {
@@ -48,7 +48,10 @@ export default function ChangePass() {
             label={t("changePass.oldPassword")}
             placeholder={t("oldPassword")}
             register={register("oldPassword", {
-              required: { value: true, message: t("changePass.oldPasswordRequired") },
+              required: {
+                value: true,
+                message: t("changePass.oldPasswordRequired"),
+              },
             })}
             error={errors.oldPassword}
           />
@@ -56,7 +59,10 @@ export default function ChangePass() {
             label={t("changePass.newPassword")}
             placeholder={t("changePass.newPassword")}
             register={register("newPassword", {
-              required: { value: true, message: t("changePass.newPasswordRequired") },
+              required: {
+                value: true,
+                message: t("changePass.newPasswordRequired"),
+              },
               minLength: {
                 value: 8,
                 message: t("newPasswordMinLength"),

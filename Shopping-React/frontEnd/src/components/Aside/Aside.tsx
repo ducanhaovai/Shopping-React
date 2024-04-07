@@ -3,7 +3,11 @@ import Category from "./components/Category";
 import Price from "./components/Price";
 import Search from "./components/Search";
 
-export default function Aside({ onCategoryClick }) {
+interface Props {
+  onCategoryClick: (categoryId: string) => void;
+}
+
+export default function Aside({ onCategoryClick }: Props) {
   return (
     <div className="py-4">
       <div className="my-4 h-0.5 bg-gray-300"></div>

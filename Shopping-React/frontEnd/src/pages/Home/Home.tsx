@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Star5 } from "../../components/Star";
 import ListPage from "../../features/Product";
-import { fetchProducts, searchProducts } from "../../api/productApi";
+import { fetchProducts } from "../../api/productApi";
 import Loading from "../../components/Loading";
 
 interface HomeProps {
@@ -44,10 +44,8 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
   useEffect(() => {
     if (searchTerm && Array.isArray(searchTerm) && searchTerm.length > 0) {
       setCurrentProducts(searchTerm);
-
     } else if (category && Array.isArray(category) && category.length > 0) {
       setCurrentProducts(category);
-
     }
   }, [searchTerm, category]);
 
