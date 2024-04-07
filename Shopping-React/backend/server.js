@@ -238,7 +238,7 @@ app.get("/api/oauth/google", async (req, res, next) => {
     const token = jwt.sign({ user: existingUser }, "our-jsonwebtoken-key", {
       expiresIn: "1d",
     });
-    res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }); // Set cookie
+    res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }); 
 
     const manual_access_token = jwt.sign(
       { email: existingUser.email, type: "access_token" },
