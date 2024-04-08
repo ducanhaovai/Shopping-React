@@ -1,7 +1,6 @@
 import axios from "axios";
 
-
-const baseURL2 = "http://localhost:8088";
+const baseURL2 = "http://104.198.10.136:8088";
 export const signup = async (data: any) => {
   try {
     console.log("Data received for signup:", data);

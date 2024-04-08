@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseURL2 = "http://localhost:8088";
-
+const baseURL2 = "http://104.198.10.136:8088";
 export const addToCart = async (
   productId: string | undefined,
   quantity: number
