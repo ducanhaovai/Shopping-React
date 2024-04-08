@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AxiosError } from "axios";
 
-const baseURL2 = "http://104.198.10.136:8088";
+const baseURL2 = "https://104.198.10.136:8088";
 
 const getTokenFromCookie = () => {
   const cookies = document.cookie.split(";").map((cookie) => cookie.trim());

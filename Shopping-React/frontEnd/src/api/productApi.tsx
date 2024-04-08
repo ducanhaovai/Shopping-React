@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL2 = "http://104.198.10.136:8088";
+const baseURL2 = "https://104.198.10.136:8088";
 
 export const fetchProducts = async () => {
   try {
