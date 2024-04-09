@@ -18,6 +18,7 @@ app.use(
       "http://localhost:3000",
       "https://shopping-react-sjvr-git-main-ducanhaovais-projects.vercel.app",
       "https://shopping-react-sjvr-lqdrwqxdx-ducanhaovais-projects.vercel.app",
+      "https://shopping-clone.site",
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
@@ -98,7 +99,6 @@ const getOauthGooleToken = async (code) => {
 
   return data;
 };
-
 
 const getGoogleUser = async ({ id_token, access_token }) => {
   const { data } = await axios.get(
@@ -238,7 +238,7 @@ app.get("/api/oauth/google", async (req, res, next) => {
     const token = jwt.sign({ user: existingUser }, "our-jsonwebtoken-key", {
       expiresIn: "1d",
     });
-    res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true }); 
+    res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
 
     const manual_access_token = jwt.sign(
       { email: existingUser.email, type: "access_token" },
