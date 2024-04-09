@@ -62,7 +62,7 @@ export default function UserForm() {
         </h1>
         <div className="mt-1 text-sm text-gray-700">{t("profile.Detail")}</div>
       </div>
-      {loading ? ( // Hiển thị loading nếu loading là true
+      {loading ? ( 
         <Loading />
       ) : (
         <form

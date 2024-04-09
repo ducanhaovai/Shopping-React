@@ -99,7 +99,7 @@ const getOauthGooleToken = async (code) => {
   return data;
 };
 
-// Hàm gửi yêu cầu lấy thông tin người dùng từ Google dựa trên Google OAuth token
+
 const getGoogleUser = async ({ id_token, access_token }) => {
   const { data } = await axios.get(
     "https://www.googleapis.com/oauth2/v1/userinfo",

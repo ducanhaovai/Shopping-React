@@ -32,7 +32,7 @@ const Product = () => {
           return;
         }
         const response = await axios.get(
-          `http://localhost:8088/api/products/${productIdInt}`
+          `https://104.198.10.136:8088/api/products/${productIdInt}`
         );
         setProduct(response.data);
         setLoading(false);

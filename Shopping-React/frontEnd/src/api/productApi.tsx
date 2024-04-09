@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseURL2 = "https://104.198.10.136:8088";
-
+const baseURL2 = "https://shopping-clone.site:8088";
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
