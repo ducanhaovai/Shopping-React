@@ -112,7 +112,7 @@ const getGoogleUser = async ({ id_token, access_token }) => {
   return data;
 };
 
-app.get("/home", verifyUser, productsRouter, (req, res) => {
+app.get("/home", verifyUser, (req, res) => {
   const { name, email } = req;
   return res.json({ Status: "Success", name, email });
 });
@@ -129,7 +129,7 @@ app.get("/products", async (req, res) => {
   }
 });
 
-app.post("/signup", productsRouter, async (req, res) => {
+app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -169,7 +169,7 @@ function loggedInRedirect(req, res, next) {
   }
 }
 
-app.post("/login", productsRouter, loggedInRedirect, async (req, res) => {
+app.post("/login", loggedInRedirect, async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -210,7 +210,7 @@ app.get("/logout", (req, res) => {
   return res.json({ Status: "Success" });
 });
 
-app.get("/api/oauth/google", productsRouter, async (req, res, next) => {
+app.get("/api/oauth/google", async (req, res, next) => {
   try {
     const { code } = req.query;
     const data = await getOauthGooleToken(code);
@@ -264,7 +264,7 @@ function generateRandomPassword() {
   return randomPassword;
 }
 
-app.get("/profile", productsRouter, verifyUser, async (req, res) => {
+app.get("/profile", verifyUser, async (req, res) => {
   try {
     const userId = req.id;
     const objectId = new ObjectId(userId);
@@ -280,7 +280,7 @@ app.get("/profile", productsRouter, verifyUser, async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 });
-app.post("/profile-update", productsRouter, async (req, res) => {
+app.post("/profile-update", async (req, res) => {
   const _id = new ObjectId(req.body._id);
 
   const { name, email, address, phone } = req.body;
@@ -300,7 +300,7 @@ app.post("/profile-update", productsRouter, async (req, res) => {
   }
 });
 
-app.get("/api/products/:productId", productsRouter, async (req, res) => {
+app.get("/api/products/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
 
@@ -330,7 +330,7 @@ app.get("/api/categories/:id/products", async (req, res) => {
   res.json(data);
 });
 
-app.get("/search-products", productsRouter, async (req, res) => {
+app.get("/search-products", async (req, res) => {
   try {
     const title = req.query.title;
     const response = await axios.get(
@@ -343,7 +343,7 @@ app.get("/search-products", productsRouter, async (req, res) => {
   }
 });
 
-app.get("/category-products", productsRouter, async (req, res) => {
+app.get("/category-products", async (req, res) => {
   try {
     const title = req.query.title;
     const response = await axios.get(
@@ -357,7 +357,7 @@ app.get("/category-products", productsRouter, async (req, res) => {
   }
 });
 
-app.post("/change-password", productsRouter, verifyUser, async (req, res) => {
+app.post("/change-password", verifyUser, async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const userId = req.id;
@@ -388,7 +388,7 @@ app.post("/change-password", productsRouter, verifyUser, async (req, res) => {
   }
 });
 
-app.get("/api/categories", productsRouter, async (req, res) => {
+app.get("/api/categories", async (req, res) => {
   try {
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/categories/"
@@ -400,7 +400,7 @@ app.get("/api/categories", productsRouter, async (req, res) => {
   }
 });
 
-app.post("/cart/add", verifyUser, productsRouter, async (req, res) => {
+app.post("/cart/add", verifyUser, async (req, res) => {
   try {
     const { productId, quantity } = req.body;
     const userId = req.id;
@@ -444,7 +444,7 @@ app.post("/cart/add", verifyUser, productsRouter, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-app.get("/cart", verifyUser, productsRouter, async (req, res) => {
+app.get("/cart", verifyUser, async (req, res) => {
   const userId = req.id;
 
   const cartsCollection = client.db().collection("carts");
@@ -456,7 +456,7 @@ app.get("/cart", verifyUser, productsRouter, async (req, res) => {
 
   return res.json(cart.products);
 });
-app.post("/cart/delete", verifyUser, productsRouter, async (req, res) => {
+app.post("/cart/delete", verifyUser, async (req, res) => {
   try {
     const { id } = req.body;
     const userId = req.id;
@@ -476,14 +476,6 @@ app.post("/cart/delete", verifyUser, productsRouter, async (req, res) => {
     console.error("Error removing product from cart:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
 });
 
 const port = process.env.PORT || 8088;
