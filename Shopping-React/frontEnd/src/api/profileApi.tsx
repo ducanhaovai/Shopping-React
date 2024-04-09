@@ -1,7 +1,6 @@
 import axios from "axios";
 import { AxiosError } from "axios";
-
-const baseURL2 = "https://shopping-clone.site:8088";
+const baseURL2 = "https://shopping-clone.site";
 
 const getTokenFromCookie = () => {
   const cookies = document.cookie.split(";").map((cookie) => cookie.trim());

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL2 = "https://shopping-clone.site:8088";
+const baseURL2 = "https://shopping-clone.site";
 
 export const checkAuth = async () => {
   try {

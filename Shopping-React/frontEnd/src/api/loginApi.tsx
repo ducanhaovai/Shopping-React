@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const baseURL2 = "https://shopping-clone.site:8088";
+const baseURL2 = "https://shopping-clone.site";
 export const signup = async (data: any) => {
   try {
     console.log("Data received for signup:", data);
