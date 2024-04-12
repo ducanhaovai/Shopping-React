@@ -480,7 +480,7 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
 
 var https = require("https");
 
-app = https.createServer(function (request, response) {
+app = https.createServer(function (response) {
   response.writeHead(200, { "Content-Type": "application/json" });
   response.end("OKLA");
 });
