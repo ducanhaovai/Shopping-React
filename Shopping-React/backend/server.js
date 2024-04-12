@@ -478,7 +478,7 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 8088;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+//const port = process.env.PORT || 8088;
+app.listen(8088, () => {
+  console.log(`Server is running on port ${8088}`);
 });
