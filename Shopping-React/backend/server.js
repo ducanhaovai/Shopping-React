@@ -478,14 +478,14 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
   }
 });
 
-var http = require("http");
+const http = require("http");
 
-app = http.createServer(function (request, response) {
+const server = http.createServer(function (request, response) {
   response.writeHead(200, { "Content-Type": "application/json" });
   response.end("OKLA");
 });
 
 const port = process.env.PORT || 8088;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
