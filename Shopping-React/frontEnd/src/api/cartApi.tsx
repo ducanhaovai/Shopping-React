@@ -1,7 +1,7 @@
 import axios from "axios";
-//const baseURL2 = "http://shopping-clone.site:8088/";
+const baseURL2 = "https://shopping-clone.site:8088";
 
-const baseURL2 = "https://34.16.213.194:8088";
+//const baseURL2 = "https://34.16.213.194:8088";
 
 export const addToCart = async (
   productId: string | undefined,
@@ -12,7 +12,7 @@ export const addToCart = async (
       `${baseURL2}/cart/add`,
       {
         productId,
-        quantity, 
+        quantity,
       },
       {
         headers: {
