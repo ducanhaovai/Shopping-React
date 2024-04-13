@@ -478,11 +478,10 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
   }
 });
 
-const http = require("http");
-
-const server = http.createServer(app);
-
-const port = process.env.PORT || 8088;
-server.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// const port = process.env.PORT || 8088;
+// app.listen(port, () => {
+//   console.log(`Server is running on port ${port}`);
+// });
+app.listen(8088, () => {
+  console.log(`Server is running on port ${8088}`);
 });
