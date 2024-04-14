@@ -2,7 +2,7 @@ import axios from "axios";
 
 //const baseURL2 = "https://34.16.213.194:8088";
 
-const baseURL2 = "https://shopping-clone.site/api";
+const baseURL2 = "http://shopping-clone.site/api";
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
