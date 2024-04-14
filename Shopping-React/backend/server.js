@@ -300,7 +300,7 @@ app.post("/profile-update", async (req, res) => {
   }
 });
 
-app.get("/api/products/:productId", async (req, res) => {
+app.get("/products/:productId", async (req, res) => {
   try {
     const productId = req.params.productId;
 
@@ -321,7 +321,7 @@ app.get("/api/products/:productId", async (req, res) => {
       .json({ error: "An error occurred while fetching the product." });
   }
 });
-app.get("/api/categories/:id/products", async (req, res) => {
+app.get("/categories/:id/products", async (req, res) => {
   const categoryId = req.params.id;
   const response = await fetch(
     `https://api.escuelajs.co/api/v1/categories/${categoryId}/products`
@@ -388,7 +388,7 @@ app.post("/change-password", verifyUser, async (req, res) => {
   }
 });
 
-app.get("/api/categories", async (req, res) => {
+app.get("/categories", async (req, res) => {
   try {
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/categories/"
@@ -478,10 +478,9 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
   }
 });
 
-// const port = process.env.PORT || 8088;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+
 app.listen(8088, () => {
   console.log(`Server is running on port ${8088}`);
 });
+
+// openssl req -new -newkey rsa:2048 -nodes -keyout shopping-clone.site.key -out shopping-clone.site.csr

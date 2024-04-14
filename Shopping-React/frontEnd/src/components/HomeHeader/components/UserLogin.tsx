@@ -45,7 +45,7 @@ export default function UserLogin() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8088/home", {
+      .get("https://shopping-clone.site/api/home", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
         },
@@ -66,7 +66,7 @@ export default function UserLogin() {
 
   const handleLogout = () => {
     axios
-      .get("http://localhost:8088/logout")
+      .get("https://shopping-clone.site/api/logout")
       .then((res) => {
         if (res.data.Status === "Success") {
           localStorage.removeItem("access_token");
