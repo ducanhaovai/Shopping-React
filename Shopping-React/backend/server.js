@@ -19,6 +19,7 @@ app.use(
       "https://shopping-react-sjvr-git-main-ducanhaovais-projects.vercel.app",
       "https://shopping-react-sjvr-lqdrwqxdx-ducanhaovais-projects.vercel.app",
       "https://shopping-clone.site",
+      "http://shopping-clone.site",
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
