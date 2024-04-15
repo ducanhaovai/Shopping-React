@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AxiosError } from "axios";
-const baseURL2 = process.env.VITE_BASE_URL;
+const baseURL2 = import.meta.env.VITE_BASE_URL;
 
 const getTokenFromCookie = () => {
   const cookies = document.cookie.split(";").map((cookie) => cookie.trim());

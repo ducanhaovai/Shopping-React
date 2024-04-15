@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL2 = process.env.VITE_BASE_URL;
+const baseURL2 = import.meta.env.VITE_BASE_URL;
 
 export const addToCart = async (
   productId: string | undefined,
