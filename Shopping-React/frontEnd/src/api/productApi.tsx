@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const baseURL2 = process.env.BASE_URL;
+const baseURL2 = process.env.VITE_BASE_URL;
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
