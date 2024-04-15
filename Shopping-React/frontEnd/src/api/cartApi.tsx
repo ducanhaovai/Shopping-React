@@ -1,7 +1,6 @@
 import axios from "axios";
-const baseURL2 = "http://shopping-clone.site/api";
 
-//const baseURL2 = "https://34.16.213.194:8088";
+const baseURL2 = process.env.BASE_URL;
 
 export const addToCart = async (
   productId: string | undefined,

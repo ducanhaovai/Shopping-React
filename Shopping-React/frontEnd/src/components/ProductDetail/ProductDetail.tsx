@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ImageSlider from "../ImageSlider/index";
 import { addToCart } from "../../api/cartApi";
 import { useTranslation } from "react-i18next";
+import { fetchProduct } from "../../api/productApi";
 
 interface Product {
   images: string[];
@@ -23,25 +24,18 @@ const Product = () => {
 
   const { t } = useTranslation();
   useEffect(() => {
-    const fetchProduct = async () => {
+    const fetchProductData = async () => {
       console.log("productId:", productId);
-      try {
-        const productIdInt = parseInt(productId!, 10);
-        if (isNaN(productIdInt)) {
-          setLoading(false);
-          return;
-        }
-        const response = await axios.get(
-          `https://104.198.10.136:8088/api/products/${productIdInt}`
-        );
-        setProduct(response.data);
+      const productIdInt = parseInt(productId!, 10);
+      if (isNaN(productIdInt)) {
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-        setLoading(false);
+        return;
       }
+      const productData = await fetchProduct(productIdInt);
+      setProduct(productData);
+      setLoading(false);
     };
-    fetchProduct();
+    fetchProductData();
   }, [productId]);
   useEffect(() => {
     if (product && product.images.length > 0) {

@@ -1,8 +1,7 @@
 import axios from "axios";
 
-//const baseURL2 = "https://34.16.213.194:8088";
 
-const baseURL2 = "http://shopping-clone.site/api";
+const baseURL2 = process.env.BASE_URL;
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
@@ -43,5 +42,26 @@ export const fetchCategories = async () => {
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];
+  }
+};
+
+export const addToCart = async (productId: string, quantity: number) => {
+  try {
+    const response = await axios.post(`${baseURL2}/cart`, {
+      productId,
+      quantity,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error adding to cart:", error);
+  }
+};
+
+export const fetchProduct = async (productId: number) => {
+  try {
+    const response = await axios.get(`${baseURL2}/products/${productId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching product:", error);
   }
 };

@@ -5,6 +5,7 @@ import "./LoginSignup.css";
 import { useNavigate } from "react-router-dom";
 import LoginGoogle from "../../features/loginGoogle";
 import Input from "../../components/Input/Input";
+import { login, signup } from "../../api/loginApi";
 
 axios.defaults.withCredentials = true;
 
@@ -33,34 +34,28 @@ export const LoginSignup = () => {
     }
   };
 
-  const handleSignUp = (data: any) => {
-    axios
-      .post("http://localhost:8088/signup", data)
-      .then((res) => {
-        console.log("Sign up successful:", res.data);
-        setMessage("Registration successful");
-        navigate("/login");
-      })
-      .catch((err) => {
-        console.error("Sign up failed:", err);
-        setMessage("Email already exists");
-      });
+  const handleSignUp = async (data: any) => {
+    try {
+      const response = await signup(data);
+      console.log("Sign up successful:", response);
+      setMessage("Registration successful");
+      navigate("/login");
+    } catch (error) {
+      console.error("Sign up failed:", error);
+      setMessage("Email already exists");
+    }
   };
 
-  const handleSignIn = (data: any) => {
-    // Pass data from React Hook Form
-    axios.defaults.withCredentials = true;
-    axios
-      .post("http://localhost:8088/login", data)
-      .then((res) => {
-        console.log("Sign in successful:", res.data);
-        setMessage("Login successful");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.error("Sign in failed:", err);
-        setMessage("Wrong email or password!");
-      });
+  const handleSignIn = async (data: any) => {
+    try {
+      const response = await login(data);
+      console.log("Sign in successful:", response);
+      setMessage("Login successful");
+      navigate("/");
+    } catch (error) {
+      console.error("Sign in failed:", error);
+      setMessage("Wrong email or password!");
+    }
   };
 
   return (
