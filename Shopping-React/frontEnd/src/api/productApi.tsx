@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const baseURL2 = import.meta.env.VITE_BASE_URL;
+
 export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
@@ -37,6 +38,7 @@ export const fetchProductsByCategory = async (categoryId: string) => {
 export const fetchCategories = async () => {
   try {
     const response = await axios.get(`${baseURL2}/categories`);
+
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
