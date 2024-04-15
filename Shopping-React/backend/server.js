@@ -389,7 +389,7 @@ app.post("/change-password", verifyUser, async (req, res) => {
   }
 });
 
-app.get("/api/categories", async (req, res) => {
+app.get("/categories", async (req, res) => {
   try {
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/categories/"
