@@ -2,17 +2,12 @@ import axios from "axios";
 const baseURL2 = import.meta.env.VITE_BASE_URL;
 
 export const checkAuth = async () => {
-  // eslint-disable-next-line no-useless-catch
-  try {
-    const response = await axios.get(`${baseURL2}/home`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axios.get(`${baseURL2}/home`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+    },
+  });
+  return response.data;
 };
 
 export const logout = async () => {
