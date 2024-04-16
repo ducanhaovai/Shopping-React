@@ -59,11 +59,9 @@ export const addToCart = async (productId: string, quantity: number) => {
 };
 
 export const fetchProduct = async (productId: number) => {
-  try {
+
     const response = await axios.get(`${baseURL2}/api/products/${productId}`);
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
+
 };

@@ -11,11 +11,6 @@ export const checkAuth = async () => {
 };
 
 export const logout = async () => {
-  try {
-    const response = await axios.get(`${baseURL2}/logout`);
-    return response.data;
-  } catch (error) {
-    console.error("Error logging out:", error);
-    throw error;
-  }
+  const response = await axios.get(`${baseURL2}/logout`);
+  return response.data;
 };
