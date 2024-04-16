@@ -1,6 +1,6 @@
 import axios from "axios";
 import { AxiosError } from "axios";
-const baseURL2 = import.meta.env.VITE_BASE_URL;   
+const baseURL2 = import.meta.env.VITE_BASE_URL;
 
 const getTokenFromCookie = () => {
   const cookies = document.cookie.split(";").map((cookie) => cookie.trim());
@@ -9,59 +9,41 @@ const getTokenFromCookie = () => {
 };
 
 export const fetchUserProfile = async () => {
-  try {
-    const token = getTokenFromCookie();
+  const token = getTokenFromCookie();
 
-    const response = await axios.get(`${baseURL2}/profile`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const response = await axios.get(`${baseURL2}/profile`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-    return response.data;
-  } catch (error) {
-    throw new Error("Error fetching user profile");
-  }
+  return response.data;
 };
 
 export const updateUserProfile = async (data: any) => {
-  try {
-    const response = await axios.post(`${baseURL2}/profile-update`, data);
+  const response = await axios.post(`${baseURL2}/profile-update`, data);
 
-    console.log("Update user profile response:", response);
+  console.log("Update user profile response:", response);
 
-    return response.data;
-  } catch (error) {
-    throw new Error("Error updating user profile");
-  }
+  return response.data;
 };
 
 export const changeUserPassword = async (
   oldPassword: any,
   newPassword: any
 ) => {
-  try {
-    const token = getTokenFromCookie();
-    const response = await axios.post(
-      `${baseURL2}/change-password`,
-      {
-        oldPassword,
-        newPassword,
+  const token = getTokenFromCookie();
+  const response = await axios.post(
+    `${baseURL2}/change-password`,
+    {
+      oldPassword,
+      newPassword,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    console.log("Change user password response:", response);
-    return response.data;
-  } catch (error) {
-    if (error instanceof AxiosError && error.response && error.response.data) {
-      throw new Error(error.response.data.message);
-    } else {
-      throw new Error("Error changing password");
     }
-  }
+  );
+  return response.data;
 };
