@@ -74,7 +74,10 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
             {Array.isArray(displayedProducts) &&
               displayedProducts.map((product, index) => (
                 <div className="col-span-1" key={product.id || index}>
-                  <Link to={`/products/${product.id}`}>
+                  <Link
+                    to={`/products/${product.id}`}
+                    key={product.id || index}
+                  >
                     <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
                       <div className="relative w-full pt-[100%]">
                         <img

@@ -25,14 +25,19 @@ const Product = () => {
   const { t } = useTranslation();
   useEffect(() => {
     const fetchProductData = async () => {
-      console.log("productId:", productId);
-      const productIdInt = parseInt(productId!, 10);
+      if (!productId) {
+        // Kiểm tra nếu productId là undefined
+        setLoading(false);
+        return;
+      }
+      const productIdInt = parseInt(productId, 10);
       if (isNaN(productIdInt)) {
         setLoading(false);
         return;
       }
       const productData = await fetchProduct(productIdInt);
       setProduct(productData);
+
       setLoading(false);
     };
     fetchProductData();

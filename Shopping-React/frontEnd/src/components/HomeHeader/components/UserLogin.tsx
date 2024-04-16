@@ -12,6 +12,7 @@ import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 import LangSwitch from "../../../features/Lang";
 import { useTranslation } from "react-i18next";
+import { checkAuth, logout } from "../../../api/homeApi";
 
 export default function UserLogin() {
   const [open, setOpen] = React.useState(false);
@@ -44,19 +45,14 @@ export default function UserLogin() {
   }
 
   useEffect(() => {
-    axios
-      .get("https://shopping-clone.site/api/home", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        if (res.data.Status === "Success") {
+    checkAuth()
+      .then((data) => {
+        console.log(data);
+        if (data.Status === "Success") {
           setAuth(true);
-          setEmail(res.data.email);
-          localStorage.setItem("user_email", res.data.email);
-          localStorage.setItem("user_name", res.data.name);
+          setEmail(data.email);
+          localStorage.setItem("user_email", data.email);
+          localStorage.setItem("user_name", data.name);
         } else {
           setAuth(false);
         }
@@ -65,10 +61,9 @@ export default function UserLogin() {
   }, []);
 
   const handleLogout = () => {
-    axios
-      .get("https://shopping-clone.site/api/logout")
-      .then((res) => {
-        if (res.data.Status === "Success") {
+    logout()
+      .then((data: { Status: string }) => {
+        if (data.Status === "Success") {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user_email");
