@@ -119,48 +119,36 @@ app.get("/home", verifyUser, (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-  try {
-    const response = await axios.get(
-      "https://api.escuelajs.co/api/v1/products"
-    );
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+  const response = await axios.get("https://api.escuelajs.co/api/v1/products");
+  res.json(response.data);
 });
 
 app.post("/signup", async (req, res) => {
   const { name, email, password } = req.body;
 
-  try {
-    if (!name || !email || !password) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    const usersCollection = client.db().collection("users");
-
-    let existingUser = await usersCollection.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "Email already exists" });
-    }
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = {
-      name,
-      email,
-      password: hashedPassword,
-      address: "",
-      phone: "",
-    };
-
-    const result = await usersCollection.insertOne(newUser);
-
-    return res.status(200).json({ message: "User registered successfully" });
-  } catch (error) {
-    console.error("Error registering user:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
+
+  const usersCollection = client.db().collection("users");
+
+  let existingUser = await usersCollection.findOne({ email });
+  if (existingUser) {
+    return res.status(400).json({ error: "Email already exists" });
+  }
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newUser = {
+    name,
+    email,
+    password: hashedPassword,
+    address: "",
+    phone: "",
+  };
+
+  const result = await usersCollection.insertOne(newUser);
+
+  return res.status(200).json({ message: "User registered successfully" });
 });
 function loggedInRedirect(req, res, next) {
   if (req.cookies.token) {
@@ -177,33 +165,28 @@ app.post("/login", loggedInRedirect, async (req, res) => {
     return res.status(400).json({ error: "Email and password are required" });
   }
 
-  try {
-    const usersCollection = client.db().collection("users");
-    const user = await usersCollection.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ error: "User not found" });
-    }
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid password" });
-    }
-    const userForToken = {
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-      },
-    };
-
-    const token = jwt.sign(userForToken, "our-jsonwebtoken-key", {
-      expiresIn: "1d",
-    });
-    res.cookie("token", token, { httpOnly: true });
-    return res.json({ Status: "Success" });
-  } catch (error) {
-    console.error("Error logging in:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+  const usersCollection = client.db().collection("users");
+  const user = await usersCollection.findOne({ email });
+  if (!user) {
+    return res.status(401).json({ error: "User not found" });
   }
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    return res.status(401).json({ error: "Invalid password" });
+  }
+  const userForToken = {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  };
+
+  const token = jwt.sign(userForToken, "our-jsonwebtoken-key", {
+    expiresIn: "1d",
+  });
+  res.cookie("token", token, { httpOnly: true });
+  return res.json({ Status: "Success" });
 });
 
 app.get("/logout", (req, res) => {
@@ -212,52 +195,48 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/api/oauth/google", async (req, res, next) => {
-  try {
-    const { code } = req.query;
-    const data = await getOauthGooleToken(code);
-    const { id_token, access_token } = data;
-    const googleUser = await getGoogleUser({ id_token, access_token });
+  const { code } = req.query;
+  const data = await getOauthGooleToken(code);
+  const { id_token, access_token } = data;
+  const googleUser = await getGoogleUser({ id_token, access_token });
 
-    if (!googleUser.verified_email) {
-      return res.status(403).json({
-        message: "Google email not verified",
-      });
-    }
-
-    const { email, name, picture } = googleUser;
-
-    const usersCollection = client.db().collection("users");
-    let existingUser = await usersCollection.findOne({ email: email });
-    if (!existingUser) {
-      const randomPassword = generateRandomPassword();
-      const hashedPassword = await bcrypt.hash(randomPassword, 10);
-      const user = { email: email, name: name, password: hashedPassword };
-      await usersCollection.insertOne(user);
-      existingUser = user;
-    }
-
-    const token = jwt.sign({ user: existingUser }, "our-jsonwebtoken-key", {
-      expiresIn: "1d",
+  if (!googleUser.verified_email) {
+    return res.status(403).json({
+      message: "Google email not verified",
     });
-    res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
-
-    const manual_access_token = jwt.sign(
-      { email: existingUser.email, type: "access_token" },
-      process.env.AC_PRIVATE_KEY,
-      { expiresIn: "15m" }
-    );
-    const manual_refresh_token = jwt.sign(
-      { email: existingUser.email, type: "refresh_token" },
-      process.env.RF_PRIVATE_KEY,
-      { expiresIn: "100d" }
-    );
-
-    return res.redirect(
-      `http://localhost:3000/login/oauth?access_token=${manual_access_token}&refresh_token=${manual_refresh_token}&name=${name}&picture=${picture}`
-    );
-  } catch (error) {
-    next(error);
   }
+
+  const { email, name, picture } = googleUser;
+
+  const usersCollection = client.db().collection("users");
+  let existingUser = await usersCollection.findOne({ email: email });
+  if (!existingUser) {
+    const randomPassword = generateRandomPassword();
+    const hashedPassword = await bcrypt.hash(randomPassword, 10);
+    const user = { email: email, name: name, password: hashedPassword };
+    await usersCollection.insertOne(user);
+    existingUser = user;
+  }
+
+  const token = jwt.sign({ user: existingUser }, "our-jsonwebtoken-key", {
+    expiresIn: "1d",
+  });
+  res.cookie("token", token, { maxAge: 24 * 60 * 60 * 1000, httpOnly: true });
+
+  const manual_access_token = jwt.sign(
+    { email: existingUser.email, type: "access_token" },
+    process.env.AC_PRIVATE_KEY,
+    { expiresIn: "15m" }
+  );
+  const manual_refresh_token = jwt.sign(
+    { email: existingUser.email, type: "refresh_token" },
+    process.env.RF_PRIVATE_KEY,
+    { expiresIn: "100d" }
+  );
+
+  return res.redirect(
+    `http://localhost:3000/login/oauth?access_token=${manual_access_token}&refresh_token=${manual_refresh_token}&name=${name}&picture=${picture}`
+  );
 });
 
 function generateRandomPassword() {
@@ -266,61 +245,42 @@ function generateRandomPassword() {
 }
 
 app.get("/profile", verifyUser, async (req, res) => {
-  try {
-    const userId = req.id;
-    const objectId = new ObjectId(userId);
-    const usersCollection = client.db().collection("users");
-    const user = await usersCollection.findOne({ _id: objectId });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    return res.json(user);
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+  const userId = req.id;
+  const objectId = new ObjectId(userId);
+  const usersCollection = client.db().collection("users");
+  const user = await usersCollection.findOne({ _id: objectId });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
   }
+
+  return res.json(user);
 });
 app.post("/profile-update", async (req, res) => {
   const _id = new ObjectId(req.body._id);
 
   const { name, email, address, phone } = req.body;
 
-  try {
-    const usersCollection = client.db().collection("users");
-    const result = await usersCollection.updateOne(
-      { _id: _id },
-      { $set: { name, phone, address, email } }
-    );
-    return res
-      .status(200)
-      .json({ message: "User profile updated successfully" });
-  } catch (error) {
-    console.error("Error updating user profile:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
+  const usersCollection = client.db().collection("users");
+  const result = await usersCollection.updateOne(
+    { _id: _id },
+    { $set: { name, phone, address, email } }
+  );
+  return res.status(200).json({ message: "User profile updated successfully" });
 });
 
 app.get("/api/products/:productId", async (req, res) => {
-  try {
-    const productId = req.params.productId;
+  const productId = req.params.productId;
 
-    const parsedProductId = parseInt(productId);
-    if (isNaN(parsedProductId)) {
-      throw new Error("Invalid productId");
-    }
-
-    const response = await axios.get(
-      `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
-    );
-    const productData = response.data;
-    res.json(productData);
-  } catch (error) {
-    console.error("Error fetching product:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching the product." });
+  const parsedProductId = parseInt(productId);
+  if (isNaN(parsedProductId)) {
+    throw new Error("Invalid productId");
   }
+
+  const response = await axios.get(
+    `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
+  );
+  const productData = response.data;
+  res.json(productData);
 });
 app.get("/api/categories/:id/products", async (req, res) => {
   const categoryId = req.params.id;
@@ -332,34 +292,28 @@ app.get("/api/categories/:id/products", async (req, res) => {
 });
 
 app.get("/search-products", async (req, res) => {
-  try {
+
     const title = req.query.title;
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/products/?title=${title}`
     );
     res.json(response.data);
-  } catch (error) {
-    console.error("Error searching products:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+
 });
 
 app.get("/category-products", async (req, res) => {
-  try {
+
     const title = req.query.title;
     const response = await axios.get(
       `https://api.escuelajs.co/api/v1/categories/?title=${title}`
     );
 
     res.json(response.data);
-  } catch (error) {
-    console.error("Error searching products:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+
 });
 
 app.post("/change-password", verifyUser, async (req, res) => {
-  try {
+
     const { oldPassword, newPassword } = req.body;
     const userId = req.id;
     const usersCollection = client.db().collection("users");
@@ -383,26 +337,20 @@ app.post("/change-password", verifyUser, async (req, res) => {
     );
 
     return res.status(200).json({ message: "Password updated successfully" });
-  } catch (error) {
-    console.error("Error changing password:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
-  }
+
 });
 
 app.get("/categories", async (req, res) => {
-  try {
+
     const response = await axios.get(
       "https://api.escuelajs.co/api/v1/categories/"
     );
     res.json(response.data);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-    res.status(500).send("Error fetching categories");
-  }
+
 });
 
 app.post("/cart/add", verifyUser, async (req, res) => {
-  try {
+
     const { productId, quantity } = req.body;
     const userId = req.id;
 
@@ -440,10 +388,7 @@ app.post("/cart/add", verifyUser, async (req, res) => {
     await cartsCollection.updateOne({ userId }, { $set: cart });
 
     res.json({ message: "Product added to cart successfully" });
-  } catch (error) {
-    console.error("Error adding product to cart:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+
 });
 app.get("/cart", verifyUser, async (req, res) => {
   const userId = req.id;
@@ -458,7 +403,6 @@ app.get("/cart", verifyUser, async (req, res) => {
   return res.json(cart.products);
 });
 app.post("/cart/delete", verifyUser, async (req, res) => {
-  try {
     const { id } = req.body;
     const userId = req.id;
 
@@ -473,16 +417,10 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
     await cartsCollection.updateOne({ userId }, { $set: cart });
 
     res.json({ message: "Product removed from cart successfully" });
-  } catch (error) {
-    console.error("Error removing product from cart:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+
 });
 
-// const port = process.env.PORT || 8088;
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
+
 app.listen(8088, () => {
   console.log(`Server is running on port ${8088}`);
 });
