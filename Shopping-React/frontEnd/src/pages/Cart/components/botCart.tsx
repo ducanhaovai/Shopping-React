@@ -3,12 +3,14 @@ type BotCartProps = {
   onSelectAll: () => void;
   totalCost: number;
 };
+import { useTranslation } from "react-i18next";
 
 export default function BotCart({
   selectedItems,
   onSelectAll,
   totalCost,
 }: BotCartProps) {
+  const { t } = useTranslation();
   const selectedCount = selectedItems.filter((item) => item).length;
 
   return (
@@ -22,19 +24,21 @@ export default function BotCart({
           />
         </div>
         <button className="mx-3 border-none bg-none">
-          Chọn tất cả ({selectedCount})
+          {t("cart.select_all")} ({selectedCount})
         </button>
-        <button className="mx-3 border-none bg-none">Xóa</button>
+        <button className="mx-3 border-none bg-none">{t("cart.delete")}</button>
       </div>
       <div className="mt-5 flex flex-col sm:ml-auto sm:mt-0 sm:flex-row sm:items-center">
         <div>
           <div className="flex items-center sm:justify-end">
-            <div>Tổng thanh toán ({selectedCount} sản phẩm):</div>
+            <div>
+              {t("cart.total_payment")} ({selectedCount} {t("cart.products")} ):
+            </div>
             <div className="ml-2 text-2xl text-orange">${totalCost}</div>
           </div>
         </div>
         <button className="mt-5 flex h-10 w-52 items-center justify-center bg-red-500 text-sm uppercase text-white hover:bg-red-600 sm:ml-4 sm:mt-0">
-          <span>Mua hàng</span>
+          <span>{t("cart.buy")}</span>
         </button>
       </div>
     </>

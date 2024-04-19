@@ -34,7 +34,7 @@ export default function Category({ onCategoryClick }: CategoryProps) {
   return (
     <ul>
       {categories &&
-        categories.map((category) => (
+        categories.slice(0, 5).map((category) => (
           <li
             key={category.id}
             className="py-2 pl-2 hover:text-gray-500"

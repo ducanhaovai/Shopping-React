@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type CartItem = {
   productId: number;
@@ -22,11 +23,12 @@ export default function ProductCart({
   onSelectItem,
   onDeleteItem,
 }: ProductCartProps) {
+  const { t } = useTranslation();
   return (
     <div className="my-3 rounded-sm bg-white p-5 shadow">
       {cartItems.map((item, index) => (
         <React.Fragment key={item.productId}>
-          <div className="mb-5 grid grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0">
+          <div className="mb-5 grid grid-cols-1 sm:grid-cols-12 items-center rounded-sm border border-gray-200 bg-white px-4 py-5 text-center text-sm text-gray-500 first:mt-0">
             <div className="col-span-6">
               <div className="flex">
                 <div className="flex flex-shrink-0 items-center justify-center pr-3">
@@ -51,9 +53,9 @@ export default function ProductCart({
               </div>
             </div>
             <div className="col-span-6">
-              <div className="grid grid-cols-5 items-center ">
-                <div className="col-span-2">
-                  <p className="ml-3">${item.price}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-5 items-center ">
+                <div className="col-span-2 text-gray-500 line-through">
+                  <p className="text-sm">$120</p>
                 </div>
                 <div className="col-span-1">
                   <div className="flex items-center ">
@@ -74,7 +76,7 @@ export default function ProductCart({
                     className="bg-none text-black transition-colors hover:text-orange"
                     onClick={() => onDeleteItem(item.productId)}
                   >
-                    Xóa
+                    {t("cart.delete")}
                   </button>
                 </div>
               </div>

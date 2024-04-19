@@ -1,12 +1,13 @@
 import { SetStateAction, useState } from "react";
 import { searchProducts } from "../../../api/productApi";
+import { useTranslation } from "react-i18next";
 interface SearchProps {
   handleSearch: (query: string) => void;
 }
 export default function Search({ handleSearch }: SearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
-
+  const { t } = useTranslation();
   const handleChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -16,7 +17,7 @@ export default function Search({ handleSearch }: SearchProps) {
   const search = async () => {
     try {
       const products = await searchProducts(searchTerm);
-      console.log("search", searchTerm);
+
       handleSearch(products);
       setError(null);
     } catch (error) {
@@ -46,7 +47,7 @@ export default function Search({ handleSearch }: SearchProps) {
           value={searchTerm}
           onChange={handleChange}
           className="block w-full rounded-sm border-none border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 outline-none"
-          placeholder="Tìm kiếm sản phẩm..."
+          placeholder={t("tophead.search-product")}
           required
         />
         <button

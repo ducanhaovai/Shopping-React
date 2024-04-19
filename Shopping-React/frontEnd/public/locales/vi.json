@@ -29,11 +29,15 @@
         "best_selling": "Bán chạy nhất",
         "price": "Giá",
         "price_low_to_high": "Giá: Thấp đến cao",
-        "price_high_to_low": "Giá: Cao đến thấp"
+        "price_high_to_low": "Giá: Cao đến thấp",
+        "search-product": "Tìm kiếm sản phẩm"
     },
     "aside": {
+        "price_max": "Giá cao nhất",
+        "price_min": "Giá thấp nhất",
         "price": "Giá",
-        "apply": "Áp dụng"
+        "apply": "Áp dụng",
+        "search": "Tìm kiếm"
     },
     "password": {
         "oldpassword": ""
@@ -69,6 +73,18 @@
         "amount": "138 sản phẩm có sẵn",
         "Amount": "Số lượng",
         "login": "Hãy đâng nhập để thêm sản phẩm vào giỏ hàng!",
-        "setAmount":"Không thể thêm quá 138 sản phẩm vào giỏ hàng."
+        "setAmount": "Không thể thêm quá 138 sản phẩm vào giỏ hàng."
+    },
+    "cart": {
+        "select_all": "Chọn tất cả",
+        "delete": "Xóa",
+        "total_payment": "Tổng thanh toán",
+        "products": "sản phẩm",
+        "buy": "Mua hàng",
+        "unit_price": "Đơn giá",
+        "quantity": "Số lượng",
+        "amount": "Số lượng",
+        "action": "Thao Tác",
+        "product": "Sản phẩm"
     }
 }

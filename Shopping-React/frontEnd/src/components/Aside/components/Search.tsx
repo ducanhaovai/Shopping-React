@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export default function Search() {
+  const { t } = useTranslation();
   return (
     <a className="mt-4 flex items-center font-bold uppercase">
       <svg
@@ -18,7 +21,7 @@ export default function Search() {
           ></polyline>
         </g>
       </svg>
-      Tìm kiếm
+      {t("aside.search")}
     </a>
   );
 }

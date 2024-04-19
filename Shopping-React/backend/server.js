@@ -292,103 +292,93 @@ app.get("/api/categories/:id/products", async (req, res) => {
 });
 
 app.get("/search-products", async (req, res) => {
-
-    const title = req.query.title;
-    const response = await axios.get(
-      `https://api.escuelajs.co/api/v1/products/?title=${title}`
-    );
-    res.json(response.data);
-
+  const title = req.query.title;
+  const response = await axios.get(
+    `https://api.escuelajs.co/api/v1/products/?title=${title}`
+  );
+  res.json(response.data);
 });
 
 app.get("/category-products", async (req, res) => {
+  const title = req.query.title;
+  const response = await axios.get(
+    `https://api.escuelajs.co/api/v1/categories/?title=${title}`
+  );
 
-    const title = req.query.title;
-    const response = await axios.get(
-      `https://api.escuelajs.co/api/v1/categories/?title=${title}`
-    );
-
-    res.json(response.data);
-
+  res.json(response.data);
 });
 
 app.post("/change-password", verifyUser, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const userId = req.id;
+  const usersCollection = client.db().collection("users");
 
-    const { oldPassword, newPassword } = req.body;
-    const userId = req.id;
-    const usersCollection = client.db().collection("users");
+  const objectId = new ObjectId(userId);
+  const user = await usersCollection.findOne({ _id: objectId });
 
-    const objectId = new ObjectId(userId);
-    const user = await usersCollection.findOne({ _id: objectId });
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+  const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+  if (!passwordMatch) {
+    return res.status(401).json({ error: "Incorrect old password" });
+  }
 
-    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
-    if (!passwordMatch) {
-      return res.status(401).json({ error: "Incorrect old password" });
-    }
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  await usersCollection.updateOne(
+    { _id: objectId },
+    { $set: { password: hashedPassword } }
+  );
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await usersCollection.updateOne(
-      { _id: objectId },
-      { $set: { password: hashedPassword } }
-    );
-
-    return res.status(200).json({ message: "Password updated successfully" });
-
+  return res.status(200).json({ message: "Password updated successfully" });
 });
 
 app.get("/categories", async (req, res) => {
-
-    const response = await axios.get(
-      "https://api.escuelajs.co/api/v1/categories/"
-    );
-    res.json(response.data);
-
+  const response = await axios.get(
+    "https://api.escuelajs.co/api/v1/categories/"
+  );
+  res.json(response.data);
 });
 
 app.post("/cart/add", verifyUser, async (req, res) => {
+  const { productId, quantity } = req.body;
+  const userId = req.id;
 
-    const { productId, quantity } = req.body;
-    const userId = req.id;
+  const productResponse = await axios.get(
+    `https://api.escuelajs.co/api/v1/products/${productId}`
+  );
+  const { title, price, images } = productResponse.data;
 
-    const productResponse = await axios.get(
-      `https://api.escuelajs.co/api/v1/products/${productId}`
-    );
-    const { title, price, images } = productResponse.data;
+  const cartsCollection = client.db().collection("carts");
+  let cart = await cartsCollection.findOne({ userId });
 
-    const cartsCollection = client.db().collection("carts");
-    let cart = await cartsCollection.findOne({ userId });
+  if (!cart) {
+    cart = {
+      userId: userId,
+      products: [],
+    };
+    await cartsCollection.insertOne(cart);
+  }
 
-    if (!cart) {
-      cart = {
-        userId: userId,
-        products: [],
-      };
-      await cartsCollection.insertOne(cart);
-    }
+  const productIndex = cart.products.findIndex(
+    (product) => product.productId === productId
+  );
 
-    const productIndex = cart.products.findIndex(
-      (product) => product.productId === productId
-    );
+  if (productIndex !== -1) {
+    cart.products[productIndex].quantity += quantity;
+  } else {
+    cart.products.push({
+      productId,
+      title,
+      price,
+      images,
+      quantity,
+    });
+  }
+  await cartsCollection.updateOne({ userId }, { $set: cart });
 
-    if (productIndex !== -1) {
-      cart.products[productIndex].quantity += quantity;
-    } else {
-      cart.products.push({
-        productId,
-        title,
-        price,
-        images,
-        quantity,
-      });
-    }
-    await cartsCollection.updateOne({ userId }, { $set: cart });
-
-    res.json({ message: "Product added to cart successfully" });
-
+  res.json({ message: "Product added to cart successfully" });
 });
 app.get("/cart", verifyUser, async (req, res) => {
   const userId = req.id;
@@ -403,26 +393,59 @@ app.get("/cart", verifyUser, async (req, res) => {
   return res.json(cart.products);
 });
 app.post("/cart/delete", verifyUser, async (req, res) => {
-    const { id } = req.body;
-    const userId = req.id;
+  const { id } = req.body;
+  const userId = req.id;
 
-    const cartsCollection = client.db().collection("carts");
-    let cart = await cartsCollection.findOne({ userId });
+  const cartsCollection = client.db().collection("carts");
+  let cart = await cartsCollection.findOne({ userId });
 
-    if (!cart) {
-      return res.status(404).json({ error: "Cart not found" });
-    }
+  if (!cart) {
+    return res.status(404).json({ error: "Cart not found" });
+  }
 
-    cart.products = cart.products.filter((product) => product.productId !== id);
-    await cartsCollection.updateOne({ userId }, { $set: cart });
+  cart.products = cart.products.filter((product) => product.productId !== id);
+  await cartsCollection.updateOne({ userId }, { $set: cart });
 
-    res.json({ message: "Product removed from cart successfully" });
+  res.json({ message: "Product removed from cart successfully" });
+});
+app.get("/search-products-by-price", async (req, res) => {
+  const minPrice = req.query.minPrice;
+  const maxPrice = req.query.maxPrice;
 
+  if (!minPrice || !maxPrice) {
+    return res.status(400).json({ error: "Price range is required" });
+  }
+  if (minPrice < 0 || maxPrice < minPrice) {
+    return res.status(400).json({ error: "Invalid price range" });
+  }
+
+  const min = Number(minPrice);
+  const max = Number(maxPrice);
+
+  const response = await axios.get(`https://api.escuelajs.co/api/v1/products`);
+  const products = response.data.filter(
+    (product) => product.price >= min && product.price <= max
+  );
+  res.json(products);
 });
 
+app.get("/products-by-price", async (req, res) => {
+  const { order } = req.query;
+  if (!order) {
+    return res.status(400).json({ error: "Order parameter is required" });
+  }
+  const response = await axios.get("https://api.escuelajs.co/api/v1/products");
+  let products = response.data;
+  if (order === "asc") {
+    products.sort((a, b) => a.price - b.price);
+  } else if (order === "desc") {
+    products.sort((a, b) => b.price - a.price);
+  } else {
+    return res.status(400).json({ error: "Invalid order parameter" });
+  }
+  res.json(products);
+});
 
 app.listen(8088, () => {
   console.log(`Server is running on port ${8088}`);
 });
-
-// openssl req -new -newkey rsa:2048 -nodes -keyout shopping-clone.site.key -out shopping-clone.site.csr

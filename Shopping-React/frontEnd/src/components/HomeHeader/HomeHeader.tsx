@@ -19,11 +19,11 @@ export default function HomeHeader({
 
   return (
     <header className="bg-[linear-gradient(-180deg,#f53d2d,#f63)]">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <UserLogin />
-        <nav className="grid w-full grid-cols-10 space-x-4 py-4">
+        <nav className="grid grid-cols-1 md:grid-cols-10 gap-4 py-4">
           <Logo />
-          <form className="col-span-7" onSubmit={handleSubmit}>
+          <form className="col-span-full md:col-span-7" onSubmit={handleSubmit}>
             <label className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Search
             </label>

@@ -5,12 +5,21 @@ import Aside from "../../components/Aside";
 import Tophome from "../../components/TopHome";
 
 import Home from "../../pages/Home";
-import { fetchProductsByCategory } from "../../api/productApi";
+import {
+  fetchProducts,
+  fetchProductsByCategory,
+  fetchProductsByPriceOrder,
+} from "../../api/productApi";
 
 export default function HomeLayout() {
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
+  const [productsByPrice, setProductsByPrice] = useState<any[]>([]);
 
+  const handlePriceChange = (products_price: any[]) => {
+    setProductsByPrice(products_price);
+    console.log(products_price);
+  };
   const handleCategoryClick = async (categoryId: string) => {
     console.log(`Category clicked: ${categoryId}`);
     try {
@@ -18,6 +27,19 @@ export default function HomeLayout() {
       setProducts(fetchedProducts);
     } catch (error) {
       console.error("Error fetching products by category:", error);
+    }
+  };
+
+  const handleSelectChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const order = event.target.value;
+    if (order === "price" || order === "") {
+      const newProducts = await fetchProducts();
+      setProducts(newProducts);
+    } else {
+      const newProducts = await fetchProductsByPriceOrder(order);
+      setProductsByPrice(newProducts);
     }
   };
   return (
@@ -28,12 +50,19 @@ export default function HomeLayout() {
       <div className="flex-grow">
         <div className="container pb-4">
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-3">
-              <Aside onCategoryClick={handleCategoryClick} />
+            <div className="col-span-12 sm:col-span-3">
+              <Aside
+                onCategoryClick={handleCategoryClick}
+                onPriceChange={handlePriceChange}
+              />
             </div>
-            <div className="col-span-9">
-              <Tophome />
-              <Home searchTerm={searchTerm} category={products} products={[]} />
+            <div className="col-span-12 sm:col-span-9">
+              <Tophome onPriceChange={handleSelectChange} />
+              <Home
+                searchTerm={searchTerm}
+                category={products}
+                products={productsByPrice}
+              />
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ interface Product {
   images: any;
 }
 
-const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
+const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -44,10 +44,12 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
   useEffect(() => {
     if (searchTerm && Array.isArray(searchTerm) && searchTerm.length > 0) {
       setCurrentProducts(searchTerm);
+    } else if (products && Array.isArray(products) && products.length > 0) {
+      setCurrentProducts(products);
     } else if (category && Array.isArray(category) && category.length > 0) {
       setCurrentProducts(category);
     }
-  }, [searchTerm, category]);
+  }, [searchTerm, products, category]);
 
   const handlePagination = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -63,16 +65,18 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category }) => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
-
+  const filteredProducts = displayedProducts.filter(
+    (product) => !product.images[0].includes('"')
+  );
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <>
-          <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {Array.isArray(displayedProducts) &&
-              displayedProducts.map((product, index) => (
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {Array.isArray(filteredProducts) &&
+              filteredProducts.map((product, index) => (
                 <div className="col-span-1" key={product.id || index}>
                   <Link
                     to={`/products/${product.id}`}

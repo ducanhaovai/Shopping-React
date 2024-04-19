@@ -2,7 +2,10 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Button from "./components/Button";
 
-export default function Tophome() {
+interface TophomeProps {
+  onPriceChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+export default function Tophome({ onPriceChange }: TophomeProps) {
   const [activeButton, setActiveButton] = useState<string | null>(null);
   const { t } = useTranslation();
 
@@ -31,7 +34,10 @@ export default function Tophome() {
               isActive={activeButton === t("tophead.best_selling")}
               onClick={() => handleButtonClick(t("tophead.best_selling"))}
             />
-            <select className="h-8 px-4 text-left text-sm capitalize outline-none  bg-white text-black hover:bg-slate-100">
+            <select
+              className="h-8 px-4 text-left text-sm capitalize outline-none  bg-white text-black hover:bg-slate-100"
+              onChange={onPriceChange}
+            >
               <option value="" className="bg-white text-black">
                 {t("tophead.price")}
               </option>

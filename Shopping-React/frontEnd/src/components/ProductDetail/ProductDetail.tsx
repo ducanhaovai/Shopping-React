@@ -19,14 +19,10 @@ const Product = () => {
   const { productId } = useParams();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
-
-  console.log("index", selectedImage);
-
   const { t } = useTranslation();
   useEffect(() => {
     const fetchProductData = async () => {
       if (!productId) {
-        // Kiểm tra nếu productId là undefined
         setLoading(false);
         return;
       }
@@ -77,9 +73,9 @@ const Product = () => {
 
   return (
     <div className="bg-gray-200 py-6">
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white p-4 shadow">
-          <div className="grid grid-cols-12 gap-9">
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-9">
             <div className="col-span-5">
               <div className="relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow">
                 <img
@@ -107,19 +103,6 @@ const Product = () => {
                   {t("detailP.Amount")}
                 </div>
                 <div className="flex items-center ml-10">
-                  <button className="flex h-8 w-8 items-center justify-center rounded-l-sm border border-gray-300 text-gray-600">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      strokeWidth="0"
-                      viewBox="0 0 1024 1024"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M872 474H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h720c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"></path>
-                    </svg>
-                  </button>
                   <div>
                     <div className="undefined py-1">
                       <input
@@ -133,22 +116,6 @@ const Product = () => {
                       />
                     </div>
                   </div>
-                  <button className="flex h-8 w-8 items-center justify-center rounded-r-sm border border-gray-300 text-gray-600">
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      strokeWidth="0"
-                      viewBox="0 0 1024 1024"
-                      version="1.1"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <defs></defs>
-                      <path d="M474 152m8 0l60 0q8 0 8 8l0 704q0 8-8 8l-60 0q-8 0-8-8l0-704q0-8 8-8Z"></path>
-                      <path d="M168 474m8 0l672 0q8 0 8 8l0 60q0 8-8 8l-672 0q-8 0-8-8l0-60q0-8 8-8Z"></path>
-                    </svg>
-                  </button>
                 </div>
                 <div className="ml-6 text-sm text-gray-500">
                   {t("detailP.amount")}
@@ -186,7 +153,7 @@ const Product = () => {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mt-8 bg-white p-4 shadow">
           <div className="rounded bg-gray-50 p-4 text-lg capitalize text-slate-700">
             {t("detailP.description")}

@@ -6,7 +6,11 @@ export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
 
-    return response.data;
+    const filteredProducts = response.data.filter(
+      (product: { images: (string | string[])[] }) =>
+        !product.images[0].includes('"')
+    );
+    return filteredProducts;
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -19,7 +23,12 @@ export const searchProducts = async (searchTerm: string) => {
     const response = await axios.get(
       `${baseURL2}/search-products?title=${encodedSearchTerm}`
     );
-    return response.data;
+
+    const filteredProducts = response.data.filter(
+      (product: { images: (string | string[])[] }) =>
+        !product.images[0].includes('"')
+    );
+    return filteredProducts;
   } catch (error) {
     console.error("Error searching products:", error);
     return [];
@@ -27,12 +36,15 @@ export const searchProducts = async (searchTerm: string) => {
 };
 
 export const fetchProductsByCategory = async (categoryId: string) => {
-  const response = await fetch(
+  const response = await axios.get(
     `${baseURL2}/api/categories/${categoryId}/products`
   );
-  const data = await response.json();
-  console.log(data);
-  return data;
+  const filteredProducts = response.data.filter(
+    (product: { images: (string | string[])[] }) =>
+      !product.images[0].includes('"')
+  );
+  console.log(filteredProducts);
+  return filteredProducts;
 };
 
 export const fetchCategories = async () => {
@@ -59,9 +71,47 @@ export const addToCart = async (productId: string, quantity: number) => {
 };
 
 export const fetchProduct = async (productId: number) => {
+  const response = await axios.get(`${baseURL2}/api/products/${productId}`);
 
-    const response = await axios.get(`${baseURL2}/api/products/${productId}`);
+  if (response.data.images[0].includes('"')) {
+    console.error("Product image contains '\"'");
+    return null;
+  }
+  return response.data;
+};
 
-    return response.data;
+export const searchProductsByPrice = async (
+  minPrice: number,
+  maxPrice: number
+) => {
+  try {
+    const response = await axios.get(
+      `${baseURL2}/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
+    );
 
+    const filteredProducts = response.data.filter(
+      (product: { images: (string | string[])[] }) =>
+        !product.images[0].includes('"')
+    );
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error searching products by price:", error);
+    return [];
+  }
+};
+export const fetchProductsByPriceOrder = async (order: string) => {
+  try {
+    const response = await axios.get(
+      `${baseURL2}/products-by-price?order=${order}`
+    );
+
+    const filteredProducts = response.data.filter(
+      (product: { images: (string | string[])[] }) =>
+        !product.images[0].includes('"')
+    );
+    return filteredProducts;
+  } catch (error) {
+    console.error("Error fetching products by price order:", error);
+    return [];
+  }
 };

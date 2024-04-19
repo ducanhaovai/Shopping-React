@@ -142,12 +142,6 @@ export default function UserLogin() {
                         >
                           {t("Profile")}
                         </MenuItem>
-                        <MenuItem
-                          className="block w-full bg-white py-3 px-4 text-left hover:bg-slate-100 hover:text-cyan-500 "
-                          onClick={handleClose}
-                        >
-                          {t("My account")}
-                        </MenuItem>
 
                         <MenuItem
                           className="block w-full bg-white py-3 px-4 text-left hover:bg-slate-100 hover:text-cyan-500"

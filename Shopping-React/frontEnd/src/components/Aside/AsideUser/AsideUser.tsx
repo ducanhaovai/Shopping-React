@@ -49,6 +49,7 @@ export default function AsideUser({ handleSelectSection }: AsideUserProps) {
         </div>
         {t("profile.Change Password")}
       </a>
+      {/*
       <a
         className={`${
           selectedSection === "purchaseOrders" ? "text-orange" : "text-gray-600"
@@ -67,6 +68,7 @@ export default function AsideUser({ handleSelectSection }: AsideUserProps) {
         </div>
         {t("profile.Purchase Orders")}
       </a>
+      */}
     </div>
   );
 }

@@ -29,11 +29,15 @@
         "best_selling": "Best Selling",
         "price": "Price",
         "price_low_to_high": "Price: Low to High",
-        "price_high_to_low": "Price: High to Low"
+        "price_high_to_low": "Price: High to Low",
+        "search-product": "Search product"
     },
     "aside": {
+        "price_max": "Price-max",
+        "price_min": "Price-min",
         "price": "Price",
-        "apply": "Apply"
+        "apply": "Apply",
+        "search": "Search"
     },
     "changePass": {
         "changePassword": "Change Password",
@@ -67,5 +71,17 @@
         "Amount": "Amount",
         "login": "Please log in to add products to cart!",
         "setAmount": "Cannot add more than 138 products to the cart."
+    },
+    "cart": {
+        "select_all": "Select all",
+        "delete": "Delete",
+        "total_payment": "Total payment",
+        "products": "products",
+        "buy": "Buy",
+        "unit_price": "Unit price",
+        "quantity": "Quantity",
+        "amount": "Amount",
+        "action": "Action",
+        "product":"Product"
     }
 }

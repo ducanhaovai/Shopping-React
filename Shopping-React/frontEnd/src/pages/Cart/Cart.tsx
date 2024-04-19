@@ -64,7 +64,7 @@ function CartPage() {
       }
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
-      console.log("Updated cart items:", updatedCartItems);
+
       setCartItems(updatedCartItems);
       setSelectedItems(new Array(updatedCartItems.length).fill(false));
       await removeFromCart(productId);
@@ -74,10 +74,12 @@ function CartPage() {
   };
 
   return (
-    <div className="container">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       <div className="overflow-auto">
-        <div className="min-w-[1000px]">
-          <HeaderCart />
+        <div className="min-w-0">
+          <div className="hidden sm:block">
+            <HeaderCart />
+          </div>
           <ProductCart
             cartItems={cartItems}
             selectedItems={selectedItems}

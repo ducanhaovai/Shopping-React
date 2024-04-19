@@ -3,16 +3,22 @@ import i18n from "../../i18n/i18n";
 
 const LangSwitch = () => {
   const [showOptions, setShowOptions] = useState(false);
-  const [language, setLanguage] = useState("English");
+  const [language, setLanguage] = useState(
+    localStorage.getItem("language") || "English"
+  );
 
   const handleToggleOptions = () => {
     setShowOptions(!showOptions);
   };
 
   const handleChangeLanguage = (newLanguage: string | undefined) => {
-    i18n.changeLanguage(newLanguage);
-    setLanguage(newLanguage === "en" ? "English" : "Tiếng Việt");
-    setShowOptions(false);
+    if (newLanguage) {
+      i18n.changeLanguage(newLanguage);
+      const displayLanguage = newLanguage === "en" ? "English" : "Tiếng Việt";
+      localStorage.setItem("language", displayLanguage);
+      setLanguage(displayLanguage);
+      setShowOptions(false);
+    }
   };
 
   return (
