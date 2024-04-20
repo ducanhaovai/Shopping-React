@@ -18,8 +18,9 @@ app.use(
       "http://localhost:3000",
       "https://shopping-react-sjvr-git-main-ducanhaovais-projects.vercel.app",
       "https://shopping-react-sjvr-lqdrwqxdx-ducanhaovais-projects.vercel.app",
-      "https://shopping-clone.site",
+      "https://shopping-clone.site/api",
       "http://shopping-clone.site",
+      "https://shopping-clone.site",
     ],
     methods: ["GET", "PUT", "POST", "DELETE"],
     credentials: true,
@@ -408,7 +409,7 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
 
   res.json({ message: "Product removed from cart successfully" });
 });
-app.get("/api/search-products-by-price", async (req, res) => {
+app.get("/search-products-by-price", async (req, res) => {
   const minPrice = req.query.minPrice;
   const maxPrice = req.query.maxPrice;
 
@@ -429,21 +430,20 @@ app.get("/api/search-products-by-price", async (req, res) => {
   res.json(products);
 });
 
-app.get("/api/search-products-by-price", async (req, res) => {
-  const minPrice = Number(req.query.minPrice);
-  const maxPrice = Number(req.query.maxPrice);
-
-  if (!minPrice || !maxPrice) {
-    return res.status(400).json({ error: "Price range is required" });
+app.get("/products-by-price", async (req, res) => {
+  const { order } = req.query;
+  if (!order) {
+    return res.status(400).json({ error: "Order parameter is required" });
   }
-  if (minPrice < 0 || maxPrice < minPrice) {
-    return res.status(400).json({ error: "Invalid price range" });
-  }
-
   const response = await axios.get("https://api.escuelajs.co/api/v1/products");
-  const products = response.data.filter(
-    (product) => product.price >= minPrice && product.price <= maxPrice
-  );
+  let products = response.data;
+  if (order === "asc") {
+    products.sort((a, b) => a.price - b.price);
+  } else if (order === "desc") {
+    products.sort((a, b) => b.price - a.price);
+  } else {
+    return res.status(400).json({ error: "Invalid order parameter" });
+  }
   res.json(products);
 });
 

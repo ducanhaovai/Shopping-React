@@ -91,7 +91,7 @@ export const searchProductsByPrice = async (
 ) => {
   try {
     const response = await axios.get(
-      `${baseURL2}/api/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
+      `${baseURL2}/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
     const filteredProducts = response.data.filter(
@@ -107,7 +107,7 @@ export const searchProductsByPrice = async (
 export const fetchProductsByPriceOrder = async (order: string) => {
   try {
     const response = await axios.get(
-      `${baseURL2}/api/products-by-price?order=${order}`
+      `${baseURL2}/products-by-price?order=${order}`
     );
 
     const filteredProducts = response.data.filter(
