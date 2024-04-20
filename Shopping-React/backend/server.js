@@ -429,20 +429,21 @@ app.get("/api/search-products-by-price", async (req, res) => {
   res.json(products);
 });
 
-app.get("/api/products-by-price", async (req, res) => {
-  const { order } = req.query;
-  if (!order) {
-    return res.status(400).json({ error: "Order parameter is required" });
+app.get("/api/search-products-by-price", async (req, res) => {
+  const minPrice = Number(req.query.minPrice);
+  const maxPrice = Number(req.query.maxPrice);
+
+  if (!minPrice || !maxPrice) {
+    return res.status(400).json({ error: "Price range is required" });
   }
+  if (minPrice < 0 || maxPrice < minPrice) {
+    return res.status(400).json({ error: "Invalid price range" });
+  }
+
   const response = await axios.get("https://api.escuelajs.co/api/v1/products");
-  let products = response.data;
-  if (order === "asc") {
-    products.sort((a, b) => a.price - b.price);
-  } else if (order === "desc") {
-    products.sort((a, b) => b.price - a.price);
-  } else {
-    return res.status(400).json({ error: "Invalid order parameter" });
-  }
+  const products = response.data.filter(
+    (product) => product.price >= minPrice && product.price <= maxPrice
+  );
   res.json(products);
 });
 
