@@ -6,11 +6,16 @@ export const fetchProducts = async () => {
   try {
     const response = await axios.get(`${baseURL2}/products`);
 
-    const filteredProducts = response.data.filter(
-      (product: { images: (string | string[])[] }) =>
-        !product.images[0].includes('"')
-    );
-    return filteredProducts;
+    if (Array.isArray(response.data)) {
+      const filteredProducts = response.data.filter(
+        (product: { images: (string | string[])[] }) =>
+          !product.images[0].includes('"')
+      );
+      return filteredProducts;
+    } else {
+      console.error("Response data is not an array:", response.data);
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching products:", error);
     return [];
@@ -86,7 +91,7 @@ export const searchProductsByPrice = async (
 ) => {
   try {
     const response = await axios.get(
-      `${baseURL2}/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
+      `${baseURL2}/api/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
     );
 
     const filteredProducts = response.data.filter(
@@ -102,7 +107,7 @@ export const searchProductsByPrice = async (
 export const fetchProductsByPriceOrder = async (order: string) => {
   try {
     const response = await axios.get(
-      `${baseURL2}/products-by-price?order=${order}`
+      `${baseURL2}/api/products-by-price?order=${order}`
     );
 
     const filteredProducts = response.data.filter(

@@ -47,7 +47,6 @@ export default function UserLogin() {
   useEffect(() => {
     checkAuth()
       .then((data) => {
-        console.log(data);
         if (data.Status === "Success") {
           setAuth(true);
           setEmail(data.email);

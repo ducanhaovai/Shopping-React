@@ -408,7 +408,7 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
 
   res.json({ message: "Product removed from cart successfully" });
 });
-app.get("/search-products-by-price", async (req, res) => {
+app.get("/api/search-products-by-price", async (req, res) => {
   const minPrice = req.query.minPrice;
   const maxPrice = req.query.maxPrice;
 
@@ -429,7 +429,7 @@ app.get("/search-products-by-price", async (req, res) => {
   res.json(products);
 });
 
-app.get("/products-by-price", async (req, res) => {
+app.get("/api/products-by-price", async (req, res) => {
   const { order } = req.query;
   if (!order) {
     return res.status(400).json({ error: "Order parameter is required" });
