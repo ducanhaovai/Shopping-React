@@ -3,7 +3,6 @@ import Footer from "../../components/Footer/Footer";
 import HomeHeader from "../../components/HomeHeader";
 import Aside from "../../components/Aside";
 import Tophome from "../../components/TopHome";
-
 import Home from "../../pages/Home";
 import {
   fetchProducts,
