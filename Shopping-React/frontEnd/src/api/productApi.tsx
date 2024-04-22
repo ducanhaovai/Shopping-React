@@ -106,10 +106,8 @@ export const searchProductsByPrice = async (
 };
 export const fetchProductsByPriceOrder = async (order: string) => {
   try {
-    const response = await axios.get(`${baseURL2}/products-by-price`, {
-      params: {
-        order: order,
-      },
+    const response = await axios.post(`${baseURL2}/products-by-price`, {
+      order: order,
     });
 
     const filteredProducts = response.data.filter(

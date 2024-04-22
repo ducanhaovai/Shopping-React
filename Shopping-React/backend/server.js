@@ -430,8 +430,8 @@ app.get("/search-products-by-price", async (req, res) => {
   res.json(products);
 });
 
-app.get("/products-by-price", async (req, res) => {
-  const { order } = req.query;
+app.post("/products-by-price", async (req, res) => {
+  const { order } = req.body;
   if (!order) {
     return res.status(400).json({ error: "Order parameter is required" });
   }
