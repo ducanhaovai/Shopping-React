@@ -409,9 +409,9 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
 
   res.json({ message: "Product removed from cart successfully" });
 });
-app.get("/search-products-by-price", async (req, res) => {
-  const minPrice = req.query.minPrice;
-  const maxPrice = req.query.maxPrice;
+app.post("/search-products-by-price", async (req, res) => {
+  const { minPrice } = req.body;
+  const { maxPrice } = req.body;
 
   if (!minPrice || !maxPrice) {
     return res.status(400).json({ error: "Price range is required" });

@@ -90,9 +90,10 @@ export const searchProductsByPrice = async (
   maxPrice: number
 ) => {
   try {
-    const response = await axios.get(
-      `${baseURL2}/search-products-by-price?minPrice=${minPrice}&maxPrice=${maxPrice}`
-    );
+    const response = await axios.post(`${baseURL2}/search-products-by-price`, {
+      minPrice: minPrice,
+      maxPrice: maxPrice,
+    });
 
     const filteredProducts = response.data.filter(
       (product: { images: (string | string[])[] }) =>
