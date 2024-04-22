@@ -85,7 +85,7 @@ export default function UserLogin() {
   const userName = localStorage.getItem("user_name");
 
   return (
-    <div className="flex items-center justify-end space-x-4 py-2 z-2">
+    <div className="list-none pl-0 mt-0 flex">
       <LangSwitch />
 
       {auth ? (

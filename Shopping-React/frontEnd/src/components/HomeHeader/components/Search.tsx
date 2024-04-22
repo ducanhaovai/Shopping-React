@@ -1,13 +1,15 @@
 import { SetStateAction, useState } from "react";
 import { searchProducts } from "../../../api/productApi";
 import { useTranslation } from "react-i18next";
+
 interface SearchProps {
   handleSearch: (query: string) => void;
 }
 export default function Search({ handleSearch }: SearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState(null);
   const { t } = useTranslation();
+  const [error, setError] = useState(null);
+
   const handleChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -27,7 +29,7 @@ export default function Search({ handleSearch }: SearchProps) {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative ">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg
             stroke="currentColor"
@@ -46,7 +48,7 @@ export default function Search({ handleSearch }: SearchProps) {
           type="search"
           value={searchTerm}
           onChange={handleChange}
-          className="block w-full rounded-sm border-none border-gray-300 bg-gray-50 p-4 pl-10 text-sm text-gray-900 outline-none"
+          className="block w-full sm:w-[600px] md:w-[800px] lg:w-[900px] rounded-sm border-none border-gray-300 bg-gray-50 p-3 pl-10 text-base text-gray-900 outline-none"
           placeholder={t("tophead.search-product")}
           required
         />
@@ -68,6 +70,7 @@ export default function Search({ handleSearch }: SearchProps) {
           </svg>
         </button>
       </div>
+
       {error && <div className="text-red-500">{error}</div>}
     </>
   );

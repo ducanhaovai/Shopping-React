@@ -6,7 +6,7 @@ interface SvgIconProps {
 
 const Star5: React.FC<SvgIconProps> = () => {
   return (
-    <div className="my-3">
+    <div className="text-base scale-90 origin-right text-gray-300 -m-1 mt-0 ml-auto mr-0 mb-0">
       <div
         className="flex items-center text-sm"
         aria-hidden="true"
@@ -17,7 +17,7 @@ const Star5: React.FC<SvgIconProps> = () => {
           fill="currentColor"
           strokeWidth="0"
           viewBox="0 0 1024 1024"
-          className="h-5 w-5 fill-yellow-400"
+          className="h-4 w-4 fill-yellow-400"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -28,7 +28,7 @@ const Star5: React.FC<SvgIconProps> = () => {
           fill="currentColor"
           strokeWidth="0"
           viewBox="0 0 1024 1024"
-          className="h-5 w-5 fill-yellow-400"
+          className="h-4 w-4 fill-yellow-400"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -39,7 +39,7 @@ const Star5: React.FC<SvgIconProps> = () => {
           fill="currentColor"
           strokeWidth="0"
           viewBox="0 0 1024 1024"
-          className="h-5 w-5 fill-yellow-400"
+          className="h-4 w-4 fill-yellow-400"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -50,7 +50,7 @@ const Star5: React.FC<SvgIconProps> = () => {
           fill="currentColor"
           strokeWidth="0"
           viewBox="0 0 1024 1024"
-          className="h-5 w-5 fill-yellow-400"
+          className="h-4 w-4 fill-yellow-400"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -61,7 +61,7 @@ const Star5: React.FC<SvgIconProps> = () => {
           fill="currentColor"
           strokeWidth="0"
           viewBox="0 0 1024 1024"
-          className="h-5 w-5 fill-yellow-400"
+          className="h-4 w-4 fill-yellow-400"
           width="1em"
           xmlns="http://www.w3.org/2000/svg"
         >

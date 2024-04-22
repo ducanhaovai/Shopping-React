@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Logo() {
   return (
-    <div className="col-span-2">
+    <div className="col-span-2 ">
       <Link to="/">
         <svg
           viewBox="0 0 192 65"

@@ -77,7 +77,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
         <Loading />
       ) : (
         <>
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3 ">
             {Array.isArray(filteredProducts) &&
               filteredProducts.map((product, index) => (
                 <div className="col-span-1" key={product.id || index}>
@@ -86,10 +86,10 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                     key={product.id || index}
                   >
                     <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
-                      <div className="relative w-full pt-[100%]">
+                      <div className="w-full h-auto sm:h-[191px]">
                         <img
                           src={product.images[0]}
-                          className="absolute top-0 left-0 h-full w-full bg-white object-cover"
+                          className="h-full w-full bg-white object-cover"
                           alt={product.title}
                         />
                       </div>
@@ -99,22 +99,16 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                           {product.title}
                         </h2>
 
-                        <div className="mt-3 flex items-center">
-                          <div className="max-w-[50%] truncate text-gray-500 line-through">
-                            <span className="text-xs">$</span>
-                            <span className="text-sm">120</span>
-                          </div>
-                          <div className="ml-1 truncate text-primary">
-                            <span className="text-sm text-red-500">
-                              ${product.price}
-                            </span>
-                          </div>
+                        <div className="mt-3 flex items-baseline justify-start flex-wrap">
+                          <span className=" ml-4 text-lg text-gray-600 line-through">
+                            120$
+                          </span>
+                          <span className="text-lg text-red-500 ml-10  ">
+                            ${product.price}
+                          </span>
                         </div>
                         <div className="mt-3 flex items-center justify-end">
                           <Star5 />
-                          <button className="bg-red-500 text-white font-semibold py-2 px-4 w-auto  focus:outline-none hover:bg-red-600 ">
-                            Add
-                          </button>
                         </div>
                       </div>
                     </div>

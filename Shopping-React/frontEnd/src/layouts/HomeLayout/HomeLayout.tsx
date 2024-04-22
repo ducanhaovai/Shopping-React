@@ -58,6 +58,7 @@ export default function HomeLayout() {
             </div>
             <div className="col-span-12 sm:col-span-9">
               <Tophome onPriceChange={handleSelectChange} />
+
               <Home
                 searchTerm={searchTerm}
                 category={products}
