@@ -410,8 +410,8 @@ app.post("/cart/delete", verifyUser, async (req, res) => {
   res.json({ message: "Product removed from cart successfully" });
 });
 app.post("/search-products-by-price", async (req, res) => {
-  const { minPrice } = req.body;
-  const { maxPrice } = req.body;
+  const minPrice = Number(req.body.minPrice);
+  const maxPrice = Number(req.body.maxPrice);
 
   if (!minPrice || !maxPrice) {
     return res.status(400).json({ error: "Price range is required" });
@@ -420,12 +420,9 @@ app.post("/search-products-by-price", async (req, res) => {
     return res.status(400).json({ error: "Invalid price range" });
   }
 
-  const min = Number(minPrice);
-  const max = Number(maxPrice);
-
   const response = await axios.get(`https://api.escuelajs.co/api/v1/products`);
   const products = response.data.filter(
-    (product) => product.price >= min && product.price <= max
+    (product) => product.price >= minPrice && product.price <= maxPrice
   );
   res.json(products);
 });
