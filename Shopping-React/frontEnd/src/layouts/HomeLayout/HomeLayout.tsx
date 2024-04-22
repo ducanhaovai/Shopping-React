@@ -50,13 +50,13 @@ export default function HomeLayout() {
       <div className="flex-grow">
         <div className="container pb-4">
           <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-12 sm:col-span-3">
+            <div className="col-span-12 sm:col-span-2">
               <Aside
                 onCategoryClick={handleCategoryClick}
                 onPriceChange={handlePriceChange}
               />
             </div>
-            <div className="col-span-12 sm:col-span-9">
+            <div className="col-span-12 sm:col-span-10 ">
               <Tophome onPriceChange={handleSelectChange} />
 
               <Home

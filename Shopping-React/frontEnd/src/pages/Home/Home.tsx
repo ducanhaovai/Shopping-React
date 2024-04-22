@@ -4,6 +4,7 @@ import { Star5 } from "../../components/Star";
 import ListPage from "../../features/Product";
 import { fetchProducts } from "../../api/productApi";
 import Loading from "../../components/Loading";
+import { CiHeart } from "react-icons/ci";
 
 interface HomeProps {
   searchTerm: string;
@@ -77,10 +78,10 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
         <Loading />
       ) : (
         <>
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3 ">
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-5 gap-3 w-full">
             {Array.isArray(filteredProducts) &&
               filteredProducts.map((product, index) => (
-                <div className="col-span-1" key={product.id || index}>
+                <div className="col-span-1 w-full " key={product.id || index}>
                   <Link
                     to={`/products/${product.id}`}
                     key={product.id || index}
@@ -107,8 +108,22 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                             ${product.price}
                           </span>
                         </div>
-                        <div className="mt-3 flex items-center justify-end">
+
+                        <div className="flex justify-between m-4 mx-2">
+                          <CiHeart />
+
                           <Star5 />
+                          <span className="text-sm text-[var(--text-color)] ml-2">
+                            Đã bán
+                          </span>
+                        </div>
+                        <div className="flex justify-between mx-2 text-gray-600 text-lg font-light pb-2">
+                          <span className="mx-2 text-gray-600 text-sm font-light">
+                            HanoiComputer
+                          </span>
+                          <span className="mx-2 text-gray-600 text-sm font-light">
+                            Acer
+                          </span>
                         </div>
                       </div>
                     </div>

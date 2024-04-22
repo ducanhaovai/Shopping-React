@@ -6,7 +6,7 @@ interface SvgIconProps {
 
 const Star5: React.FC<SvgIconProps> = () => {
   return (
-    <div className="text-base scale-90 origin-right text-gray-300 -m-1 mt-0 ml-auto mr-0 mb-0">
+    <div className="text-base scale-90 origin-right text-gray-400 -m-1 mt-0 mb-0 ml-auto">
       <div
         className="flex items-center text-sm"
         aria-hidden="true"
