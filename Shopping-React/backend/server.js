@@ -435,16 +435,23 @@ app.get("/products-by-price", async (req, res) => {
   if (!order) {
     return res.status(400).json({ error: "Order parameter is required" });
   }
-  const response = await axios.get("https://api.escuelajs.co/api/v1/products");
-  let products = response.data;
-  if (order === "asc") {
-    products.sort((a, b) => a.price - b.price);
-  } else if (order === "desc") {
-    products.sort((a, b) => b.price - a.price);
-  } else {
-    return res.status(400).json({ error: "Invalid order parameter" });
+  try {
+    const response = await axios.get(
+      "https://api.escuelajs.co/api/v1/products"
+    );
+    let products = response.data;
+    if (order === "asc") {
+      products.sort((a, b) => a.price - b.price);
+    } else if (order === "desc") {
+      products.sort((a, b) => b.price - a.price);
+    } else {
+      return res.status(400).json({ error: "Invalid order parameter" });
+    }
+    res.json(products);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ error: "Error fetching products" });
   }
-  res.json(products);
 });
 
 app.listen(8088, () => {

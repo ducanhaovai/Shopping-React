@@ -23,6 +23,9 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setCurrentProducts(products);
+  }, [products]);
 
   useEffect(() => {
     const fetchInitialProducts = async () => {

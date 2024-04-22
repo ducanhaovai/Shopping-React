@@ -13,7 +13,7 @@ import {
 
 export default function HomeLayout() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<any[]>([]);
   const [productsByPrice, setProductsByPrice] = useState<any[]>([]);
 
   const handlePriceChange = (products_price: any[]) => {
