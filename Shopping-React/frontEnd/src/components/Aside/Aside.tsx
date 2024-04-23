@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
+import  { useState, useEffect } from "react";
 import Allfile from "./components/Allfile";
 import Category from "./components/Category";
 import Price from "./components/Price";

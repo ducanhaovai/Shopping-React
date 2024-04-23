@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
