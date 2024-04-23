@@ -37,7 +37,7 @@ export default function Category({ onCategoryClick }: CategoryProps) {
         categories.slice(0, 5).map((category) => (
           <li
             key={category.id}
-            className="py-2 pl-2 hover:text-gray-500"
+            className="py-2 pl-2 hover:text-red-500"
             onClick={() => handleCategoryClick(category.id)}
           >
             <a className="relative px-2">

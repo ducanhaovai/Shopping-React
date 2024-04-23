@@ -12,6 +12,17 @@ module.exports = {
       colors: {
         orange: "#ee4d2d",
       },
+      animation: {
+        // Thêm dòng này
+        fadeIn: "fadeIn 1s linear",
+      },
+      keyframes: {
+        // Và thêm dòng này
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
     },
   },
   plugins: [

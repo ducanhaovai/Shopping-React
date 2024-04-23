@@ -9,6 +9,7 @@ import {
   fetchProductsByCategory,
   fetchProductsByPriceOrder,
 } from "../../api/productApi";
+import Banner from "../../components/Banner/Banner";
 
 export default function HomeLayout() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -43,13 +44,16 @@ export default function HomeLayout() {
   };
   return (
     <div className="flex h-screen flex-col justify-between">
-      <HomeHeader
-        handleSearch={(value: SetStateAction<string>) => setSearchTerm(value)}
-      />
-      <div className="flex-grow">
+      <div>
+        <HomeHeader
+          handleSearch={(value: SetStateAction<string>) => setSearchTerm(value)}
+        />
+        <Banner />
+      </div>
+      <div className="flex-grow ">
         <div className="container pb-4">
-          <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-12 sm:col-span-2">
+          <div className="grid grid-cols-12 gap-6 pt-8">
+            <div className="col-span-12 sm:col-span-2"> 
               <Aside
                 onCategoryClick={handleCategoryClick}
                 onPriceChange={handlePriceChange}

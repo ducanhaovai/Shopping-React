@@ -26,7 +26,7 @@ const LangSwitch = () => {
       <button
         type="button"
         onClick={handleToggleOptions}
-        className="outline-none transition duration-300 flex items-center space-x-2 rounded-md px-4 py-2 text-white/80 bg-transparent hover:bg-white/20 gap-x-2"
+        className="outline-none transition duration-300 flex items-center space-x-2 rounded-md px-4 py-2 text-white/80 bg-transparent hover:bg-white/20 gap-x-2 no-underline font-light text-xs "
       >
         <svg
           stroke="currentColor"
@@ -47,13 +47,13 @@ const LangSwitch = () => {
         <div className="absolute top-10 right-0 bg-white/80 rounded-md shadow-md z-10">
           <ul>
             <li
-              className="py-2 px-4 hover:bg-white cursor-pointer"
+              className="py-2 px-4 hover:bg-white cursor-pointer font-light text-sm"
               onClick={() => handleChangeLanguage("vi")}
             >
               Tiếng Việt
             </li>
             <li
-              className="py-2 px-4 hover:bg-white cursor-pointer"
+              className="py-2 px-4 hover:bg-white cursor-pointer font-light text-sm"
               onClick={() => handleChangeLanguage("en")}
             >
               English

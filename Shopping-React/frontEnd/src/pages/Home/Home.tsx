@@ -5,6 +5,7 @@ import ListPage from "../../features/Product";
 import { fetchProducts } from "../../api/productApi";
 import Loading from "../../components/Loading";
 import { CiHeart } from "react-icons/ci";
+import { useTranslation } from "react-i18next";
 
 interface HomeProps {
   searchTerm: string;
@@ -17,6 +18,7 @@ interface Product {
   title: string;
   price: number;
   images: any;
+  sold: number;
 }
 
 const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
@@ -24,8 +26,13 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
   useEffect(() => {
-    setCurrentProducts(products);
+    const updatedProducts = products.map((product) => ({
+      ...product,
+      sold: Math.floor(Math.random() * 100) + 1,
+    }));
+    setCurrentProducts(updatedProducts);
   }, [products]);
 
   useEffect(() => {
@@ -104,7 +111,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                           <span className=" ml-4 text-lg text-gray-600 line-through">
                             120$
                           </span>
-                          <span className="text-lg text-red-500 ml-10  ">
+                          <span className="text-lg text-red-500 ml-20  ">
                             ${product.price}
                           </span>
                         </div>
@@ -113,8 +120,8 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                           <CiHeart />
 
                           <Star5 />
-                          <span className="text-sm text-[var(--text-color)] ml-2">
-                            Đã bán
+                          <span className="text-sm text-[var(--text-color)] ml-3">
+                            {t("sold")}: 88
                           </span>
                         </div>
                         <div className="flex justify-between mx-2 text-gray-600 text-lg font-light pb-2">

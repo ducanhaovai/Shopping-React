@@ -3,6 +3,7 @@
     "Logout": "Đăng xuất",
     "Login": "Đăng nhập",
     "List": "Tất cả danh mục",
+    "sold": "Đã bán",
     "footer": {
         "copyright": "© 2024 Shopee. Tất cả các quyền được bảo lưu.",
         "countryRegion": "Quốc gia & Khu vực: Singapore Indonesia Thái Lan Malaysia Việt Nam Philippines Brazil México Colombia Chile Đài Loan",
@@ -86,5 +87,22 @@
         "amount": "Số lượng",
         "action": "Thao Tác",
         "product": "Sản phẩm"
+    },
+    "sell": {
+        "sellerChannel": "Kênh người bán",
+        "becomeASeller": "Trở thành Người bán Shopee",
+        "downloadApp": "Tải ứng dụng",
+        "connect": "Kết nối"
+    },
+    "app": {
+        "healthProtection": "Bảo vệ sức khỏe",
+        "cheapStuff": "Gì Cũng Rẻ - Mua Là Freeship",
+        "saleTimeFrame": "Khung Giờ Săn Sale",
+        "freeDelivery": "Miễn Phí Vận Chuyển",
+        "cashback": "Hoàn Xu 20% - Lên Đến 50K",
+        "brandDiscount": "Hàng Hiệu -50%",
+        "internationalItems": "Hàng Quốc Tế",
+        "serviceCardTopup": "Nạp Thẻ Dịch Vụ",
+        "shockingDeal": "Deal Sốc Từ 1K"
     }
 }

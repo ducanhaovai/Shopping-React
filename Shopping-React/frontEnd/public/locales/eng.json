@@ -3,6 +3,7 @@
     "Logout": "Logout",
     "Login": "Login",
     "List": "List",
+    "sold": "Sold",
     "footer": {
         "copyright": "© 2024 Shopee. All rights reserved.",
         "countryRegion": "Country & Region: Singapore Indonesia Thailand Malaysia Vietnam Philippines Brazil Mexico Colombia Chile Taiwan",
@@ -82,6 +83,23 @@
         "quantity": "Quantity",
         "amount": "Amount",
         "action": "Action",
-        "product":"Product"
+        "product": "Product"
+    },
+    "sell": {
+        "sellerChannel": "Seller Channel",
+        "becomeASeller": "Become a Shopee Seller",
+        "downloadApp": "Download App",
+        "connect": "Connect"
+    },
+    "app": {
+        "healthProtection": "Health Protection",
+        "cheapStuff": "Everything Cheap - Buy is Freeship",
+        "saleTimeFrame": "Sale Hunting Time Frame",
+        "freeDelivery": "Free Delivery",
+        "cashback": "20% Cashback - Up to 50K",
+        "brandDiscount": "50% Off Branded Items",
+        "internationalItems": "International Items",
+        "serviceCardTopup": "Service Card Top-up",
+        "shockingDeal": "Shocking Deals From 1K"
     }
 }

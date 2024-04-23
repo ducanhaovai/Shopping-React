@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 export default function Allfile() {
   const { t } = useTranslation();
   return (
-    <a className="flex items-center font-bold">
+    <a className="flex items-center font-bold  ">
       <svg viewBox="0 0 12 10" className="mr-3 h-4 w-3 fill-current">
         <g fillRule="evenodd" stroke="none" strokeWidth="1">
           <g transform="translate(-373 -208)">
@@ -16,7 +16,9 @@ export default function Allfile() {
           </g>
         </g>
       </svg>
-      {t("List")}
+      <h3 className="text-custom-color text-xl font-normal  uppercase">
+        {t("List")}
+      </h3>
     </a>
   );
 }
