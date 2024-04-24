@@ -23,7 +23,11 @@ export default function BannerContent() {
     setCurrent((prev) => (prev - 1 + banners.length) % banners.length);
 
   return (
-    <div className="flex flex-wrap justify-between mx-[-4px] sm:mx-[-8px] md:mx-[-12px] lg:mx-[-16px] xl:mx-[-16px] mt-[30px] relative">
+    <div
+      className="flex flex-wrap justify-between mx-[-4px] sm:mx-[-8px] md:mx-[-12px] lg:mx-[-16px] xl:mx-[-16px] mt-[30px] relative"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <div className="flex-auto w-full sm:w-[66.66667%] md:px-2 block relative">
         <img
           src={banners[current]}
