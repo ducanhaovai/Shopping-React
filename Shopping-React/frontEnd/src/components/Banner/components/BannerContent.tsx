@@ -23,17 +23,14 @@ export default function BannerContent() {
     setCurrent((prev) => (prev - 1 + banners.length) % banners.length);
 
   return (
-    <div
-      className="flex flex-wrap justify-between mx-[-4px] sm:mx-[-8px] md:mx-[-12px] lg:mx-[-16px] xl:mx-[-16px] mt-[30px] relative"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)} // Corrected the onMouseLeave function
-    >
-      <div className="flex-auto max-w-[66.66667%] sm:px-2 block relative">
+    <div className="flex flex-wrap justify-between mx-[-4px] sm:mx-[-8px] md:mx-[-12px] lg:mx-[-16px] xl:mx-[-16px] mt-[30px] relative">
+      <div className="flex-auto w-full sm:w-[66.66667%] md:px-2 block relative">
         <img
           src={banners[current]}
           alt="Banner"
           key={current}
           className="w-full h-[235px] object-cover animate-fadeIn"
+          style={{ objectFit: "contain" }}
         />
         {isHovering && (
           <>
@@ -54,7 +51,7 @@ export default function BannerContent() {
           </>
         )}
       </div>
-      <div className="flex-auto max-w-[33.33333%] px-1  flex flex-col items-center justify-between h-[235px]">
+      <div className="flex-auto w-full sm:w-[33.33333%] px-1 flex flex-col items-center justify-between h-[235px]">
         <img
           src={image5}
           alt="Image 1"
