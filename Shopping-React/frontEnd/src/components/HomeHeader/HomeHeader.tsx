@@ -47,7 +47,7 @@ export default function HomeHeader({
           <UserLogin />
         </div>
 
-        <nav className="h-[var(--header-with-search-height)] flex items-start mx-2 gap-4 py-4">
+        <nav className="h-[var(--header-with-search-height)] flex items-start mx-2 gap-4 pt-4">
           <Logo />
 
           <div className="flex-shrink flex flex-col">

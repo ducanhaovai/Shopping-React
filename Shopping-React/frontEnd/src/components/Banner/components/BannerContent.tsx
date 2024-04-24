@@ -26,33 +26,33 @@ export default function BannerContent() {
     <div
       className="flex flex-wrap justify-between mx-[-4px] sm:mx-[-8px] md:mx-[-12px] lg:mx-[-16px] xl:mx-[-16px] mt-[30px] relative"
       onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseLeave={() => setIsHovering(false)} // Corrected the onMouseLeave function
     >
-      <div className="flex-auto max-w-[66.66667%] sm:px-2 block">
-        <div className="relative h-[235px]">
-          <img
-            src={banners[current]}
-            alt="Banner"
-            key={current}
-            className="w-full h-full object-cover animate-fadeIn absolute"
-          />
-          {isHovering && (
-            <>
-              <button
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full opacity-50"
-                onClick={prevImage}
-              >
-                ◀
-              </button>
-              <button
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full opacity-50"
-                onClick={nextImage}
-              >
-                ▶
-              </button>
-            </>
-          )}
-        </div>
+      <div className="flex-auto max-w-[66.66667%] sm:px-2 block relative">
+        <img
+          src={banners[current]}
+          alt="Banner"
+          key={current}
+          className="w-full h-[235px] object-cover animate-fadeIn"
+        />
+        {isHovering && (
+          <>
+            <button
+              className="absolute top-1/2 left-5 transform -translate-y-1/2 -translate-x-5 bg-white p-2 rounded-full opacity-50"
+              style={{ transform: "translate(-50%, -50%)" }}
+              onClick={prevImage}
+            >
+              ◀
+            </button>
+            <button
+              className="absolute top-1/2 right-5 transform -translate-y-1/2 translate-x-5 bg-white p-2 rounded-full opacity-50"
+              style={{ transform: "translate(50%, -50%)" }}
+              onClick={nextImage}
+            >
+              ▶
+            </button>
+          </>
+        )}
       </div>
       <div className="flex-auto max-w-[33.33333%] px-1  flex flex-col items-center justify-between h-[235px]">
         <img
