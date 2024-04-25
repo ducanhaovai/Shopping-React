@@ -50,8 +50,8 @@ export default function UserLogin() {
         if (data.Status === "Success") {
           setAuth(true);
           setEmail(data.email);
-          localStorage.setItem("user_email", data.email);
-          localStorage.setItem("user_name", data.name);
+          setWithExpiry("user_email", data.email, 24 * 60 * 60 * 1000);
+          setWithExpiry("user_name", data.name, 24 * 60 * 60 * 1000);
         } else {
           setAuth(false);
         }
@@ -81,8 +81,30 @@ export default function UserLogin() {
   const handleLogin = () => {
     navigate("/login", { replace: true });
   };
+  const setWithExpiry = (key: string, value: any, ttl: number) => {
+    const now = new Date();
+    const item = {
+      value: value,
+      expiry: now.getTime() + ttl,
+    };
+    localStorage.setItem(key, JSON.stringify(item));
+  };
 
-  const userName = localStorage.getItem("user_name");
+  const getWithExpiry = (key: string) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+      return null;
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return item.value;
+  };
+
+  const userName = getWithExpiry("user_name");
 
   return (
     <div className="list-none pl-0 mt-0 flex">
