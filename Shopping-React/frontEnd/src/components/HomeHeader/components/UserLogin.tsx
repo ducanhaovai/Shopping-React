@@ -180,12 +180,12 @@ export default function UserLogin() {
         </Stack>
       ) : (
         <div className="flex items-center">
-          <a
-            className="mx-3 capitalize hover:text-white/70"
+          <button
+            className="outline-none transition duration-300 flex items-center space-x-2 rounded-md px-4 py-2 text-white/80 bg-transparent hover:bg-white/20 gap-x-2 no-underline font-light text-sm "
             onClick={handleLogin}
           >
             {t("Login")}
-          </a>
+          </button>
         </div>
       )}
     </div>

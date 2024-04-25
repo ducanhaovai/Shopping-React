@@ -15,7 +15,9 @@ export const LoginSignup = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: "onBlur",
+  });
 
   const navigate = useNavigate();
 
@@ -86,6 +88,9 @@ export const LoginSignup = () => {
                   {...register("name", { required: true })}
                 />
               )}
+              {errors.name && (
+                <p className="text-red-600 ml-2">Email is required.</p>
+              )}
               <Input
                 className="mt-2"
                 type="email"
@@ -99,10 +104,14 @@ export const LoginSignup = () => {
                 className="mt-2"
                 type="password"
                 placeholder="Password"
-                {...register("password", { required: true })}
+                {...register("password", { required: true, minLength: 6 })}
               />
               {errors.password && (
-                <p className="text-red-600 ml-2">Password is required.</p>
+                <p className="text-red-600 ml-2">
+                  {errors.password.type === "required"
+                    ? "Password is required"
+                    : "Password must be at least 6 characters long"}
+                </p>
               )}
               <div className="mt-2">
                 {action === "Sign in" ? (
