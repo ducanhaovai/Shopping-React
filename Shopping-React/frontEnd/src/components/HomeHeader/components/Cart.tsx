@@ -7,13 +7,13 @@ export default function Cart() {
   };
   return (
     <div
-      className="flex-center col-span-1 justify-self-end"
+      className="flex-center col-span-1 justify-self-end transform transition-transform duration-200 hover:-translate-y-2.5"
       onClick={handleCartClick}
     >
       <div>
         <a>
           <svg
-            stroke="currentColor" 
+            stroke="currentColor"
             fill="currentColor"
             strokeWidth="0"
             viewBox="0 0 1024 1024"
