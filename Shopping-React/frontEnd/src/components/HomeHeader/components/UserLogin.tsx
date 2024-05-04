@@ -66,6 +66,7 @@ export default function UserLogin() {
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           localStorage.removeItem("user_email");
+          localStorage.removeItem("user_name");
           navigate("/login", { replace: true });
         } else {
           alert("error");
@@ -81,6 +82,7 @@ export default function UserLogin() {
   const handleLogin = () => {
     navigate("/login", { replace: true });
   };
+  
   const setWithExpiry = (key: string, value: any, ttl: number) => {
     const now = new Date();
     const item = {
