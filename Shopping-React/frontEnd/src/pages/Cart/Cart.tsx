@@ -74,12 +74,11 @@ function CartPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="container">
       <div className="overflow-auto">
-        <div className="min-w-0">
-          <div className="hidden sm:block">
-            <HeaderCart />
-          </div>
+        <div className="min-w-[1000px]">
+          <HeaderCart />
+
           <ProductCart
             cartItems={cartItems}
             selectedItems={selectedItems}
@@ -88,7 +87,7 @@ function CartPage() {
           />
         </div>
       </div>
-      <div className="sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100 bg-white p-5 shadow sm:flex-row sm:items-center">
+      <div className="sticky bottom-0 z-10 mt-8 flex flex-col rounded-sm border border-gray-100 bg-white p-5 shadow">
         <BotCart
           selectedItems={selectedItems}
           onSelectAll={handleSelectAll}
