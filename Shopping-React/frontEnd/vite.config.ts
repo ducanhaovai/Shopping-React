@@ -6,6 +6,10 @@ export default defineConfig({
   plugins: [react(), WindiCSS()],
   server: {
     port: 3000,
+    hmr: {
+      host: "shopping-clone.site",
+      protocol: "wss",
+    },
   },
   preview: {
     port: 8080,

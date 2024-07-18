@@ -17,7 +17,7 @@ export default function HomeHeader({
 }: {
   handleSearch: HandleSearchFunction;
 }) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState([]);
   const [searchTerm] = useState("");
   const { t } = useTranslation();
   useEffect(() => {
