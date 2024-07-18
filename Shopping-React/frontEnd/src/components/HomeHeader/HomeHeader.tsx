@@ -11,31 +11,34 @@ type Category = {
   id: string;
   name: string;
 };
+
 type HandleSearchFunction = (searchTerm: string) => void;
+
 export default function HomeHeader({
   handleSearch,
 }: {
   handleSearch: HandleSearchFunction;
 }) {
-  const [categories, setCategories] = useState([]);
-  const [searchTerm] = useState("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const { t } = useTranslation();
+
   useEffect(() => {
     const fetchCat = async () => {
       try {
         const data = await fetchCategories();
-        setCategories(data);
+        setCategories(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching categories:", error);
+        setCategories([]); 
       }
     };
 
     fetchCat();
   }, []);
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     handleSearch(searchTerm);
   };
 
@@ -53,20 +56,19 @@ export default function HomeHeader({
           <div className="flex-shrink flex flex-col">
             <form onSubmit={handleSubmit}>
               <label className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Search
+                {t("search.placeholder")}
               </label>
-              <Search handleSearch={handleSearch} />
+              <Search handleSearch={setSearchTerm} />
             </form>
 
             <ul className="hidden sm:flex flex-wrap items-center">
-              {categories &&
-                categories.slice(0, 5).map((category) => (
-                  <li key={category.id} className="my-2 sm:mx-2">
-                    <a className="text-sm text-white">
-                      {t(`category.${category.name.toLowerCase()}`)}
-                    </a>
-                  </li>
-                ))}
+              {categories.slice(0, 5).map((category) => (
+                <li key={category.id} className="my-2 sm:mx-2">
+                  <a className="text-sm text-white">
+                    {t(`category.${category.name.toLowerCase()}`)}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
