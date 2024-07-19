@@ -17,7 +17,7 @@ interface Product {
   id: string;
   title: string;
   price: number;
-  images: any;
+  image: any;
   sold: number;
 }
 
@@ -77,7 +77,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
     indexOfLastProduct
   );
   const filteredProducts = displayedProducts.filter(
-    (product) => !product.images[0].includes('"')
+    (product) => !product.image[0].includes('"')
   );
   return (
     <div>
@@ -96,7 +96,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                     <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
                       <div className="w-full h-auto sm:h-[191px]">
                         <img
-                          src={product.images[0]}
+                          src={product.image[0]}
                           className="h-full w-full bg-white object-cover"
                           alt={product.title}
                         />
