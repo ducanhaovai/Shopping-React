@@ -55,8 +55,12 @@ export const fetchProductsByCategory = async (categoryId: string) => {
 export const fetchCategories = async () => {
   try {
     const response = await axios.get(`${baseURL2}/categories`);
-
-    return response.data;
+    if (Array.isArray(response.data)) {
+      return response.data;
+    } else {
+      console.error("Unexpected response format:", response.data);
+      return [];
+    }
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];
