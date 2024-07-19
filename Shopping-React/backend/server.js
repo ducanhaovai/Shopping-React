@@ -120,7 +120,7 @@ app.get("/home", verifyUser, (req, res) => {
 });
 
 app.get("/products", async (req, res) => {
-  const response = await axios.get("https://api.escuelajs.co/api/v1/products");
+  const response = await axios.get("https://fakestoreapi.com/products");
   res.json(response.data);
 });
 
@@ -278,7 +278,7 @@ app.get("/api/products/:productId", async (req, res) => {
   }
 
   const response = await axios.get(
-    `https://api.escuelajs.co/api/v1/products/${parsedProductId}`
+    `https://fakestoreapi.com/products/${parsedProductId}`
   );
   const productData = response.data;
   res.json(productData);
