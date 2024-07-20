@@ -56,14 +56,7 @@
         "incorrectOldPassword": "The old password you entered is incorrect.",
         "errorChangingPassword": "Error changing password: "
     },
-    "category": {
-        "clothes": "Clothes",
-        "electronics": "Electronics",
-        "furniture": "Furniture",
-        "shoes": "Shoes",
-        "miscellaneous": "Miscellaneous",
-        "foods": "Foods"
-    },
+   
     "detailP": {
         "description": "Product Description",
         "addToCart": "Add to cart",
@@ -101,5 +94,11 @@
         "internationalItems": "International Items",
         "serviceCardTopup": "Service Card Top-up",
         "shockingDeal": "Shocking Deals From 1K"
+    },
+    "category": {
+        "electronics": "Electronics",
+        "jewelery": "Jewelery",
+        "men's clothing": "Men's Clothing",
+        "women's clothing": "Women's Clothing"
     }
 }

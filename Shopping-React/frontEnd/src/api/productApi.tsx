@@ -8,8 +8,8 @@ export const fetchProducts = async () => {
 
     if (Array.isArray(response.data)) {
       const filteredProducts = response.data.filter(
-        (product: { images: (string | string[])[] }) =>
-          !product.images[0].includes('"')
+        (product: { image: (string | string[])[] }) =>
+          !product.image[0].includes('"')
       );
       return filteredProducts;
     } else {
@@ -30,8 +30,8 @@ export const searchProducts = async (searchTerm: string) => {
     );
 
     const filteredProducts = response.data.filter(
-      (product: { images: (string | string[])[] }) =>
-        !product.images[0].includes('"')
+      (product: { image: (string | string[])[] }) =>
+        !product.image[0].includes('"')
     );
     return filteredProducts;
   } catch (error) {
@@ -40,16 +40,17 @@ export const searchProducts = async (searchTerm: string) => {
   }
 };
 
-export const fetchProductsByCategory = async (categoryId: string) => {
-  const response = await axios.get(
-    `${baseURL2}/api/categories/${categoryId}/products`
-  );
-  const filteredProducts = response.data.filter(
-    (product: { images: (string | string[])[] }) =>
-      !product.images[0].includes('"')
-  );
-  console.log(filteredProducts);
-  return filteredProducts;
+export const fetchProductsByCategory = async (categoryName: string) => {
+  try {
+    const response = await axios.get(
+      `${baseURL2}/api/categories/${categoryName}`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+    return [];
+  }
 };
 
 export const fetchCategories = async () => {
@@ -82,7 +83,7 @@ export const addToCart = async (productId: string, quantity: number) => {
 export const fetchProduct = async (productId: number) => {
   const response = await axios.get(`${baseURL2}/api/products/${productId}`);
 
-  if (response.data.images[0].includes('"')) {
+  if (response.data.image[0].includes('"')) {
     console.error("Product image contains '\"'");
     return null;
   }
@@ -100,8 +101,8 @@ export const searchProductsByPrice = async (
     });
 
     const filteredProducts = response.data.filter(
-      (product: { images: (string | string[])[] }) =>
-        !product.images[0].includes('"')
+      (product: { image: (string | string[])[] }) =>
+        !product.image[0].includes('"')
     );
     return filteredProducts;
   } catch (error) {
@@ -116,8 +117,8 @@ export const fetchProductsByPriceOrder = async (order: string) => {
     });
 
     const filteredProducts = response.data.filter(
-      (product: { images: (string | string[])[] }) =>
-        !product.images[0].includes('"')
+      (product: { image: (string | string[])[] }) =>
+        !product.image[0].includes('"')
     );
     return filteredProducts;
   } catch (error) {

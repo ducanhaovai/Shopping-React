@@ -60,12 +60,10 @@
         "errorChangingPassword": "Lỗi khi thay đổi mật khẩu: "
     },
     "category": {
-        "clothes": "Quần áo",
-        "electronics": "Điện tử",
-        "furniture": "Đồ nội thất",
-        "shoes": "Giày dép",
-        "miscellaneous": "Linh tinh",
-        "foods": "Thực phẩm"
+        "electronics": "Đồ điện tử",
+        "jewelery": "Trang Sức",
+        "men's clothing": "Quần áo nam",
+        "women's clothing": "QUần áo nữ"
     },
     "detailP": {
         "description": "Mô tả sản phẩm",

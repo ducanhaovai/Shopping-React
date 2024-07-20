@@ -14,11 +14,13 @@ interface HomeProps {
 }
 
 interface Product {
+  rating: any;
   id: string;
   title: string;
   price: number;
   image: any;
   sold: number;
+  count: number;
 }
 
 const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
@@ -27,6 +29,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
   const [itemsPerPage] = useState(10);
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
+
   useEffect(() => {
     const updatedProducts = products.map((product) => ({
       ...product,
@@ -76,9 +79,11 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
     indexOfFirstProduct,
     indexOfLastProduct
   );
+
   const filteredProducts = displayedProducts.filter(
     (product) => !product.image[0].includes('"')
   );
+
   return (
     <div>
       {loading ? (
@@ -94,10 +99,10 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
                     key={product.id || index}
                   >
                     <div className="overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.04rem] hover:shadow-md">
-                      <div className="w-full h-auto sm:h-[191px]">
+                      <div className="w-full h-auto sm:h-[191px] flex justify-center">
                         <img
-                          src={product.image[0]}
-                          className="h-full w-full bg-white object-cover"
+                          src={product.image}
+                          className="h-full  bg-white object-cover"
                           alt={product.title}
                         />
                       </div>
@@ -109,9 +114,9 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
 
                         <div className="mt-3 flex items-baseline justify-start flex-wrap">
                           <span className=" ml-4 text-lg text-gray-600 line-through">
-                            120$
+                            $120
                           </span>
-                          <span className="text-lg text-red-500 ml-20  ">
+                          <span className="text-lg text-red-500 ml-auto  ">
                             ${product.price}
                           </span>
                         </div>
@@ -121,7 +126,7 @@ const Home: React.FC<HomeProps> = ({ searchTerm, category, products }) => {
 
                           <Star5 />
                           <span className="text-sm text-[var(--text-color)] ml-3">
-                            {t("sold")}: 88
+                            {t("sold")}: {product.rating.count}
                           </span>
                         </div>
                         <div className="flex justify-between mx-2 text-gray-600 text-lg font-light pb-2">

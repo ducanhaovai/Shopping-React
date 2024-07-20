@@ -283,10 +283,10 @@ app.get("/api/products/:productId", async (req, res) => {
   const productData = response.data;
   res.json(productData);
 });
-app.get("/api/categories/:id/products", async (req, res) => {
-  const categoryId = req.params.id;
+app.get("/api/categories/:name", async (req, res) => {
+  const categoryName = req.params.name;
   const response = await fetch(
-    `https://api.escuelajs.co/api/v1/categories/${categoryId}/products`
+    `https://fakestoreapi.com/products/category/${categoryName}`
   );
   const data = await response.json();
   res.json(data);
@@ -295,7 +295,7 @@ app.get("/api/categories/:id/products", async (req, res) => {
 app.get("/search-products", async (req, res) => {
   const title = req.query.title;
   const response = await axios.get(
-    `https://api.escuelajs.co/api/v1/products/?title=${title}`
+    `https://fakestoreapi.com/products/?title=${title}`
   );
   res.json(response.data);
 });
@@ -337,7 +337,7 @@ app.post("/change-password", verifyUser, async (req, res) => {
 
 app.get("/categories", async (req, res) => {
   const response = await axios.get(
-    "https://api.escuelajs.co/api/v1/categories/"
+    "https://fakestoreapi.com/products/categories"
   );
   res.json(response.data);
 });
@@ -347,7 +347,7 @@ app.post("/cart/add", verifyUser, async (req, res) => {
   const userId = req.id;
 
   const productResponse = await axios.get(
-    `https://api.escuelajs.co/api/v1/products/${productId}`
+    `https://fakestoreapi.com/products/${productId}`
   );
   const { title, price, images } = productResponse.data;
 
@@ -420,7 +420,7 @@ app.post("/search-products-by-price", async (req, res) => {
     return res.status(400).json({ error: "Invalid price range" });
   }
 
-  const response = await axios.get(`https://api.escuelajs.co/api/v1/products`);
+  const response = await axios.get(`https://fakestoreapi.com/products`);
   const products = response.data.filter(
     (product) => product.price >= minPrice && product.price <= maxPrice
   );
@@ -433,9 +433,7 @@ app.post("/products-by-price", async (req, res) => {
     return res.status(400).json({ error: "Order parameter is required" });
   }
   try {
-    const response = await axios.get(
-      "https://api.escuelajs.co/api/v1/products"
-    );
+    const response = await axios.get("https://fakestoreapi.com/products");
     let products = response.data;
     if (order === "asc") {
       products.sort((a, b) => a.price - b.price);

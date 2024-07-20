@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "../../../api/productApi";
 import { useTranslation } from "react-i18next";
+
+const fetchCategories = async () => {
+  return [
+    { id: "1", name: "electronics" },
+    { id: "2", name: "jewelery" },
+    { id: "3", name: "men's clothing" },
+    { id: "4", name: "women's clothing" },
+  ];
+};
 
 type Category = {
   id: string;
@@ -19,7 +27,6 @@ export default function Category({ onCategoryClick }: CategoryProps) {
     const getCategories = async () => {
       try {
         const data = await fetchCategories();
-        console.log("Fetched Categories:", data);
         setCategories(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

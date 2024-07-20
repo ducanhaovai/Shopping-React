@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
-import ImageSlider from "../ImageSlider/index";
 import { addToCart } from "../../api/cartApi";
 import { useTranslation } from "react-i18next";
 import { fetchProduct } from "../../api/productApi";
 
 interface Product {
-  images: string[];
+  image: string;
   title: string;
   description: string;
   price: number;
@@ -17,7 +16,6 @@ const Product = () => {
   const [loading, setLoading] = useState(true);
   const [error] = useState(null);
   const { productId } = useParams();
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { t } = useTranslation();
   useEffect(() => {
@@ -38,15 +36,7 @@ const Product = () => {
     };
     fetchProductData();
   }, [productId]);
-  useEffect(() => {
-    if (product && product.images.length > 0) {
-      setSelectedImage(product.images[0]);
-    }
-  }, [product]);
 
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-  };
   const handleAddToCart = () => {
     if (quantity > 138) {
       alert(t("detailP.setAmount"));
@@ -79,15 +69,9 @@ const Product = () => {
             <div className="col-span-5">
               <div className="relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow">
                 <img
-                  src={selectedImage || ""}
+                  src={product.image}
                   alt={product.title}
-                  className="pointer-events-none absolute top-0 left-0 h-full w-full bg-white object-cover"
-                />
-              </div>
-              <div className="relative mt-4 grid grid-cols-5 gap-1">
-                <ImageSlider
-                  imageUrls={product.images}
-                  onImageClick={handleImageClick}
+                  className="pointer-events-none absolute top-0 left-0  bg-white object-cover"
                 />
               </div>
             </div>

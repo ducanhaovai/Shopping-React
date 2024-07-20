@@ -19,7 +19,7 @@ export default function HomeHeader({
 }: {
   handleSearch: HandleSearchFunction;
 }) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const { t } = useTranslation();
 
@@ -30,7 +30,7 @@ export default function HomeHeader({
         setCategories(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching categories:", error);
-        setCategories([]); 
+        setCategories([]);
       }
     };
 
@@ -62,10 +62,10 @@ export default function HomeHeader({
             </form>
 
             <ul className="hidden sm:flex flex-wrap items-center">
-              {categories.slice(0, 5).map((category) => (
-                <li key={category.id} className="my-2 sm:mx-2">
+              {categories.slice(0, 5).map((category, index) => (
+                <li key={index} className="my-2 sm:mx-2">
                   <a className="text-sm text-white">
-                    {t(`category.${category.name.toLowerCase()}`)}
+                    {t(`category.${category.toLowerCase()}`)}
                   </a>
                 </li>
               ))}
