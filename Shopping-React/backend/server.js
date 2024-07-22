@@ -349,7 +349,7 @@ app.post("/cart/add", verifyUser, async (req, res) => {
   const productResponse = await axios.get(
     `https://fakestoreapi.com/products/${productId}`
   );
-  const { title, price, images } = productResponse.data;
+  const { title, price, image } = productResponse.data;
 
   const cartsCollection = client.db().collection("carts");
   let cart = await cartsCollection.findOne({ userId });
@@ -373,7 +373,7 @@ app.post("/cart/add", verifyUser, async (req, res) => {
       productId,
       title,
       price,
-      images,
+      image,
       quantity,
     });
   }
