@@ -7,7 +7,7 @@ type CartItem = {
   description: string;
   quantity: number;
   price: number;
-  images: string;
+  image: string;
 };
 
 type ProductCartProps = {
@@ -64,7 +64,7 @@ export default function ProductCart({
               <div className="flex-grow">
                 <div className="flex">
                   <img
-                    src={item.images}
+                    src={item.image}
                     alt={item.title}
                     className="h-20 w-20 flex-shrink-0"
                   />
