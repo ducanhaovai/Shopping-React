@@ -62,11 +62,11 @@ export default function ProductCart({
                 />
               </div>
               <div className="flex-grow">
-                <div className="flex">
+                <div className="flex justify-center items-center">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="h-20 w-20 flex-shrink-0"
+                    className="h-20 flex-shrink-0"
                   />
                   <div className="flex-grow px-2 pt-1 pb-2">
                     <p className="line-clamp-2">{item.title}</p>
