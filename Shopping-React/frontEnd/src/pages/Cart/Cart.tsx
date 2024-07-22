@@ -9,7 +9,7 @@ type Item = {
   description: string;
   quantity: number;
   price: number;
-  images: string;
+  image: string;
   productId: number;
 };
 
